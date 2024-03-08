@@ -1,0 +1,136 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|c:\\users\\jani\\documents\\programming\\numbermatchapp\\numbermatchapp\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|solutionrelative:numbermatchapp\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jani\\.nuget\\packages\\microsoft.windowsappsdk\\1.3.230724000\\buildTransitive\\Microsoft.UI.Xaml.Markup.Compiler.interop.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|c:\\users\\jani\\documents\\programming\\numbermatchapp\\numbermatchapp\\helpers\\gamebackend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|solutionrelative:numbermatchapp\\helpers\\gamebackend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|c:\\users\\jani\\documents\\programming\\numbermatchapp\\numbermatchapp\\helpers\\tools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|solutionrelative:numbermatchapp\\helpers\\tools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|c:\\users\\jani\\documents\\programming\\numbermatchapp\\numbermatchapp\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|solutionrelative:numbermatchapp\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|c:\\users\\jani\\documents\\programming\\numbermatchapp\\numbermatchapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|solutionrelative:numbermatchapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|c:\\users\\jani\\documents\\programming\\numbermatchapp\\numbermatchapp\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07F3DF6A-FC01-4840-A348-0B70A5F10D15}|NumberMatchApp\\NumberMatchApp.csproj|solutionrelative:numbermatchapp\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\MainPage.xaml",
+              "RelativeDocumentMoniker": "NumberMatchApp\\MainPage.xaml",
+              "ToolTip": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\MainPage.xaml",
+              "RelativeToolTip": "NumberMatchApp\\MainPage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEEAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-03-08T12:58:22.744Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "NumberMatchApp\\MainPage.xaml.cs",
+              "ToolTip": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\MainPage.xaml.cs",
+              "RelativeToolTip": "NumberMatchApp\\MainPage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-08T12:58:34.937Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameBackend.cs",
+              "DocumentMoniker": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\Helpers\\GameBackend.cs",
+              "RelativeDocumentMoniker": "NumberMatchApp\\Helpers\\GameBackend.cs",
+              "ToolTip": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\Helpers\\GameBackend.cs",
+              "RelativeToolTip": "NumberMatchApp\\Helpers\\GameBackend.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-08T13:44:40.632Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Tools.cs",
+              "DocumentMoniker": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\Helpers\\Tools.cs",
+              "RelativeDocumentMoniker": "NumberMatchApp\\Helpers\\Tools.cs",
+              "ToolTip": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\Helpers\\Tools.cs",
+              "RelativeToolTip": "NumberMatchApp\\Helpers\\Tools.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAwwAcAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-08T13:07:05.714Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Microsoft.UI.Xaml.Markup.Compiler.interop.targets",
+              "DocumentMoniker": "C:\\Users\\Jani\\.nuget\\packages\\microsoft.windowsappsdk\\1.3.230724000\\buildTransitive\\Microsoft.UI.Xaml.Markup.Compiler.interop.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\.nuget\\packages\\microsoft.windowsappsdk\\1.3.230724000\\buildTransitive\\Microsoft.UI.Xaml.Markup.Compiler.interop.targets",
+              "ToolTip": "C:\\Users\\Jani\\.nuget\\packages\\microsoft.windowsappsdk\\1.3.230724000\\buildTransitive\\Microsoft.UI.Xaml.Markup.Compiler.interop.targets",
+              "RelativeToolTip": "..\\..\\..\\.nuget\\packages\\microsoft.windowsappsdk\\1.3.230724000\\buildTransitive\\Microsoft.UI.Xaml.Markup.Compiler.interop.targets",
+              "ViewState": "AQIAAN8BAAAAAAAAAAAswPgBAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-03-08T13:47:39.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\App.xaml",
+              "RelativeDocumentMoniker": "NumberMatchApp\\App.xaml",
+              "ToolTip": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\App.xaml",
+              "RelativeToolTip": "NumberMatchApp\\App.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-03-08T13:33:09.135Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "NumberMatchApp\\MauiProgram.cs",
+              "ToolTip": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\MauiProgram.cs",
+              "RelativeToolTip": "NumberMatchApp\\MauiProgram.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-08T13:11:14.35Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
