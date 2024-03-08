@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// The main page of the app, where the game is played.
+/// The front end of the game.
 /// Made by: Jani Aelterman.
 /// </summary>
 
@@ -26,8 +26,6 @@ namespace NumberMatchApp
                 MakeNumberMatchGrid(COLUMNS, ROWS);
                 game = new GameBackend(COLUMNS, ROWS);
 #endif
-
-            //GameBackend game = new GameBackend(columns, rows);
 
             SynchronizeGrid(game.GetGameGrid());
         }

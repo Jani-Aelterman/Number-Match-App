@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NumberMatchApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+8502bf770b60fa256cbe7977ff046d05b7909807")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+065e966b03ec9d88689f49fa8afd334fd293268b")]
 [assembly: System.Reflection.AssemblyProductAttribute("NumberMatchApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NumberMatchApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

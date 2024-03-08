@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "B1OfiTm35AH/QzlvWcE6Kq7xUbGAMmSOwa3SJg8Lv+Ftx+XzwU7GL3onq6H3fmt6tK6mrhvVqFRUOKmiT68p1A==",
+  "dgSpecHash": "gBoEj7cFIH089v+n0N65uoaAI/9+BxzlY1lvslzfSvdNFO4C1vjZ/yUtAT+kPF/cZ+dt2Ag7hb9yXBcJWafuwA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\NumberMatchApp.csproj",
+  "projectFilePath": "C:\\Users\\Jani\\Documents\\Programming\\Number-Match-App\\NumberMatchApp\\NumberMatchApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jani\\.nuget\\packages\\communitytoolkit.maui\\7.0.1\\communitytoolkit.maui.7.0.1.nupkg.sha512",
     "C:\\Users\\Jani\\.nuget\\packages\\communitytoolkit.maui.core\\7.0.1\\communitytoolkit.maui.core.7.0.1.nupkg.sha512",

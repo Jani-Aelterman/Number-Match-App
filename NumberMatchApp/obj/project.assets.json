@@ -36038,11 +36038,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\NumberMatchApp.csproj",
+      "projectUniqueName": "C:\\Users\\Jani\\Documents\\Programming\\Number-Match-App\\NumberMatchApp\\NumberMatchApp.csproj",
       "projectName": "NumberMatchApp",
-      "projectPath": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\NumberMatchApp.csproj",
+      "projectPath": "C:\\Users\\Jani\\Documents\\Programming\\Number-Match-App\\NumberMatchApp\\NumberMatchApp.csproj",
       "packagesPath": "C:\\Users\\Jani\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jani\\Documents\\Programming\\NumberMatchApp\\NumberMatchApp\\obj\\",
+      "outputPath": "C:\\Users\\Jani\\Documents\\Programming\\Number-Match-App\\NumberMatchApp\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
