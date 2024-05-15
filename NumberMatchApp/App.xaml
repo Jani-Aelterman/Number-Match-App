@@ -4,13 +4,20 @@
              xmlns:local="clr-namespace:NumberMatchApp"
              x:Class="NumberMatchApp.App"
              xmlns:mds="clr-namespace:Material.Components.Maui.Styles;assembly=Material.Components.Maui"
-             xmlns:mcu="clr-namespace:MaterialColorUtilities.Maui;assembly=MaterialColorUtilities.Maui">
+             xmlns:mcu="clr-namespace:MaterialColorUtilities.Maui;assembly=MaterialColorUtilities.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <!-- Begin custom design resources -->
+
+                <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
+
+                <material:StyleResource ColorsOverride="{x:Reference appColors}" BasedOn="{x:Reference appStyles}" />
+                
                 <mds:MaterialStyles />
                 <ResourceDictionary>
                     <Color x:Key="Primary" />

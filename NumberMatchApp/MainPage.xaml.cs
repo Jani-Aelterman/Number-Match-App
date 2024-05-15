@@ -23,8 +23,8 @@ namespace NumberMatchApp
             MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             game = new GameBackend(ROWS + 8, COLUMNS + 5);
 #else
-                MakeNumberMatchGrid(COLUMNS, ROWS);
-                game = new GameBackend(COLUMNS, ROWS);
+            MakeNumberMatchGrid(COLUMNS, ROWS);
+            game = new GameBackend(COLUMNS, ROWS);
 #endif
 
             SynchronizeGrid(game.GetGameGrid());
@@ -48,6 +48,8 @@ namespace NumberMatchApp
                         //Text = col.ToString(),
                         //CornerRadius = 0, //  maybe more modern with rounded corners
                         BorderColor = (Color)Application.Current.Resources["Primary"],
+                        BackgroundColor = (Color)Application.Current.Resources["Background"],
+                        TextColor = (Color)Application.Current.Resources["Primary"],
                         BorderWidth = 2,
                     };
 
@@ -93,11 +95,11 @@ namespace NumberMatchApp
 
                 button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
 
-                //temporarily
-                if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
+                //gives error
+                /*if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
                 {
                     // remove the values from the grid
-                }
+                }*/
 
                 game.SaveData();
 

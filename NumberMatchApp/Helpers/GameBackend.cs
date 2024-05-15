@@ -19,8 +19,12 @@ namespace NumberMatchApp.Helpers
         {
             InitializeGrid(columns, rows);
             //check if there is saved data
+            
             if (Preferences.ContainsKey("gameData"))
+            {
+                Tools.ShowToast("DEBUG: GameData found");
                 LoadData();
+            }
         }
 
         //private void InitializeGrid(int columns, int rows)
@@ -87,11 +91,22 @@ namespace NumberMatchApp.Helpers
             Dictionary<string, object> retrievedGameData = JsonConvert.DeserializeObject<Dictionary<string, object>>(retrievedJson);
 
             // Retrieve the game grid, stage, and numbers matched from the dictionary
-            gameGrid = (List<List<int>>)retrievedGameData["gameGrid"];
-            Stage = (int)retrievedGameData["stage"];
-            NumbersMatched = (int)retrievedGameData["numbersMatched"];
+            try
+            {
+                var temp = retrievedGameData.ContainsKey("gameGrid");
+                //gameGrid = temp ? (List<List<int>>)retrievedGameData["gameGrid"] : new List<List<int>>();
+            }
+            catch (Exception e)
+            {
+                Tools.ShowToast("DEBUG: " + e.Message);
+            }
+            //////////////////Tools.ShowToast("DEBUG: " + retrievedGameData["gameGrid"]);
+            //////////////////////string gameGridString = retrievedGameData["gameGrid"].ToString();
+            ///////////////////////////////Tools.ShowToast(gameGridString);
+            //////////////Stage = (int)retrievedGameData["stage"];
+            ///////////////NumbersMatched = (int)retrievedGameData["numbersMatched"];
 
-            Tools.ShowToast("DEBUG: Game loaded");
+            ///////////Tools.ShowToast("DEBUG: Game loaded");
         }
 
         //  check if the numbers match, gets the position of the numbers as arguments
