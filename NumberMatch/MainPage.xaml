@@ -1,0 +1,89 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NumberMatch.MainPage"
+             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="false">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Label x:Name="Title"
+               Text="Number Match"
+               FontSize="32"
+               FontAttributes="Bold"
+               TextColor="{DynamicResource Primary}"
+               HorizontalOptions="Center" />
+
+            <Label x:Name="LabelAmmountMatchedNumbers"
+               Text="Matched numbers: 0"
+               TextColor="{DynamicResource Primary}"
+               HorizontalOptions="Center" />
+
+            <Label x:Name="LabelStage"
+               Text="Stage: 0"
+               TextColor="{DynamicResource Primary}"
+               HorizontalOptions="Start" />
+
+            <Grid x:Name="NumberMatchGrid" HorizontalOptions="Center" VerticalOptions="Center"></Grid>
+
+            <Grid HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="50" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="AddBtn"
+                    Text="+"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Clicked="AddButtonClicked"
+                    BackgroundColor="{DynamicResource Primary}"
+                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                    CornerRadius="20" />
+
+                <Button x:Name="HelpBtn"
+                    Text="Help"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Clicked="HelpButtonClicked"
+                    BackgroundColor="{DynamicResource Primary}"
+                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                    CornerRadius="20" />
+            </Grid>
+
+            <!-- Debug grid -->
+            <!-- <Grid HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="50" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Row="0" Grid.Column="0">
+                    <Image.Source>
+                        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Warning}" Color="Red" />
+                    </Image.Source>
+                </Image>
+
+                <Label x:Name="LblPreviousBtn" Text="null"
+                       Grid.Row="0"
+                       Grid.Column="1"/>
+            </Grid> -->
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
