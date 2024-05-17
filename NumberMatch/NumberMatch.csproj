@@ -24,7 +24,7 @@
 		<ApplicationTitle>NumberMatch</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.numbermatch</ApplicationId>
+		<ApplicationId>com.aelterman.numbermatch</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
