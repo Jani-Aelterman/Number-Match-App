@@ -3,7 +3,9 @@
 /// Made by: Jani Aelterman.
 /// </summary>
 
+using CommunityToolkit.Maui.Views;
 using NumberMatch.Helpers;
+using System.Runtime.CompilerServices;
 using static NumberMatch.Helpers.Tools;
 
 namespace NumberMatch
@@ -12,7 +14,6 @@ namespace NumberMatch
     {
         private GameBackend game;
         private const int COLUMNS = 9, ROWS = 13;
-        //private int pressedNumber = 0;
         private Tuple<int, int> previousPressedButton = null; //  previous pressed button, row and column
 
         public MainPage()
@@ -21,10 +22,10 @@ namespace NumberMatch
 
 #if WINDOWS
             MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
-            game = new GameBackend(ROWS + 8, COLUMNS + 5);
+            game = new GameBackend(ROWS + 8, COLUMNS + 5, this);
 #else
             MakeNumberMatchGrid(COLUMNS, ROWS);
-            game = new GameBackend(COLUMNS, ROWS);
+            game = new GameBackend(COLUMNS, ROWS, this);
 
 
             /*this.Behaviors.Add(new StatusBarBehavior
@@ -78,7 +79,14 @@ namespace NumberMatch
                 for (int col = 0; col < gameGrid[row].Count; col++)
                 {
                     Button button = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
-                    button.Text = gameGrid[row][col].ToString();
+
+                    if (gameGrid[row][col] == 0)
+                    {
+                        button.Text = null;
+                        button.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                    }
+                    else
+                        button.Text = gameGrid[row][col].ToString();
                 }
             }
 
@@ -87,17 +95,20 @@ namespace NumberMatch
             LabelStage.Text = "Stage: " + game.Stage;
         }
 
-        ///  <TODO>: implement the game logic
         private void GridButtonClicked(object sender, EventArgs e)
         {
+            //this.ShowPopup(new Pages.PopupPage());
+
             Button button = (Button)sender;
 
+            // Uncheck button if checked, don't check for match
             if (button.BackgroundColor == (Color)Application.Current.Resources["Primary"])
             {
                 button.BackgroundColor = (Color)Application.Current.Resources["Background"];
                 button.TextColor = (Color)Application.Current.Resources["Primary"];
             }
 
+            // Check for match if the button is initialized
             else if (button.Text != null)
             {
                 int row = Grid.GetRow(button);
@@ -106,51 +117,25 @@ namespace NumberMatch
                 button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
                 button.TextColor = (Color)Application.Current.Resources["Background"];
 
-                //gives error
-                /*if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
+                if(previousPressedButton == null)
                 {
-                    // remove the values from the grid
-                }*/
+                    previousPressedButton = new Tuple<int, int>(row, col);
+                }
+                else
+                {
+                    if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
+                    {
+                        previousPressedButton = null;
+
+                        SynchronizeGrid(game.GetGameGrid());
+                    }
+                    else
+                    {
+                        previousPressedButton = null;
+                    }
+                }
 
                 game.SaveData();
-
-                //if (pressedNumber == 0)
-                //{
-                //    pressedNumber++;
-
-                //    button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
-
-                //    Tools.ShowToast($"Button clicked at row {row}, column {col}, {pressedNumber}");
-                //}
-
-                //if (pressedNumber == 1)
-                //{
-                //    button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
-
-                //    Thread.Sleep(1000);///////////////////////
-
-                //    pressedNumber++;
-
-                //    foreach (Button btn in numberMatchGrid)
-                //    {
-                //        btn.BackgroundColor = default;
-                //    }
-
-                //    //button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
-
-                //    pressedNumber = 0;
-
-                //    Tools.ShowToast($"Button clicked at row {row}, column {col}, {pressedNumber}");
-                //}
-
-                //if (pressedNumber == 1)
-                //{
-                //    pressedNumber++;
-
-                //    button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
-
-                //    Tools.ShowToast($"Button clicked at row {row}, column {col}, {pressedNumber}");
-                //}
             }
         }
 
@@ -170,7 +155,18 @@ namespace NumberMatch
 
         private void HelpButtonClicked(object sender, EventArgs e)
         {
-            ShowToast("DEBUG: Help button clicked");
+            //ShowToast("DEBUG: Help button clicked");
+            ShowPopup("Not implemented yet");
+        }
+
+
+
+
+
+
+        public void ShowPopup(String text)
+        {
+            this.ShowPopup(new Pages.PopupPage(text));
         }
     }
 }

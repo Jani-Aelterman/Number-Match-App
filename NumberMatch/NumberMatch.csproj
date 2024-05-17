@@ -68,4 +68,10 @@
 		<PackageReference Include="UraniumUI.Material" Version="2.8.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Pages\PopupPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

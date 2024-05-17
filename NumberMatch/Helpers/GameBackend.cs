@@ -16,8 +16,12 @@ namespace NumberMatch.Helpers
         public int Stage { get; private set; } = 0;
         public int NumbersMatched { get; private set; } = 0;
 
-        public GameBackend(int columns, int rows)
+        private MainPage page;
+
+        public GameBackend(int columns, int rows, MainPage mainpage)
         {
+            this.page = mainpage;
+
             InitializeGrid(columns, rows);
             //check if there is saved data
 
@@ -52,7 +56,7 @@ namespace NumberMatch.Helpers
 
                 for (int j = 0; j < columns; j++)
                 {
-                    row.Add(random.Next(0, 9));
+                    row.Add(random.Next(1, 9));
                 }
 
                 gameGrid.Add(row);
@@ -131,8 +135,32 @@ namespace NumberMatch.Helpers
             // Deserialize the JSON string back into game data dictionary
             Dictionary<string, object> retrievedGameData = JsonConvert.DeserializeObject<Dictionary<string, object>>(retrievedJson);
 
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in retrievedGameData)
+            {
+                //sb.Append($"{item.Key}: {item.Value}\n");
+                sb.Append(item.Key);
+
+                if (item.Key == "gameGrid")
+                {
+                    //Shell.Current.DisplayAlert("DEBUG", $"GameGrid found: {item.Value}", "OK");
+
+                    //page.ShowPopup = new Pages.PopupPage(item.Value.ToString());
+                    /////////////page.ShowPopup($"GameGrid found: {item.Value}");
+
+                    if (item.Value is List<List<int>>)
+                        gameGrid = item.Value as List<List<int>>;
+                    else
+                        page.ShowPopup($"GameGrid not found as List<List<int>>");
+                }
+            }
+
+            //Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {sb.ToString()}", "OK");
+            page.ShowPopup($"Game loaded: {sb.ToString()}");
+
             // Retrieve the game grid, stage, and numbers matched from the dictionary
-            var retrievedGrid = retrievedGameData["gameGrid"] as List<List<int>>;
+            /*var retrievedGrid = retrievedGameData["gameGrid"] as List<List<int>>;
             if (retrievedGrid != null)
             {
                 gameGrid = retrievedGrid;
@@ -142,7 +170,7 @@ namespace NumberMatch.Helpers
                 // Handle the case where no game data is found (e.g., initialize a new grid)
                 //Tools.ShowToast($"DEBUG: GameGrid not found: {retrievedGrid}");
                 Shell.Current.DisplayAlert("DEBUG", $"GameGrid not found: {retrievedGrid}", "OK");
-            }
+            }*/
             //Stage = (int)retrievedGameData["stage"];
             //NumbersMatched = (int)retrievedGameData["numbersMatched"];
 
@@ -210,7 +238,15 @@ namespace NumberMatch.Helpers
             {
                 //  check if the numbers are at the right position to match
                 if (CheckAdjacent(row1, col1, row2, col2))
+                {
+                    page.ShowPopup("Matched by adjecent");
+
+                    //  remove the numbers from the grid
+                    gameGrid[row1][col1] = 0;
+                    gameGrid[row2][col2] = 0;
+
                     return true;
+                }
             }
 
             return false;
