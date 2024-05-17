@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Maui.Storage;
+using Microsoft.Maui.Controls;
 
 namespace NumberMatch.Helpers
 {
@@ -67,22 +68,31 @@ namespace NumberMatch.Helpers
         public void SaveData()
         {
             // Create a dictionary to store the game data
-            Dictionary<string, object> gameData = new Dictionary<string, object>();
-            gameData["gameGrid"] = gameGrid;
-            gameData["stage"] = Stage;
-            gameData["numbersMatched"] = NumbersMatched;
+            //////////////Dictionary<string, object> gameData = new Dictionary<string, object>();
+            ///////////////gameData["gameGrid"] = gameGrid;
+            ////////////gameData["stage"] = Stage;
+            ////////////gameData["numbersMatched"] = NumbersMatched;
 
             // Serialise the game data to a JSON string
-            string gameDataJson = JsonConvert.SerializeObject(gameData);
+            ////string gameDataJson = JsonConvert.SerializeObject(gameData);
 
             // Save the JSON string
+            ////////////Preferences.Set("gameData", gameDataJson);
+            //////////////Preferences.Set("gameGrid", gameGrid);
+            //////////Preferences.Set("stage", Stage);
+            //////////////Preferences.Set("numbersMatched", NumbersMatched);
+
+
+            string gameDataJson = ConvertToJsonString(gameGrid, Stage, NumbersMatched);
             Preferences.Set("gameData", gameDataJson);
+
+
 
             Tools.ShowToast("DEBUG: Game saved");
         }
 
         //  load saved game data
-        public void LoadData()
+        /*public void LoadData()
         {
             // Retrieve the JSON string
             string retrievedJson = Preferences.Get("gameData", "");
@@ -107,7 +117,90 @@ namespace NumberMatch.Helpers
             ///////////////NumbersMatched = (int)retrievedGameData["numbersMatched"];
 
             ///////////Tools.ShowToast("DEBUG: Game loaded");
+        }*/
+
+
+
+        public void LoadData()
+        {
+            // Retrieve the JSON string
+            string retrievedJson = Preferences.Get("gameData", "");
+
+            Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {retrievedJson}", "OK");
+
+            // Deserialize the JSON string back into game data dictionary
+            Dictionary<string, object> retrievedGameData = JsonConvert.DeserializeObject<Dictionary<string, object>>(retrievedJson);
+
+            // Retrieve the game grid, stage, and numbers matched from the dictionary
+            var retrievedGrid = retrievedGameData["gameGrid"] as List<List<int>>;
+            if (retrievedGrid != null)
+            {
+                gameGrid = retrievedGrid;
+            }
+            else
+            {
+                // Handle the case where no game data is found (e.g., initialize a new grid)
+                //Tools.ShowToast($"DEBUG: GameGrid not found: {retrievedGrid}");
+                Shell.Current.DisplayAlert("DEBUG", $"GameGrid not found: {retrievedGrid}", "OK");
+            }
+            //Stage = (int)retrievedGameData["stage"];
+            //NumbersMatched = (int)retrievedGameData["numbersMatched"];
+
+            //Tools.ShowToast($"DEBUG: Game loaded: {(int)retrievedGameData["stage"]}, {(int)retrievedGameData["numbersMatched"]}");
+
+
+
+
+            //bool saveLoginDetails = ...;
+            //...
+            //Preferences.Set("SaveLogin", saveLoginDetails);
+            //...
+            //var savedPreference = Preferences.Get("SaveLogin", false);
+
+
         }
+
+
+
+
+        private string ConvertToJsonString(List<List<int>> gameGrid, int Stage, int NumbersMatched)
+        {
+            // Construct the JSON object.
+            var saveData = new Dictionary<string, object>
+            {
+                { "gameGrid", gameGrid },
+                { "stage", Stage },
+                { "NumbersMatched", NumbersMatched },
+            };
+
+            // Convert the JSON object to a string.
+            string jsonSaveData = JsonConvert.SerializeObject(saveData);
+
+            return jsonSaveData;
+        }
+
+
+
+
+
+
+        /*async Task SaveData()
+        {
+            // Convert game data to JSON
+            string gameDataJson = ConvertToJsonString(gameGrid, Stage, NumbersMatched);
+
+            // Get a storage file object
+            IStorageFile file = await FileSystem.Current.GetFileAsync("gameData.json");
+
+            // Write JSON data to the file
+            await file.WriteAllTextAsync(gameDataJson);
+        }*/
+
+
+
+
+
+
 
         //  check if the numbers match, gets the position of the numbers as arguments
         public bool CheckMatch(int row1, int col1, int row2, int col2)

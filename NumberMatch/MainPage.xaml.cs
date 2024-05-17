@@ -93,7 +93,10 @@ namespace NumberMatch
             Button button = (Button)sender;
 
             if (button.BackgroundColor == (Color)Application.Current.Resources["Primary"])
-                button.BackgroundColor = default;
+            {
+                button.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                button.TextColor = (Color)Application.Current.Resources["Primary"];
+            }
 
             else if (button.Text != null)
             {
@@ -101,6 +104,7 @@ namespace NumberMatch
                 int col = Grid.GetColumn(button);
 
                 button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
+                button.TextColor = (Color)Application.Current.Resources["Background"];
 
                 //gives error
                 /*if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
