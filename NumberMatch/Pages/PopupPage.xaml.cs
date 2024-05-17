@@ -9,6 +9,8 @@ public partial class PopupPage : Popup
         InitializeComponent();
 
         lbl.Text = text;
+
+        CancelButton.IsEnabled = false;
     }
 
     private void Button_Clicked(object sender, EventArgs e)

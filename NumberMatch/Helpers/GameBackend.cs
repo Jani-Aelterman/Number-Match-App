@@ -130,7 +130,7 @@ namespace NumberMatch.Helpers
             // Retrieve the JSON string
             string retrievedJson = Preferences.Get("gameData", "");
 
-            Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {retrievedJson}", "OK");
+            /////////Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {retrievedJson}", "OK");
 
             // Deserialize the JSON string back into game data dictionary
             Dictionary<string, object> retrievedGameData = JsonConvert.DeserializeObject<Dictionary<string, object>>(retrievedJson);
@@ -157,7 +157,7 @@ namespace NumberMatch.Helpers
             }
 
             //Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {sb.ToString()}", "OK");
-            page.ShowPopup($"Game loaded: {sb.ToString()}");
+            ////////////////page.ShowPopup($"Game loaded: {sb.ToString()}");
 
             // Retrieve the game grid, stage, and numbers matched from the dictionary
             /*var retrievedGrid = retrievedGameData["gameGrid"] as List<List<int>>;
@@ -245,6 +245,8 @@ namespace NumberMatch.Helpers
                     gameGrid[row1][col1] = 0;
                     gameGrid[row2][col2] = 0;
 
+                    NumbersMatched ++;
+
                     return true;
                 }
             }
@@ -255,7 +257,20 @@ namespace NumberMatch.Helpers
         //  check if the numbers are next to eachother
         private static bool CheckAdjacent(int row1, int col1, int row2, int col2)
         {
-            return (row1 == row2 && Math.Abs(col1 - col2) == 1) || (col1 == col2 && Math.Abs(row1 - row2) == 1);
+            bool adjecent = (row1 == row2 && Math.Abs(col1 - col2) == 1) || (col1 == col2 && Math.Abs(row1 - row2) == 1);
+            bool diagonal = (Math.Abs(row1 - row2) == 1 && Math.Abs(col1 - col2) == 1);
+            
+            if (adjecent || diagonal)
+                    return true;
+
+            return false;
+
+            //  check if the numbers are next to eachother or on top of eachother
+            /*if (row1 == row2 && Math.Abs(col1 - col2) == 1)
+                return true;
+            if (col1 == col2 && Math.Abs(row1 - row2) == 1)
+                return true;
+            return false;*/
         }
     }
 }

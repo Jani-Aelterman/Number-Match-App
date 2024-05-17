@@ -128,10 +128,24 @@ namespace NumberMatch
                         previousPressedButton = null;
 
                         SynchronizeGrid(game.GetGameGrid());
+
+                        LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.NumbersMatched;
                     }
                     else
                     {
                         previousPressedButton = null;
+
+                        // uncheck the selected tiles
+                        foreach (Button b in NumberMatchGrid.Children)
+                        {
+                            if (b.BackgroundColor == (Color)Application.Current.Resources["Primary"])
+                            {
+                                b.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                                b.TextColor = (Color)Application.Current.Resources["Primary"];
+                            }
+                        }
+
+                        ShowPopup("No match found");
                     }
                 }
 
