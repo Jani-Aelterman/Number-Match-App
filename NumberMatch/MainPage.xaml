@@ -64,28 +64,6 @@
                     CornerRadius="20" />
             </Grid>
 
-            <!-- Debug grid -->
-            <!-- <Grid HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="50" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Image Grid.Row="0" Grid.Column="0">
-                    <Image.Source>
-                        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Warning}" Color="Red" />
-                    </Image.Source>
-                </Image>
-
-                <Label x:Name="LblPreviousBtn" Text="null"
-                       Grid.Row="0"
-                       Grid.Column="1"/>
-            </Grid> -->
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

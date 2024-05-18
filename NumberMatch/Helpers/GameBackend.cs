@@ -264,13 +264,6 @@ namespace NumberMatch.Helpers
                     return true;
 
             return false;
-
-            //  check if the numbers are next to eachother or on top of eachother
-            /*if (row1 == row2 && Math.Abs(col1 - col2) == 1)
-                return true;
-            if (col1 == col2 && Math.Abs(row1 - row2) == 1)
-                return true;
-            return false;*/
         }
     }
 }

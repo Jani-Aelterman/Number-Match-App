@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>NumberMatch</ApplicationTitle>
+		<ApplicationTitle>Number Match</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.aelterman.numbermatch</ApplicationId>
