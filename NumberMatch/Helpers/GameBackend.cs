@@ -12,7 +12,7 @@ namespace NumberMatch.Helpers
 {
     public class GameBackend
     {
-        private List<List<int>> gameGrid = new List<List<int>>();
+        private List<List<int>> gameGrid = [];
         public int Stage { get; private set; } = 0;
         public int NumbersMatched { get; private set; } = 0;
 
@@ -32,20 +32,6 @@ namespace NumberMatch.Helpers
             }
         }
 
-        //private void InitializeGrid(int columns, int rows)
-        //{
-        //    Random random = new Random();
-        //    int randomNumber = random.Next(1, 11);
-
-        //    for (int i = 0; i < 5; i++)
-        //    {
-        //        for(int j = 0; j < columns; j++)
-        //        {
-        //            gameGrid[i][j] = random.Next(0, 9);
-        //        }
-        //    }
-        //}
-
         private void InitializeGrid(int columns, int rows)
         {
             Random random = new Random();
@@ -55,9 +41,7 @@ namespace NumberMatch.Helpers
                 List<int> row = new List<int>();
 
                 for (int j = 0; j < columns; j++)
-                {
                     row.Add(random.Next(1, 10));
-                }
 
                 gameGrid.Add(row);
             }
@@ -184,14 +168,12 @@ namespace NumberMatch.Helpers
             //Preferences.Set("SaveLogin", saveLoginDetails);
             //...
             //var savedPreference = Preferences.Get("SaveLogin", false);
-
-
         }
 
 
 
 
-        private string ConvertToJsonString(List<List<int>> gameGrid, int Stage, int NumbersMatched)
+        private static string ConvertToJsonString(List<List<int>> gameGrid, int Stage, int NumbersMatched)
         {
             // Construct the JSON object.
             var saveData = new Dictionary<string, object>
@@ -239,8 +221,6 @@ namespace NumberMatch.Helpers
                 //  check if the numbers are at the right position to match
                 if (CheckAdjacent(row1, col1, row2, col2))
                 {
-                    ////////////page.ShowPopup("Matched by adjecent");
-
                     //  remove the numbers from the grid
                     gameGrid[row1][col1] = 0;
                     gameGrid[row2][col2] = 0;
@@ -269,95 +249,6 @@ namespace NumberMatch.Helpers
 
 
 
-        /*private bool CheckAdjacent(int row1, int col1, int row2, int col2)
-        {
-
-
-
-
-
-            bool adjecent = (row1 == row2 && Math.Abs(col1 - col2) == 1) || (col1 == col2 && Math.Abs(row1 - row2) == 1);
-            bool diagonal = (Math.Abs(row1 - row2) == 1 && Math.Abs(col1 - col2) == 1);
-
-            if (adjecent || diagonal)
-                return true;
-
-
-
-
-
-
-            // Check if the tiles are on the same row
-            if (row1 == row2)
-            {
-                // Ensure col1 is the leftmost column
-                if (col2 < col1)
-                {
-                    int temp = col1;
-                    col1 = col2;
-                    col2 = temp;
-                }
-
-                // Check the tiles between the two given tiles
-                for (int col = col1 + 1; col < col2; col++)
-                {
-                    if (gameGrid[row1][col] != 0)
-                    {
-                        return false;
-                    }
-                }
-            }
-            // Check if the tiles are in the same column
-            else if (col1 == col2)
-            {
-                // Ensure row1 is the topmost row
-                if (row2 < row1)
-                {
-                    int temp = row1;
-                    row1 = row2;
-                    row2 = temp;
-                }
-
-                // Check the tiles between the two given tiles
-                for (int row = row1 + 1; row < row2; row++)
-                {
-                    if (gameGrid[row][col1] != 0)
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                // The tiles are not on the same row or column
-                return false;
-            }
-
-            // All tiles between the two given tiles are empty
-            return true;
-        }*/
-
-
-
-
-        public void RemoveEmptyRowsAndShiftUp()
-        {
-            for (int i = 0; i < gameGrid.Count; i++)
-            {
-                if (gameGrid[i].All(x => x == 0))
-                {
-                    gameGrid.RemoveAt(i);
-                    //gameGrid.Insert(0, new List<int>(new int[gameGrid[0].Count]));
-
-                    //////////page.ShowPopup($"Grid: {gameGrid.ToString}");
-                }
-            }
-        }
-
-
-
-
-
         private bool CheckAdjacent(int row1, int col1, int row2, int col2)
         {
             // Check if the tiles are on the same row
@@ -365,40 +256,24 @@ namespace NumberMatch.Helpers
             {
                 // Ensure col1 is the leftmost column
                 if (col2 < col1)
-                {
-                    int temp = col1;
-                    col1 = col2;
-                    col2 = temp;
-                }
+                    (col2, col1) = (col1, col2);
 
                 // Check the tiles between the two given tiles
                 for (int col = col1 + 1; col < col2; col++)
-                {
                     if (gameGrid[row1][col] != 0)
-                    {
                         return false;
-                    }
-                }
             }
             // Check if the tiles are in the same column
             else if (col1 == col2)
             {
                 // Ensure row1 is the topmost row
                 if (row2 < row1)
-                {
-                    int temp = row1;
-                    row1 = row2;
-                    row2 = temp;
-                }
+                    (row2, row1) = (row1, row2);
 
                 // Check the tiles between the two given tiles
                 for (int row = row1 + 1; row < row2; row++)
-                {
                     if (gameGrid[row][col1] != 0)
-                    {
                         return false;
-                    }
-                }
             }
             // Check if the tiles are on the same diagonal
             else if (Math.Abs(row1 - row2) == Math.Abs(col1 - col2))
@@ -406,22 +281,14 @@ namespace NumberMatch.Helpers
                 // Ensure row1 is the topmost row
                 if (row2 < row1)
                 {
-                    int tempRow = row1;
-                    int tempCol = col1;
-                    row1 = row2;
-                    col1 = col2;
-                    row2 = tempRow;
-                    col2 = tempCol;
+                    (row2, row1) = (row1, row2);
+                    (col2, col1) = (col1, col2);
                 }
 
                 // Check the tiles between the two given tiles
                 for (int i = 1; i < Math.Abs(row1 - row2); i++)
-                {
                     if (gameGrid[row1 + i][col1 + i] != 0)
-                    {
                         return false;
-                    }
-                }
             }
             else
             {
@@ -433,11 +300,11 @@ namespace NumberMatch.Helpers
             return true;
         }
 
-
-
-
-
-
-
+        public void RemoveEmptyRowsAndShiftUp()
+        {
+            for (int i = 0; i < gameGrid.Count; i++)
+                if (gameGrid[i].All(x => x == 0))
+                    gameGrid.RemoveAt(i);
+        }
     }
 }
