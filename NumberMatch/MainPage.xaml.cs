@@ -90,6 +90,30 @@ namespace NumberMatch
                 }
             }
 
+
+            // make every button under the gamegrid list background color
+            /*for (int row = gameGrid.Count; row < ROWS; row++)
+            {
+                for (int col = 0; col < COLUMNS; col++)
+                {
+                    Button button = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
+                    button.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                    button.Text = null;
+                }
+            }*/
+
+            for (int row = gameGrid.Count; row < ROWS; row++)
+            {
+                for (int col = 0; col < COLUMNS; col++)
+                {
+                    Button button = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
+                    button.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                    button.Text = null;
+                }
+            }
+
+
+
             //set numbersmatched and stage
             LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.NumbersMatched;
             LabelStage.Text = "Stage: " + game.Stage;
@@ -106,6 +130,11 @@ namespace NumberMatch
             {
                 button.BackgroundColor = (Color)Application.Current.Resources["Background"];
                 button.TextColor = (Color)Application.Current.Resources["Primary"];
+
+                if(Grid.GetRow(button) == previousPressedButton.Item1 && Grid.GetColumn(button) == previousPressedButton.Item2)
+                {
+                    previousPressedButton = null;
+                }
             }
 
             // Check for match if the button is initialized
@@ -127,9 +156,27 @@ namespace NumberMatch
                     {
                         previousPressedButton = null;
 
+
+
+                        // temp
+                        foreach (Button b in NumberMatchGrid.Children)
+                        {
+                            if (b.BackgroundColor == (Color)Application.Current.Resources["Primary"])
+                            {
+                                b.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                                b.TextColor = (Color)Application.Current.Resources["Primary"];
+                            }
+                        }
+
+
+
+                        game.RemoveEmptyRowsAndShiftUp();
+
                         SynchronizeGrid(game.GetGameGrid());
 
                         LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.NumbersMatched;
+
+                        ShowToast("Matched");
                     }
                     else
                     {
@@ -145,7 +192,7 @@ namespace NumberMatch
                             }
                         }
 
-                        ShowPopup("No match found");
+                        ShowToast("No match found");
                     }
                 }
 
