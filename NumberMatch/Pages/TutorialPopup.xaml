@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+           x:Class="NumberMatch.Pages.TutorialPopup"
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           Color="Transparent">
+    <Grid>
+        <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label x:Name="lbl" Text="Welcome to .NET MAUI!"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+
+                <!-- game grid to show the tutorail with a size of 8X4-->
+                <Grid RowSpacing="0" ColumnSpacing="0" Padding="0" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="0" Text="1" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="1" Text="2" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="2" Text="3" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="3" Text="4" FontSize="Large" Padding="0" />
+
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="0" Text="5" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="1" Text="6" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="2" Text="7" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="3" Text="8" FontSize="Large" Padding="0" />
+
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="0" Text="9" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="1" Text="10" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="2" Text="11" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="3" Text="12" FontSize="Large" Padding="0" />
+
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="0" Text="13" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="1" Text="14" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="2" Text="15" FontSize="Large" Padding="0" />
+                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="3" Text="16" FontSize="Large" Padding="0" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <mdc:Button
+                        Grid.Column="0"
+                        Text="Cancel"
+                        BackgroundColor="{DynamicResource Primary}"
+                        FontColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        StyleClass="FilledButton"
+                        x:Name="CancelButton"/>
+                    
+                    <mdc:Button
+                        Grid.Column="1"
+                        Text="Skip Tutorial"
+                        BackgroundColor="{DynamicResource Primary}"
+                        FontColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        StyleClass="FilledButton"
+                        Clicked="Button_Clicked" />
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</mct:Popup>

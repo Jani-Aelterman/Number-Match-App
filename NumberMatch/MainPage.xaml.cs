@@ -20,6 +20,11 @@ namespace NumberMatch
         {
             InitializeComponent();
 
+            // Show popup of the build
+            this.ShowPopup(new Pages.AlphaPopup());
+
+            //this.ShowPopup(new Pages.TutorialPopup());
+
 #if WINDOWS
             MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             game = new GameBackend(ROWS + 8, COLUMNS + 5, this);
@@ -59,6 +64,9 @@ namespace NumberMatch
                         BackgroundColor = (Color)Application.Current.Resources["Background"],
                         TextColor = (Color)Application.Current.Resources["Primary"],
                         BorderWidth = 2,
+                        // set the fontsize to large
+                        FontSize = 30,
+                        Padding = new Thickness(0), // Remove padding
                     };
 
                     button.Clicked += GridButtonClicked;
@@ -211,13 +219,16 @@ namespace NumberMatch
 
         private void AddButtonClicked(object sender, EventArgs e)
         {
-            ShowToast("DEBUG: Add button clicked");
+            //ShowToast("DEBUG: Add button clicked");
+            //ShowPopup("Not implemented yet");
+            this.ShowPopup(new Pages.NotImplementedPopup());
         }
 
         private void HelpButtonClicked(object sender, EventArgs e)
         {
             //ShowToast("DEBUG: Help button clicked");
-            ShowPopup("Not implemented yet");
+            //ShowPopup("Not implemented yet");
+            this.ShowPopup(new Pages.TutorialPopup());
         }
 
 
@@ -225,9 +236,9 @@ namespace NumberMatch
 
 
 
-        public void ShowPopup(String text)
+        /*public void ShowPopup(String text)
         {
             this.ShowPopup(new Pages.PopupPage(text));
-        }
+        }*/
     }
 }

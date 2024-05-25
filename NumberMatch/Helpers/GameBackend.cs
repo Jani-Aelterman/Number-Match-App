@@ -23,8 +23,8 @@ namespace NumberMatch.Helpers
             this.page = mainpage;
 
             InitializeGrid(columns, rows);
-            //check if there is saved data
 
+            //check if there is saved data
             if (Preferences.ContainsKey("gameData"))
             {
                 Tools.ShowToast("DEBUG: GameData found");
