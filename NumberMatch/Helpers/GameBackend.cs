@@ -32,6 +32,11 @@ namespace NumberMatch.Helpers
             }
         }
 
+        public List<List<int>> GetGameGrid()
+        {
+            return gameGrid;
+        }
+
         private void InitializeGrid(int columns, int rows)
         {
             Random random = new Random();
@@ -45,11 +50,6 @@ namespace NumberMatch.Helpers
 
                 gameGrid.Add(row);
             }
-        }
-
-        public List<List<int>> GetGameGrid()
-        {
-            return gameGrid;
         }
 
         //  save game data
@@ -287,7 +287,7 @@ namespace NumberMatch.Helpers
 
                 // Check the tiles between the two given tiles
                 for (int i = 1; i < Math.Abs(row1 - row2); i++)
-                    if (gameGrid[row1 + i][col1 + i] != 0)
+                    if (gameGrid[row1 + i][col1 + i] != 0) // can give a index out of range error
                         return false;
             }
             else
@@ -305,6 +305,29 @@ namespace NumberMatch.Helpers
             for (int i = 0; i < gameGrid.Count; i++)
                 if (gameGrid[i].All(x => x == 0))
                     gameGrid.RemoveAt(i);
+        }
+
+        // add numbers to the grid containing only numbers that are already in the grid
+        public void AddNumbersToGrid()
+        {
+            Random random = new Random();
+
+            for (int i = 0; i < 5 - gameGrid.Count; i++)
+            {
+                List<int> row = new List<int>();
+
+                for (int j = 0; j < gameGrid[0].Count; j++)
+                {
+                    int number = random.Next(1, 10);
+
+                    while (!gameGrid.SelectMany(x => x).Contains(number))
+                        number = random.Next(1, 10);
+
+                    row.Add(number);
+                }
+
+                gameGrid.Insert(0, row);
+            }
         }
     }
 }

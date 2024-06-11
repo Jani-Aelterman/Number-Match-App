@@ -210,18 +210,19 @@ namespace NumberMatch
 
         public void RefreshGridColors()
         {
-            foreach (Button button in NumberMatchGrid.Children)
+            foreach (Button tile in NumberMatchGrid.Children)
             {
-                if (button.BackgroundColor == (Color)Application.Current.Resources["Primary"])
-                    button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
+                if (tile.BackgroundColor == (Color)Application.Current.Resources["Primary"])
+                    tile.BackgroundColor = (Color)Application.Current.Resources["Primary"];
             }
         }
 
         private void AddButtonClicked(object sender, EventArgs e)
         {
-            //ShowToast("DEBUG: Add button clicked");
-            //ShowPopup("Not implemented yet");
-            this.ShowPopup(new Pages.NotImplementedPopup());
+            //////////////this.ShowPopup(new Pages.NotImplementedPopup());
+
+            game.AddNumbersToGrid();
+            SynchronizeGrid(game.GetGameGrid());
         }
 
         private void HelpButtonClicked(object sender, EventArgs e)
