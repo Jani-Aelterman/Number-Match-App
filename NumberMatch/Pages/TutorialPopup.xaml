@@ -6,6 +6,7 @@
            x:Class="NumberMatch.Pages.TutorialPopup"
            CanBeDismissedByTappingOutsideOfPopup="False"
            Color="Transparent">
+    
     <Grid>
         <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
             <VerticalStackLayout VerticalOptions="Center">

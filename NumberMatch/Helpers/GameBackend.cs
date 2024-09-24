@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Maui.Storage;
 using Microsoft.Maui.Controls;
+using SQLite;
+using NumberMatch.Data;
+using static NumberMatch.Helpers.Tools;
+using static SQLite.TableMapping;
 
 namespace NumberMatch.Helpers
 {
@@ -16,20 +20,56 @@ namespace NumberMatch.Helpers
         public int Stage { get; private set; } = 0;
         public int NumbersMatched { get; private set; } = 0;
 
+        private DatabaseManager manager = new DatabaseManager();
+
+        private GameData gameData;
+
         private MainPage page;
 
         public GameBackend(int columns, int rows, MainPage mainpage)
         {
             this.page = mainpage;
 
-            InitializeGrid(columns, rows);
+            //InitializeGrid(columns, rows);
+
+            LoadData(columns, rows);
+
+            /*gameData = manager.LoadGameData();
+
+            if (manager.LoadGameData() != null)
+            {
+                gameData = manager.LoadGameData();
+
+                if (gameData.Gamegrid != null)
+                {
+                    gameGrid = gameData.Gamegrid;
+                }
+                else
+                {
+                    InitializeGrid(columns, rows);
+                }
+
+                Stage = gameData.Stage;
+                NumbersMatched = gameData.NumbersMatched;
+
+                ShowToast("DEBUG: Game loaded");
+            }
+            else
+            {
+                InitializeGrid(columns, rows);
+
+                ShowToast("DEBUG: Game not loaded");
+            }*/
+
 
             //check if there is saved data
-            if (Preferences.ContainsKey("gameData"))
+            /*if (Preferences.ContainsKey("gameData"))
             {
-                Tools.ShowToast("DEBUG: GameData found");
+                ///////////Tools.ShowToast("DEBUG: GameData found");
                 LoadData();
-            }
+            }*/
+
+            //manager.SaveGameData(new GameData { Stage = this.Stage, NumbersMatched = this.NumbersMatched, Gamegrid = this.gameGrid});
         }
 
         public List<List<int>> GetGameGrid()
@@ -71,12 +111,17 @@ namespace NumberMatch.Helpers
             //////////////Preferences.Set("numbersMatched", NumbersMatched);
 
 
-            string gameDataJson = ConvertToJsonString(gameGrid, Stage, NumbersMatched);
-            Preferences.Set("gameData", gameDataJson);
+            //string gameDataJson = ConvertToJsonString(gameGrid, Stage, NumbersMatched);
+            //Preferences.Set("gameData", gameDataJson);
 
 
 
-            ///////////////////Tools.ShowToast("DEBUG: Game saved");
+            // Save the game data to the database
+            manager.SaveGameData(new GameData { Stage = this.Stage, NumbersMatched = this.NumbersMatched, Gamegrid = this.gameGrid });
+
+
+
+            ShowToast("DEBUG: Game saved");
         }
 
         //  load saved game data
@@ -109,10 +154,10 @@ namespace NumberMatch.Helpers
 
 
 
-        public void LoadData()
+        public void LoadData(int columns, int rows)
         {
             // Retrieve the JSON string
-            string retrievedJson = Preferences.Get("gameData", "");
+            /*string retrievedJson = Preferences.Get("gameData", "");
 
             /////////Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {retrievedJson}", "OK");
 
@@ -135,10 +180,42 @@ namespace NumberMatch.Helpers
 
                     if (item.Value is List<List<int>>)
                         gameGrid = item.Value as List<List<int>>;
-                    else
-                        Tools.ShowToast($"GameGrid not found as List<List<int>>");
+                    ///////////else
+                        ////////////////Tools.ShowToast($"GameGrid not found as List<List<int>>");
                 }
+            }*/
+
+
+
+
+            gameData = manager.LoadGameData();
+
+            if (manager.LoadGameData() != null)
+            {
+                gameData = manager.LoadGameData();
+
+                if (gameData.Gamegrid != null)
+                {
+                    gameGrid = gameData.Gamegrid;
+                }
+                else
+                {
+                    InitializeGrid(columns, rows);
+                }
+
+                Stage = gameData.Stage/* ?? 0*/;
+                NumbersMatched = gameData.NumbersMatched/* ?? 0*/;
+
+                ShowToast("DEBUG: Game loaded");
             }
+            else
+            {
+                InitializeGrid(columns, rows);
+
+                ShowToast("DEBUG: Game not loaded");
+            }
+
+
 
             //Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {sb.ToString()}", "OK");
             ////////////////page.ShowPopup($"Game loaded: {sb.ToString()}");
@@ -312,11 +389,30 @@ namespace NumberMatch.Helpers
         {
             Random random = new Random();
 
-            for (int i = 0; i < 5 - gameGrid.Count; i++)
+            int rowsToAdd = 5 - gameGrid.Count;
+
+            // If rowsToAdd is odd, increment it by 1 to make it even
+            /*if (rowsToAdd % 2 != 0)
+            {
+                rowsToAdd++;
+            }*/
+
+            for (int i = 0; i < rowsToAdd; i++)
             {
                 List<int> row = new List<int>();
 
                 for (int j = 0; j < gameGrid[0].Count; j++)
+                {
+                    int number = random.Next(1, 10);
+
+                    while (!gameGrid.SelectMany(x => x).Contains(number))
+                        number = random.Next(1, 10);
+
+                    row.Add(number);
+                }
+
+                // If the row contains an odd number of elements, add one more
+                if (row.Count % 2 != 0)
                 {
                     int number = random.Next(1, 10);
 

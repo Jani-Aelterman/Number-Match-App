@@ -21,7 +21,7 @@ namespace NumberMatch
             InitializeComponent();
 
             // Show popup of the build
-            this.ShowPopup(new Pages.AlphaPopup());
+            ////////this.ShowPopup(new Pages.AlphaPopup());
 
             //this.ShowPopup(new Pages.TutorialPopup());
 
@@ -184,7 +184,7 @@ namespace NumberMatch
 
                         LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.NumbersMatched;
 
-                        ShowToast("Matched");
+                        ///////////ShowToast("Matched");
                     }
                     else
                     {
@@ -200,7 +200,7 @@ namespace NumberMatch
                             }
                         }
 
-                        ShowToast("No match found");
+                        //////////////////ShowToast("No match found");
                     }
                 }
 
