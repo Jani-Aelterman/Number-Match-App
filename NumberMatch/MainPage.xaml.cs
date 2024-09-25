@@ -21,7 +21,7 @@ namespace NumberMatch
             InitializeComponent();
 
             // Show popup of the build
-            ////////this.ShowPopup(new Pages.AlphaPopup());
+            this.ShowPopup(new Pages.AlphaPopup());
 
             //this.ShowPopup(new Pages.TutorialPopup());
 
@@ -228,18 +228,20 @@ namespace NumberMatch
         private void HelpButtonClicked(object sender, EventArgs e)
         {
             //ShowToast("DEBUG: Help button clicked");
-            //ShowPopup("Not implemented yet");
             this.ShowPopup(new Pages.TutorialPopup());
         }
 
-
-
-
-
-
-        /*public void ShowPopup(String text)
+        private void ResetButtonClicked(object sender, EventArgs e)
         {
-            this.ShowPopup(new Pages.PopupPage(text));
-        }*/
+#if WINDOWS
+            //MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
+            game.InitializeGrid(ROWS + 8, COLUMNS + 5);
+#else
+            //MakeNumberMatchGrid(COLUMNS, ROWS);
+            game.InitializeGrid(COLUMNS, ROWS);
+#endif
+
+            SynchronizeGrid(game.gameData.GameGrid);
+        }
     }
 }

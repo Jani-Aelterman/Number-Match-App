@@ -16,11 +16,7 @@ namespace NumberMatch.Helpers
 {
     public class GameBackend
     {
-        //private List<List<int>> gameGrid = [];
-        //public int Stage { get; private set; } = 0;
-        //public int NumbersMatched { get; private set; } = 0;
-
-        private DatabaseManager manager = new DatabaseManager();
+        //private DatabaseManager manager = new DatabaseManager();
 
         public GameData gameData { get; private set; } = new GameData();
 
@@ -30,60 +26,7 @@ namespace NumberMatch.Helpers
         {
             this.page = mainpage;
 
-            //InitializeGrid(columns, rows);
-
-            //manager.SaveGameData(gameData);
-            //SaveData();
             LoadData(columns, rows);
-
-            ////////ShowToast($"DEBUG: gameGridJson: {gameData.GameGridJson}");
-
-            //ShowToast($"DEBUG: gameGrid: {ConvertGameGridToJsonString(testGrid)}");
-
-            //var testGridJsonString = ConvertGameGridToJsonString(testGrid);
-
-            //var convertedGrid = ConvertJsonStringToGameGrid(testGridJsonString);
-
-            //ShowToast($"DEBUG: gameGrid: {ConvertGameGridToJsonString(convertedGrid)}");
-
-            ////////LoadData(columns, rows);
-
-            /*gameData = manager.LoadGameData();
-
-            if (manager.LoadGameData() != null)
-            {
-                gameData = manager.LoadGameData();
-
-                if (gameData.Gamegrid != null)
-                {
-                    gameGrid = gameData.Gamegrid;
-                }
-                else
-                {
-                    InitializeGrid(columns, rows);
-                }
-
-                Stage = gameData.Stage;
-                NumbersMatched = gameData.NumbersMatched;
-
-                ShowToast("DEBUG: Game loaded");
-            }
-            else
-            {
-                InitializeGrid(columns, rows);
-
-                ShowToast("DEBUG: Game not loaded");
-            }*/
-
-
-            //check if there is saved data
-            /*if (Preferences.ContainsKey("gameData"))
-            {
-                ///////////Tools.ShowToast("DEBUG: GameData found");
-                LoadData();
-            }*/
-
-            //manager.SaveGameData(new GameData { Stage = this.Stage, NumbersMatched = this.NumbersMatched, Gamegrid = this.gameGrid});
         }
 
         public List<List<int>> GetGameGrid()
@@ -91,7 +34,7 @@ namespace NumberMatch.Helpers
             return gameData.GameGrid;
         }
 
-        private void InitializeGrid(int columns, int rows)
+        public void InitializeGrid(int columns, int rows)
         {
             Random random = new Random();
 
@@ -109,70 +52,15 @@ namespace NumberMatch.Helpers
             }
         }
 
-
         //  save game data
         public void SaveData()
         {
-            // Create a dictionary to store the game data
-            //////////////Dictionary<string, object> gameData = new Dictionary<string, object>();
-            ///////////////gameData["gameGrid"] = gameGrid;
-            ////////////gameData["stage"] = Stage;
-            ////////////gameData["numbersMatched"] = NumbersMatched;
-
-            // Serialise the game data to a JSON string
-            ////string gameDataJson = JsonConvert.SerializeObject(gameData);
-
-            // Save the JSON string
-            ////////////Preferences.Set("gameData", gameDataJson);
-            //////////////Preferences.Set("gameGrid", gameGrid);
-            //////////Preferences.Set("stage", Stage);
-            //////////////Preferences.Set("numbersMatched", NumbersMatched);
-
-
-            //string gameDataJson = ConvertToJsonString(gameGrid, Stage, NumbersMatched);
-            //Preferences.Set("gameData", gameDataJson);
-
             Preferences.Set("numbersMatched", gameData.NumbersMatched);
             Preferences.Set("stage", gameData.Stage);
             Preferences.Set("gameGrid", ConvertGameGridToJsonString(gameData.GameGrid));
 
-            // Save the game data to the database
-            //manager.SaveGameData(gameData);
-
-
-
             ShowToast("DEBUG: Game saved");
         }
-
-        //  load saved game data
-        /*public void LoadData()
-        {
-            // Retrieve the JSON string
-            string retrievedJson = Preferences.Get("gameData", "");
-
-            // Deserialize the JSON string back into game data dictionary
-            Dictionary<string, object> retrievedGameData = JsonConvert.DeserializeObject<Dictionary<string, object>>(retrievedJson);
-
-            // Retrieve the game grid, stage, and numbers matched from the dictionary
-            try
-            {
-                var temp = retrievedGameData.ContainsKey("gameGrid");
-                //gameGrid = temp ? (List<List<int>>)retrievedGameData["gameGrid"] : new List<List<int>>();
-            }
-            catch (Exception e)
-            {
-                Tools.ShowToast("DEBUG: " + e.Message);
-            }
-            //////////////////Tools.ShowToast("DEBUG: " + retrievedGameData["gameGrid"]);
-            //////////////////////string gameGridString = retrievedGameData["gameGrid"].ToString();
-            ///////////////////////////////Tools.ShowToast(gameGridString);
-            //////////////Stage = (int)retrievedGameData["stage"];
-            ///////////////NumbersMatched = (int)retrievedGameData["numbersMatched"];
-
-            ///////////Tools.ShowToast("DEBUG: Game loaded");
-        }*/
-
-
 
         public void LoadData(int columns, int rows)
         {
@@ -189,9 +77,6 @@ namespace NumberMatch.Helpers
                 gameData.GameGrid = ConvertJsonStringToGameGrid(gameGridJson);
             }
         }
-
-
-
 
         private static string ConvertToJsonString(List<List<int>> gameGrid, int Stage, int NumbersMatched)
         {
@@ -211,48 +96,13 @@ namespace NumberMatch.Helpers
 
         private string ConvertGameGridToJsonString(List<List<int>> gameGrid)
         {
-            // Construct the JSON object.
-            /*var saveData = new Dictionary<string, object>
-            {
-                { "gameGrid", gameGrid }
-            };
-
-            // Convert the JSON object to a string.
-            string jsonSaveData = JsonConvert.SerializeObject(saveData);
-
-            return jsonSaveData;*/
-
-
-
             return JsonConvert.SerializeObject(gameGrid);
         }
 
         private List<List<int>> ConvertJsonStringToGameGrid(string testGridJsonString)
         {
-            //return JsonConvert.DeserializeObject<List<List<int>>(testGridJsonString);
             return JsonConvert.DeserializeObject<List<List<int>>>(testGridJsonString);
         }
-
-
-
-
-        /*async Task SaveData()
-        {
-            // Convert game data to JSON
-            string gameDataJson = ConvertToJsonString(gameGrid, Stage, NumbersMatched);
-
-            // Get a storage file object
-            IStorageFile file = await FileSystem.Current.GetFileAsync("gameData.json");
-
-            // Write JSON data to the file
-            await file.WriteAllTextAsync(gameDataJson);
-        }*/
-
-
-
-
-
-
 
         //  check if the numbers match, gets the position of the numbers as arguments
         public bool CheckMatch(int row1, int col1, int row2, int col2)

@@ -44,6 +44,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Button x:Name="AddBtn"
@@ -63,6 +64,15 @@
                     BackgroundColor="{DynamicResource Primary}"
                     TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                     CornerRadius="20" />
+
+                <Button x:Name="ResetBtn"
+                        Text="Reset"
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Clicked="ResetButtonClicked"
+                        BackgroundColor="{DynamicResource Primary}"
+                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        CornerRadius="20" />
             </Grid>
 
         </VerticalStackLayout>
