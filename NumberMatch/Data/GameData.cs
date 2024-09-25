@@ -12,23 +12,17 @@ namespace NumberMatch.Data
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string gameGridJson { get; set; } = "";
+        public string GameGridJson { get; set; } = "";
         public int Stage { get; set; } = 0;
         public int NumbersMatched { get; set; } = 0;
 
-        [Ignore]
-        public List<List<int>> Gamegrid
+        /*[Ignore]
+        public List<List<int>> GameGrid
         {
-            get => JsonConvert.DeserializeObject<List<List<int>>>(gameGridJson);
-            set => gameGridJson = JsonConvert.SerializeObject(value);
-        }
-    }
+            get => JsonConvert.DeserializeObject<List<List<int>>>(GameGridJson);
+            set => GameGridJson = JsonConvert.SerializeObject(value);
+        }*/
 
-    /*public class Person
-    {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-    }*/
+        public List<List<int>> GameGrid;
+    }
 }

@@ -40,7 +40,7 @@ namespace NumberMatch
             });*/
 #endif
 
-            SynchronizeGrid(game.GetGameGrid());
+            SynchronizeGrid(game.gameData.GameGrid);
         }
 
         private void MakeNumberMatchGrid(int columns, int rows) //  make the grid with buttons
@@ -123,8 +123,8 @@ namespace NumberMatch
 
 
             //set numbersmatched and stage
-            LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.NumbersMatched;
-            LabelStage.Text = "Stage: " + game.Stage;
+            LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
+            LabelStage.Text = "Stage: " + game.gameData.Stage;
         }
 
         private void GridButtonClicked(object sender, EventArgs e)
@@ -182,7 +182,7 @@ namespace NumberMatch
 
                         SynchronizeGrid(game.GetGameGrid());
 
-                        LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.NumbersMatched;
+                        LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
 
                         ///////////ShowToast("Matched");
                     }

@@ -16,13 +16,13 @@ namespace NumberMatch.Helpers
 {
     public class GameBackend
     {
-        private List<List<int>> gameGrid = [];
-        public int Stage { get; private set; } = 0;
-        public int NumbersMatched { get; private set; } = 0;
+        //private List<List<int>> gameGrid = [];
+        //public int Stage { get; private set; } = 0;
+        //public int NumbersMatched { get; private set; } = 0;
 
         private DatabaseManager manager = new DatabaseManager();
 
-        private GameData gameData;
+        public GameData gameData { get; private set; } = new GameData();
 
         private MainPage page;
 
@@ -32,7 +32,21 @@ namespace NumberMatch.Helpers
 
             //InitializeGrid(columns, rows);
 
+            //manager.SaveGameData(gameData);
+            //SaveData();
             LoadData(columns, rows);
+
+            ////////ShowToast($"DEBUG: gameGridJson: {gameData.GameGridJson}");
+
+            //ShowToast($"DEBUG: gameGrid: {ConvertGameGridToJsonString(testGrid)}");
+
+            //var testGridJsonString = ConvertGameGridToJsonString(testGrid);
+
+            //var convertedGrid = ConvertJsonStringToGameGrid(testGridJsonString);
+
+            //ShowToast($"DEBUG: gameGrid: {ConvertGameGridToJsonString(convertedGrid)}");
+
+            ////////LoadData(columns, rows);
 
             /*gameData = manager.LoadGameData();
 
@@ -74,12 +88,15 @@ namespace NumberMatch.Helpers
 
         public List<List<int>> GetGameGrid()
         {
-            return gameGrid;
+            return gameData.GameGrid;
         }
 
         private void InitializeGrid(int columns, int rows)
         {
             Random random = new Random();
+
+            // Ensure gameData.GameGrid is initialized
+            gameData.GameGrid = new List<List<int>>();
 
             for (int i = 0; i < 5; i++)
             {
@@ -88,9 +105,10 @@ namespace NumberMatch.Helpers
                 for (int j = 0; j < columns; j++)
                     row.Add(random.Next(1, 10));
 
-                gameGrid.Add(row);
+                gameData.GameGrid.Add(row);
             }
         }
+
 
         //  save game data
         public void SaveData()
@@ -114,10 +132,12 @@ namespace NumberMatch.Helpers
             //string gameDataJson = ConvertToJsonString(gameGrid, Stage, NumbersMatched);
             //Preferences.Set("gameData", gameDataJson);
 
-
+            Preferences.Set("numbersMatched", gameData.NumbersMatched);
+            Preferences.Set("stage", gameData.Stage);
+            Preferences.Set("gameGrid", ConvertGameGridToJsonString(gameData.GameGrid));
 
             // Save the game data to the database
-            manager.SaveGameData(new GameData { Stage = this.Stage, NumbersMatched = this.NumbersMatched, Gamegrid = this.gameGrid });
+            //manager.SaveGameData(gameData);
 
 
 
@@ -156,95 +176,18 @@ namespace NumberMatch.Helpers
 
         public void LoadData(int columns, int rows)
         {
-            // Retrieve the JSON string
-            /*string retrievedJson = Preferences.Get("gameData", "");
+            gameData.NumbersMatched = Preferences.Get("numbersMatched", 0);
+            gameData.Stage = Preferences.Get("stage", 0);
+            string gameGridJson = Preferences.Get("gameGrid", "");
 
-            /////////Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {retrievedJson}", "OK");
-
-            // Deserialize the JSON string back into game data dictionary
-            Dictionary<string, object> retrievedGameData = JsonConvert.DeserializeObject<Dictionary<string, object>>(retrievedJson);
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var item in retrievedGameData)
-            {
-                //sb.Append($"{item.Key}: {item.Value}\n");
-                sb.Append(item.Key);
-
-                if (item.Key == "gameGrid")
-                {
-                    //Shell.Current.DisplayAlert("DEBUG", $"GameGrid found: {item.Value}", "OK");
-
-                    //page.ShowPopup = new Pages.PopupPage(item.Value.ToString());
-                    /////////////page.ShowPopup($"GameGrid found: {item.Value}");
-
-                    if (item.Value is List<List<int>>)
-                        gameGrid = item.Value as List<List<int>>;
-                    ///////////else
-                        ////////////////Tools.ShowToast($"GameGrid not found as List<List<int>>");
-                }
-            }*/
-
-
-
-
-            gameData = manager.LoadGameData();
-
-            if (manager.LoadGameData() != null)
-            {
-                gameData = manager.LoadGameData();
-
-                if (gameData.Gamegrid != null)
-                {
-                    gameGrid = gameData.Gamegrid;
-                }
-                else
-                {
-                    InitializeGrid(columns, rows);
-                }
-
-                Stage = gameData.Stage/* ?? 0*/;
-                NumbersMatched = gameData.NumbersMatched/* ?? 0*/;
-
-                ShowToast("DEBUG: Game loaded");
-            }
-            else
+            if (string.IsNullOrEmpty(gameGridJson))
             {
                 InitializeGrid(columns, rows);
-
-                ShowToast("DEBUG: Game not loaded");
-            }
-
-
-
-            //Shell.Current.DisplayAlert("DEBUG", $"Game loaded: {sb.ToString()}", "OK");
-            ////////////////page.ShowPopup($"Game loaded: {sb.ToString()}");
-
-            // Retrieve the game grid, stage, and numbers matched from the dictionary
-            /*var retrievedGrid = retrievedGameData["gameGrid"] as List<List<int>>;
-            if (retrievedGrid != null)
-            {
-                gameGrid = retrievedGrid;
             }
             else
             {
-                // Handle the case where no game data is found (e.g., initialize a new grid)
-                //Tools.ShowToast($"DEBUG: GameGrid not found: {retrievedGrid}");
-                Shell.Current.DisplayAlert("DEBUG", $"GameGrid not found: {retrievedGrid}", "OK");
-            }*/
-            //Stage = (int)retrievedGameData["stage"];
-            //NumbersMatched = (int)retrievedGameData["numbersMatched"];
-
-            //Tools.ShowToast($"DEBUG: Game loaded: {(int)retrievedGameData["stage"]}, {(int)retrievedGameData["numbersMatched"]}");
-
-
-
-
-            //bool saveLoginDetails = ...;
-            //...
-            //Preferences.Set("SaveLogin", saveLoginDetails);
-            //...
-            //var savedPreference = Preferences.Get("SaveLogin", false);
+                gameData.GameGrid = ConvertJsonStringToGameGrid(gameGridJson);
+            }
         }
 
 
@@ -266,7 +209,29 @@ namespace NumberMatch.Helpers
             return jsonSaveData;
         }
 
+        private string ConvertGameGridToJsonString(List<List<int>> gameGrid)
+        {
+            // Construct the JSON object.
+            /*var saveData = new Dictionary<string, object>
+            {
+                { "gameGrid", gameGrid }
+            };
 
+            // Convert the JSON object to a string.
+            string jsonSaveData = JsonConvert.SerializeObject(saveData);
+
+            return jsonSaveData;*/
+
+
+
+            return JsonConvert.SerializeObject(gameGrid);
+        }
+
+        private List<List<int>> ConvertJsonStringToGameGrid(string testGridJsonString)
+        {
+            //return JsonConvert.DeserializeObject<List<List<int>>(testGridJsonString);
+            return JsonConvert.DeserializeObject<List<List<int>>>(testGridJsonString);
+        }
 
 
 
@@ -293,16 +258,16 @@ namespace NumberMatch.Helpers
         public bool CheckMatch(int row1, int col1, int row2, int col2)
         {
             //  check if the numbers match
-            if ((gameGrid[row1][col1] == gameGrid[row2][col2]) || (gameGrid[row1][col1] + gameGrid[row2][col2] == 10))
+            if ((gameData.GameGrid[row1][col1] == gameData.GameGrid[row2][col2]) || (gameData.GameGrid[row1][col1] + gameData.GameGrid[row2][col2] == 10))
             {
                 //  check if the numbers are at the right position to match
                 if (CheckAdjacent(row1, col1, row2, col2))
                 {
                     //  remove the numbers from the grid
-                    gameGrid[row1][col1] = 0;
-                    gameGrid[row2][col2] = 0;
+                    gameData.GameGrid[row1][col1] = 0;
+                    gameData.GameGrid[row2][col2] = 0;
 
-                    NumbersMatched ++;
+                    gameData.NumbersMatched ++;
 
                     return true;
                 }
@@ -337,7 +302,7 @@ namespace NumberMatch.Helpers
 
                 // Check the tiles between the two given tiles
                 for (int col = col1 + 1; col < col2; col++)
-                    if (gameGrid[row1][col] != 0)
+                    if (gameData.GameGrid[row1][col] != 0)
                         return false;
             }
             // Check if the tiles are in the same column
@@ -349,7 +314,7 @@ namespace NumberMatch.Helpers
 
                 // Check the tiles between the two given tiles
                 for (int row = row1 + 1; row < row2; row++)
-                    if (gameGrid[row][col1] != 0)
+                    if (gameData.GameGrid[row][col1] != 0)
                         return false;
             }
             // Check if the tiles are on the same diagonal
@@ -364,7 +329,7 @@ namespace NumberMatch.Helpers
 
                 // Check the tiles between the two given tiles
                 for (int i = 1; i < Math.Abs(row1 - row2); i++)
-                    if (gameGrid[row1 + i][col1 + i] != 0) // can give a index out of range error
+                    if (gameData.GameGrid[row1 + i][col1 + i] != 0) // can give a index out of range error
                         return false;
             }
             else
@@ -379,9 +344,9 @@ namespace NumberMatch.Helpers
 
         public void RemoveEmptyRowsAndShiftUp()
         {
-            for (int i = 0; i < gameGrid.Count; i++)
-                if (gameGrid[i].All(x => x == 0))
-                    gameGrid.RemoveAt(i);
+            for (int i = 0; i < gameData.GameGrid.Count; i++)
+                if (gameData.GameGrid[i].All(x => x == 0))
+                    gameData.GameGrid.RemoveAt(i);
         }
 
         // add numbers to the grid containing only numbers that are already in the grid
@@ -389,7 +354,7 @@ namespace NumberMatch.Helpers
         {
             Random random = new Random();
 
-            int rowsToAdd = 5 - gameGrid.Count;
+            int rowsToAdd = 5 - gameData.GameGrid.Count;
 
             // If rowsToAdd is odd, increment it by 1 to make it even
             /*if (rowsToAdd % 2 != 0)
@@ -401,11 +366,11 @@ namespace NumberMatch.Helpers
             {
                 List<int> row = new List<int>();
 
-                for (int j = 0; j < gameGrid[0].Count; j++)
+                for (int j = 0; j < gameData.GameGrid[0].Count; j++)
                 {
                     int number = random.Next(1, 10);
 
-                    while (!gameGrid.SelectMany(x => x).Contains(number))
+                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
                         number = random.Next(1, 10);
 
                     row.Add(number);
@@ -416,13 +381,13 @@ namespace NumberMatch.Helpers
                 {
                     int number = random.Next(1, 10);
 
-                    while (!gameGrid.SelectMany(x => x).Contains(number))
+                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
                         number = random.Next(1, 10);
 
                     row.Add(number);
                 }
 
-                gameGrid.Insert(0, row);
+                gameData.GameGrid.Insert(0, row);
             }
         }
     }
