@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Maui.Storage;
 using Microsoft.Maui.Controls;
-//using SQLite;
 using NumberMatch.Data;
 using static NumberMatch.Helpers.Tools;
-//using static SQLite.TableMapping;
 
 namespace NumberMatch.Helpers
 {
     public class GameBackend
     {
-        //private DatabaseManager manager = new DatabaseManager();
-
         public GameData gameData { get; private set; } = new GameData();
 
         private MainPage page;
@@ -75,22 +71,6 @@ namespace NumberMatch.Helpers
                 gameData.GameGrid = ConvertJsonStringToGameGrid(gameGridJson);
             }
         }
-
-        /*private static string ConvertToJsonString(List<List<int>> gameGrid, int Stage, int NumbersMatched)
-        {
-            // Construct the JSON object.
-            var saveData = new Dictionary<string, object>
-            {
-                { "gameGrid", gameGrid },
-                { "stage", Stage },
-                { "NumbersMatched", NumbersMatched },
-            };
-
-            // Convert the JSON object to a string.
-            string jsonSaveData = JsonConvert.SerializeObject(saveData);
-
-            return jsonSaveData;
-        }*/
 
         private static string ConvertGameGridToJsonString(List<List<int>> gameGrid)
         {
