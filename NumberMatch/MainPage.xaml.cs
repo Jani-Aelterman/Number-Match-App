@@ -89,30 +89,11 @@ namespace NumberMatch
                     Button tile = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
 
                     if (gameGrid[row][col] == 0)
-                    {
                         tile.Text = null;
-                        //////////////button.BackgroundColor = (Color)Application.Current.Resources["Background"];
-                        //button.Text = gameGrid[row][col].ToString();//temporary
-                        //button.TextColor = (Color)Application.Current.Resources["Background"];
-                    }
                     else
                         tile.Text = gameGrid[row][col].ToString();
                 }
             }
-
-
-            // make every button under the gamegrid list background color
-            for (int row = gameGrid.Count; row < ROWS; row++)
-            {
-                for (int col = 0; col < COLUMNS; col++)
-                {
-                    Button button = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
-                    button.BackgroundColor = (Color)Application.Current.Resources["Background"];
-                    button.Text = null;
-                }
-            }
-
-
 
             //set numbersmatched and stage
             LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;

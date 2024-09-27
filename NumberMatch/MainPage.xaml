@@ -8,7 +8,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+             BackgroundColor="{AppThemeBinding Light={DynamicResource Background}, Dark={StaticResource Black}}">
 
     <ScrollView>
 
@@ -75,14 +75,16 @@
                         TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         CornerRadius="20" />
 
-                <Button x:Name="DebugBtn"
+                <Button
+                        x:Name="DebugBtn"
                         Text="Debug"
                         Grid.Row="0"
                         Grid.Column="3"
                         Clicked="DebugButtonClicked"
                         BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                        CornerRadius="20" />
+                        BorderColor="{DynamicResource Primary}"
+                        TextColor="{DynamicResource Primary}"    
+                        StyleClass="OutlinedButton"/>
             </Grid>
 
         </VerticalStackLayout>
