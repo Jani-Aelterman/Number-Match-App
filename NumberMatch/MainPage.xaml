@@ -8,7 +8,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{DynamicResource Background}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
 
     <ScrollView>
 
@@ -36,12 +36,13 @@
 
             <Grid x:Name="NumberMatchGrid" HorizontalOptions="Center" VerticalOptions="Center"></Grid>
 
-            <Grid HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="50" >
+            <Grid HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="30">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -70,6 +71,15 @@
                         Grid.Row="0"
                         Grid.Column="2"
                         Clicked="ResetButtonClicked"
+                        BackgroundColor="{DynamicResource Primary}"
+                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        CornerRadius="20" />
+
+                <Button x:Name="DebugBtn"
+                        Text="Debug"
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        Clicked="DebugButtonClicked"
                         BackgroundColor="{DynamicResource Primary}"
                         TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         CornerRadius="20" />

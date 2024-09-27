@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SQLite;
+//using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace NumberMatch.Data
 {
     public class GameData
     {
-        [PrimaryKey, AutoIncrement]
+        //[PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string GameGridJson { get; set; } = "";
         public int Stage { get; set; } = 0;

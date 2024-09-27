@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Maui.Storage;
 using Microsoft.Maui.Controls;
-using SQLite;
+//using SQLite;
 using NumberMatch.Data;
 using static NumberMatch.Helpers.Tools;
-using static SQLite.TableMapping;
+//using static SQLite.TableMapping;
 
 namespace NumberMatch.Helpers
 {
@@ -58,8 +58,6 @@ namespace NumberMatch.Helpers
             Preferences.Set("numbersMatched", gameData.NumbersMatched);
             Preferences.Set("stage", gameData.Stage);
             Preferences.Set("gameGrid", ConvertGameGridToJsonString(gameData.GameGrid));
-
-            ShowToast("DEBUG: Game saved");
         }
 
         public void LoadData(int columns, int rows)
@@ -78,7 +76,7 @@ namespace NumberMatch.Helpers
             }
         }
 
-        private static string ConvertToJsonString(List<List<int>> gameGrid, int Stage, int NumbersMatched)
+        /*private static string ConvertToJsonString(List<List<int>> gameGrid, int Stage, int NumbersMatched)
         {
             // Construct the JSON object.
             var saveData = new Dictionary<string, object>
@@ -92,9 +90,9 @@ namespace NumberMatch.Helpers
             string jsonSaveData = JsonConvert.SerializeObject(saveData);
 
             return jsonSaveData;
-        }
+        }*/
 
-        private string ConvertGameGridToJsonString(List<List<int>> gameGrid)
+        private static string ConvertGameGridToJsonString(List<List<int>> gameGrid)
         {
             return JsonConvert.SerializeObject(gameGrid);
         }
@@ -192,15 +190,26 @@ namespace NumberMatch.Helpers
             return true;
         }
 
-        public void RemoveEmptyRowsAndShiftUp()
+        /*public void RemoveEmptyRowsAndShiftUp()
         {
             for (int i = 0; i < gameData.GameGrid.Count; i++)
                 if (gameData.GameGrid[i].All(x => x == 0))
                     gameData.GameGrid.RemoveAt(i);
+        }*/
+
+        public void RemoveEmptyRowsAndShiftUp()
+        {
+            for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
+            {
+                if (gameData.GameGrid[i].All(x => x == 0))
+                {
+                    gameData.GameGrid.RemoveAt(i);
+                }
+            }
         }
 
         // add numbers to the grid containing only numbers that are already in the grid
-        public void AddNumbersToGrid()
+        /*public void AddNumbersToGrid()
         {
             Random random = new Random();
 
@@ -210,7 +219,7 @@ namespace NumberMatch.Helpers
             /*if (rowsToAdd % 2 != 0)
             {
                 rowsToAdd++;
-            }*/
+            }*
 
             for (int i = 0; i < rowsToAdd; i++)
             {
@@ -239,6 +248,42 @@ namespace NumberMatch.Helpers
 
                 gameData.GameGrid.Insert(0, row);
             }
+        }*/
+
+        public void AddNumbersToGrid()
+        {
+            Random random = new Random();
+            int maxColumns = gameData.GameGrid.FirstOrDefault().Count; // Define the maximum number of columns
+            int rowsToAdd = 5 - gameData.GameGrid.Count;
+
+            for (int i = 0; i < rowsToAdd; i++)
+            {
+                List<int> row = new List<int>();
+
+                for (int j = 0; j < maxColumns; j++)
+                {
+                    int number = random.Next(1, 10);
+
+                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
+                        number = random.Next(1, 10);
+
+                    row.Add(number);
+                }
+
+                // Ensure the row has an even number of elements but does not exceed maxColumns
+                if (row.Count % 2 != 0 && row.Count < maxColumns)
+                {
+                    int number = random.Next(1, 10);
+
+                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
+                        number = random.Next(1, 10);
+
+                    row.Add(number);
+                }
+
+                gameData.GameGrid.Insert(0, row);
+            }
         }
+
     }
 }

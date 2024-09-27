@@ -1,5 +1,5 @@
 ﻿using NumberMatch.Helpers;
-using SQLite;
+//using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace NumberMatch.Data
 
         public void SaveGameData(GameData gameData)
         {
-            using (var db = new SQLiteConnection(dbPath))
+            /*using (var db = new SQLiteConnection(dbPath))
             {
                 var existingData = db.Table<GameData>().FirstOrDefault();
                 if (existingData == null)
@@ -26,15 +26,17 @@ namespace NumberMatch.Data
                 {
                     db.Update(gameData);
                 }
-            }
+            }*/
         }
 
         public GameData LoadGameData()
         {
-            using (var db = new SQLiteConnection(dbPath))
+            /*using (var db = new SQLiteConnection(dbPath))
             {
                 return db.Table<GameData>().FirstOrDefault();
-            }
+            }*/
+
+            return new GameData();
         }
     }
 }

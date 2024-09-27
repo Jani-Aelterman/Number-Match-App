@@ -86,30 +86,22 @@ namespace NumberMatch
             {
                 for (int col = 0; col < gameGrid[row].Count; col++)
                 {
-                    Button button = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
+                    Button tile = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
 
                     if (gameGrid[row][col] == 0)
                     {
-                        button.Text = null;
-                        button.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                        tile.Text = null;
+                        //////////////button.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                        //button.Text = gameGrid[row][col].ToString();//temporary
+                        //button.TextColor = (Color)Application.Current.Resources["Background"];
                     }
                     else
-                        button.Text = gameGrid[row][col].ToString();
+                        tile.Text = gameGrid[row][col].ToString();
                 }
             }
 
 
             // make every button under the gamegrid list background color
-            /*for (int row = gameGrid.Count; row < ROWS; row++)
-            {
-                for (int col = 0; col < COLUMNS; col++)
-                {
-                    Button button = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
-                    button.BackgroundColor = (Color)Application.Current.Resources["Background"];
-                    button.Text = null;
-                }
-            }*/
-
             for (int row = gameGrid.Count; row < ROWS; row++)
             {
                 for (int col = 0; col < COLUMNS; col++)
@@ -129,30 +121,28 @@ namespace NumberMatch
 
         private void GridButtonClicked(object sender, EventArgs e)
         {
-            //this.ShowPopup(new Pages.PopupPage());
-
-            Button button = (Button)sender;
+            Button tile = (Button)sender;
 
             // Uncheck button if checked, don't check for match
-            if (button.BackgroundColor == (Color)Application.Current.Resources["Primary"])
+            if (tile.BackgroundColor == (Color)Application.Current.Resources["Primary"])
             {
-                button.BackgroundColor = (Color)Application.Current.Resources["Background"];
-                button.TextColor = (Color)Application.Current.Resources["Primary"];
+                tile.BackgroundColor = (Color)Application.Current.Resources["Background"];
+                tile.TextColor = (Color)Application.Current.Resources["Primary"];
 
-                if(Grid.GetRow(button) == previousPressedButton.Item1 && Grid.GetColumn(button) == previousPressedButton.Item2)
+                if(Grid.GetRow(tile) == previousPressedButton.Item1 && Grid.GetColumn(tile) == previousPressedButton.Item2)
                 {
                     previousPressedButton = null;
                 }
             }
 
             // Check for match if the button is initialized
-            else if (button.Text != null)
+            else if (tile.Text != null)
             {
-                int row = Grid.GetRow(button);
-                int col = Grid.GetColumn(button);
+                int row = Grid.GetRow(tile);
+                int col = Grid.GetColumn(tile);
 
-                button.BackgroundColor = (Color)Application.Current.Resources["Primary"];
-                button.TextColor = (Color)Application.Current.Resources["Background"];
+                tile.BackgroundColor = (Color)Application.Current.Resources["Primary"];
+                tile.TextColor = (Color)Application.Current.Resources["Background"];
 
                 if(previousPressedButton == null)
                 {
@@ -200,7 +190,7 @@ namespace NumberMatch
                             }
                         }
 
-                        //////////////////ShowToast("No match found");
+                        ShowToast("No match found");
                     }
                 }
 
@@ -219,29 +209,36 @@ namespace NumberMatch
 
         private void AddButtonClicked(object sender, EventArgs e)
         {
-            //////////////this.ShowPopup(new Pages.NotImplementedPopup());
-
             game.AddNumbersToGrid();
             SynchronizeGrid(game.GetGameGrid());
         }
 
         private void HelpButtonClicked(object sender, EventArgs e)
         {
-            //ShowToast("DEBUG: Help button clicked");
             this.ShowPopup(new Pages.TutorialPopup());
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)
         {
 #if WINDOWS
-            //MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             game.InitializeGrid(ROWS + 8, COLUMNS + 5);
 #else
-            //MakeNumberMatchGrid(COLUMNS, ROWS);
             game.InitializeGrid(COLUMNS, ROWS);
 #endif
-
+            game.gameData.NumbersMatched = 0;
+            game.gameData.Stage = 0;
             SynchronizeGrid(game.gameData.GameGrid);
+            game.SaveData();
+        }
+
+        public void ShowBackendGrid(List<List<int>> grid)
+        {
+            this.ShowPopup(new Pages.Popups.gridPopup(grid));
+        }
+
+        private void DebugButtonClicked(object sender, EventArgs e)
+        {
+            ShowBackendGrid(game.GetGameGrid());
         }
     }
 }
