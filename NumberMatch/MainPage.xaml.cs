@@ -4,6 +4,7 @@
 /// </summary>
 
 using CommunityToolkit.Maui.Views;
+using Newtonsoft.Json.Linq;
 using NumberMatch.Helpers;
 using System.Runtime.CompilerServices;
 using static NumberMatch.Helpers.Tools;
@@ -15,6 +16,7 @@ namespace NumberMatch
         private GameBackend game;
         private const int COLUMNS = 9, ROWS = 13;
         private Tuple<int, int> previousPressedButton = null; //  previous pressed button, row and column
+        private readonly Color dynamicBackgroundColor = (Color)Application.Current.Resources["Background"];
 
         public MainPage()
         {
@@ -41,6 +43,21 @@ namespace NumberMatch
 #endif
 
             SynchronizeGrid(game.gameData.GameGrid);
+            LoadSettings();
+        }
+
+        private void LoadSettings()
+        {
+            if (Preferences.ContainsKey("DeveloperOptions"))
+            {
+                DebugBtn.IsEnabled = Preferences.Get("DeveloperOptions", false);
+                DebugBtn.IsVisible = Preferences.Get("DeveloperOptions", false);
+            }
+
+            if(Preferences.Get("OledDarkmode", false))
+                this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, Colors.Black);
+            else
+                this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, dynamicBackgroundColor);
         }
 
         private void MakeNumberMatchGrid(int columns, int rows) //  make the grid with buttons
@@ -94,6 +111,8 @@ namespace NumberMatch
                         tile.Text = gameGrid[row][col].ToString();
                 }
             }
+
+            // set the tiles under the active grid to the value of null
 
             //set numbersmatched and stage
             LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
@@ -220,6 +239,12 @@ namespace NumberMatch
         private void DebugButtonClicked(object sender, EventArgs e)
         {
             ShowBackendGrid(game.GetGameGrid());
+        }
+
+        private void SettingsButtonClicked(object sender, EventArgs e)
+        {
+            this.ShowPopup(new Pages.Popups.SettingsPopup());
+            LoadSettings();
         }
     }
 }
