@@ -17,6 +17,7 @@ namespace NumberMatch
         private const int COLUMNS = 9, ROWS = 13;
         private Tuple<int, int> previousPressedButton = null; //  previous pressed button, row and column
         private readonly Color dynamicBackgroundColor = (Color)Application.Current.Resources["Background"];
+        private readonly Color dynamicPrimaryColor = (Color)Application.Current.Resources["Primary"];
 
         public MainPage()
         {
@@ -46,7 +47,7 @@ namespace NumberMatch
             LoadSettings();
         }
 
-        private void LoadSettings()
+        public void LoadSettings()
         {
             if (Preferences.ContainsKey("DeveloperOptions"))
             {
@@ -77,9 +78,9 @@ namespace NumberMatch
                         //Text = $"Button {row * 14 + col + 1}",
                         //Text = col.ToString(),
                         //CornerRadius = 0, //  maybe more modern with rounded corners
-                        BorderColor = (Color)Application.Current.Resources["Primary"],
-                        BackgroundColor = (Color)Application.Current.Resources["Background"],
-                        TextColor = (Color)Application.Current.Resources["Primary"],
+                        BorderColor = dynamicPrimaryColor,
+                        BackgroundColor = dynamicBackgroundColor,
+                        TextColor = dynamicPrimaryColor,
                         BorderWidth = 2,
                         // set the fontsize to large
                         FontSize = 30,
@@ -113,6 +114,14 @@ namespace NumberMatch
             }
 
             // set the tiles under the active grid to the value of null
+            for (int row = gameGrid.Count; row < ROWS; row++)
+            {
+                for (int col = 0; col < COLUMNS; col++)
+                {
+                    Button tile = (Button)NumberMatchGrid.Children[row * COLUMNS + col];
+                    tile.Text = null;
+                }
+            }
 
             //set numbersmatched and stage
             LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
@@ -124,10 +133,10 @@ namespace NumberMatch
             Button tile = (Button)sender;
 
             // Uncheck button if checked, don't check for match
-            if (tile.BackgroundColor == (Color)Application.Current.Resources["Primary"])
+            if (tile.BackgroundColor == dynamicPrimaryColor)
             {
-                tile.BackgroundColor = (Color)Application.Current.Resources["Background"];
-                tile.TextColor = (Color)Application.Current.Resources["Primary"];
+                tile.BackgroundColor = dynamicBackgroundColor;
+                tile.TextColor = dynamicPrimaryColor;
 
                 if(Grid.GetRow(tile) == previousPressedButton.Item1 && Grid.GetColumn(tile) == previousPressedButton.Item2)
                 {
@@ -141,8 +150,8 @@ namespace NumberMatch
                 int row = Grid.GetRow(tile);
                 int col = Grid.GetColumn(tile);
 
-                tile.BackgroundColor = (Color)Application.Current.Resources["Primary"];
-                tile.TextColor = (Color)Application.Current.Resources["Background"];
+                tile.BackgroundColor = dynamicPrimaryColor;
+                tile.TextColor = dynamicBackgroundColor;
 
                 if(previousPressedButton == null)
                 {
@@ -159,10 +168,10 @@ namespace NumberMatch
                         // temp
                         foreach (Button b in NumberMatchGrid.Children)
                         {
-                            if (b.BackgroundColor == (Color)Application.Current.Resources["Primary"])
+                            if (b.BackgroundColor == dynamicPrimaryColor)
                             {
-                                b.BackgroundColor = (Color)Application.Current.Resources["Background"];
-                                b.TextColor = (Color)Application.Current.Resources["Primary"];
+                                b.BackgroundColor = dynamicBackgroundColor;
+                                b.TextColor = dynamicPrimaryColor;
                             }
                         }
 
@@ -183,10 +192,10 @@ namespace NumberMatch
                         // uncheck the selected tiles
                         foreach (Button b in NumberMatchGrid.Children)
                         {
-                            if (b.BackgroundColor == (Color)Application.Current.Resources["Primary"])
+                            if (b.BackgroundColor == dynamicPrimaryColor)
                             {
-                                b.BackgroundColor = (Color)Application.Current.Resources["Background"];
-                                b.TextColor = (Color)Application.Current.Resources["Primary"];
+                                b.BackgroundColor = dynamicBackgroundColor;
+                                b.TextColor = dynamicPrimaryColor;
                             }
                         }
 
@@ -202,8 +211,8 @@ namespace NumberMatch
         {
             foreach (Button tile in NumberMatchGrid.Children)
             {
-                if (tile.BackgroundColor == (Color)Application.Current.Resources["Primary"])
-                    tile.BackgroundColor = (Color)Application.Current.Resources["Primary"];
+                if (tile.BackgroundColor == dynamicPrimaryColor)
+                    tile.BackgroundColor = dynamicPrimaryColor;
             }
         }
 
@@ -243,8 +252,7 @@ namespace NumberMatch
 
         private void SettingsButtonClicked(object sender, EventArgs e)
         {
-            this.ShowPopup(new Pages.Popups.SettingsPopup());
-            LoadSettings();
+            this.ShowPopup(new Pages.Popups.SettingsPopup(this));
         }
     }
 }
