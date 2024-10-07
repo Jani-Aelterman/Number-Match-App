@@ -8,7 +8,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{AppThemeBinding Light={DynamicResource Background}, Dark={DynamicResource Background}}">
+             BackgroundColor="{DynamicResource Background}">
 
     <ScrollView>
 
@@ -17,27 +17,36 @@
             Padding="30,0"
             VerticalOptions="Center">
 
+            <!-- <mdc:Button Text="Settings"
+                        IconData="{x:Static m:MaterialSharp.Settings}"
+                        BackgroundColor="Transparent"
+                        IconColor="{DynamicResource Secondary}"
+                        FontColor="{DynamicResource Secondary}"/> -->
+
+            <!-- <mdc:Button Text="button" IconData="add" /> -->
+
             <Button x:Name="Title"
-               Text="Number Match"
-               FontSize="32"
-               FontAttributes="Bold"
-               TextColor="{DynamicResource Primary}"
-               BackgroundColor="{DynamicResource Background}"
-               BorderColor="{DynamicResource Primary}"
-               CornerRadius="10"
-               Padding="0"
-               Clicked="SettingsButtonClicked"
-               HorizontalOptions="Center" />
+                    Text="Number Match"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    TextColor="{DynamicResource Primary}"
+                    BackgroundColor="Transparent"
+                    BorderColor="{DynamicResource Primary}"
+                    CornerRadius="10"
+                    Padding="0"
+                    VerticalOptions="Center"
+                    Clicked="SettingsButtonClicked"
+                    HorizontalOptions="Center" />
 
             <Label x:Name="LabelAmmountMatchedNumbers"
-               Text="Matched numbers: 0"
-               TextColor="{DynamicResource Primary}"
-               HorizontalOptions="Center" />
+                   Text="Matched numbers: 0"
+                   TextColor="{DynamicResource OnBackground}"
+                   HorizontalOptions="Center" />
 
             <Label x:Name="LabelStage"
-               Text="Stage: 0"
-               TextColor="{DynamicResource Primary}"
-               HorizontalOptions="Start" />
+                   Text="Stage: 0"
+                   TextColor="{DynamicResource OnBackground}"
+                   HorizontalOptions="Start" />
 
             <Grid x:Name="NumberMatchGrid" HorizontalOptions="Center" VerticalOptions="Center"></Grid>
 
@@ -49,27 +58,31 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
-                    <!-- <ColumnDefinition Width="Auto"/> -->
+                    <ColumnDefinition Width="Auto"/>
                     <!-- <ColumnDefinition Width="Auto"/> -->
                 </Grid.ColumnDefinitions>
 
                 <Button x:Name="AddBtn"
-                    Text="+"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Clicked="AddButtonClicked"
-                    BackgroundColor="{DynamicResource Primary}"
-                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                    CornerRadius="20" />
+                        Text="+"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Clicked="AddButtonClicked"
+                        BackgroundColor="{DynamicResource Primary}"
+                        TextColor="{DynamicResource OnPrimary}"
+                        CornerRadius="20"/>
 
-                <!-- <Button x:Name="HelpBtn"
+                <!--<mdc:IconButton IconData="{Static m:MaterialRound.Plus_one}"
+                                IconColor="Black"
+                                BackgroundColor="White"/>-->
+
+                <Button x:Name="HelpBtn"
                     Text="Help"
                     Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="3"
                     Clicked="HelpButtonClicked"
                     BackgroundColor="{DynamicResource Primary}"
                     TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                    CornerRadius="20" /> -->
+                    CornerRadius="20" />
 
                 <Button x:Name="ResetBtn"
                         Text="Reset"
@@ -77,11 +90,10 @@
                         Grid.Column="1"
                         Clicked="ResetButtonClicked"
                         BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                        CornerRadius="20" />
+                        TextColor="{DynamicResource OnPrimary}"
+                        CornerRadius="20"/>
 
-                <Button
-                        x:Name="DebugBtn"
+                <Button x:Name="DebugBtn"
                         Text="Debug"
                         IsEnabled="False"
                         IsVisible="False"
@@ -92,6 +104,7 @@
                         BorderColor="{DynamicResource Primary}"
                         TextColor="{DynamicResource Primary}"    
                         StyleClass="OutlinedButton"/>
+
             </Grid>
 
         </VerticalStackLayout>

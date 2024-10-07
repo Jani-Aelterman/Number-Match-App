@@ -57,17 +57,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.3" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
 
 		<PackageReference Include="Material.Components.Maui" Version="0.2.2-preview" />
 		<PackageReference Include="MaterialColorUtilities.Maui" Version="0.3.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.90" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.90" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
 
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.10.0" />
-		<PackageReference Include="UraniumUI.Material" Version="2.10.0" />
+		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.10.1" />
+		<PackageReference Include="UraniumUI.Material" Version="2.10.1" />
 
 	</ItemGroup>
 

@@ -18,7 +18,7 @@
 
                 <material:StyleResource ColorsOverride="{x:Reference appColors}" BasedOn="{x:Reference appStyles}" />
 
-                <mds:MaterialStyles />
+                <!-- Define colors and brushes first -->
                 <ResourceDictionary>
                     <Color x:Key="Primary" />
                     <Color x:Key="PrimaryContainer" />
@@ -85,7 +85,11 @@
                     <SolidColorBrush x:Key="Surface4Brush" />
                     <SolidColorBrush x:Key="Surface5Brush" />
                 </ResourceDictionary>
+
+                <!-- Now reference them in MaterialStyles -->
                 <mcu:MaterialColorResourceDictionary />
+                <mds:MaterialStyles Light="#05affc" Dark="#05affc"/>
+                
                 <!-- End custom design resources -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

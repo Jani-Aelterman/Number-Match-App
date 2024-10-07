@@ -16,15 +16,18 @@ namespace NumberMatch
         private GameBackend game;
         private const int COLUMNS = 9, ROWS = 13;
         private Tuple<int, int> previousPressedButton = null; //  previous pressed button, row and column
-        private readonly Color dynamicBackgroundColor = (Color)Application.Current.Resources["Background"];
+        private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Background"] ?? Colors.Black);
         private readonly Color dynamicPrimaryColor = (Color)Application.Current.Resources["Primary"];
+        private readonly Color dynamicSecondaryColor = (Color)Application.Current.Resources["Secondary"];
+        private readonly Color dynamicTertiaryColor = (Color)Application.Current.Resources["Tertiary"];
+        //button.SetDynamicResource(Button.BackgroundProperty, "Primary");
 
         public MainPage()
         {
             InitializeComponent();
 
             // Show popup of the build
-            this.ShowPopup(new Pages.AlphaPopup());
+            //this.ShowPopup(new Pages.AlphaPopup());
 
             //this.ShowPopup(new Pages.TutorialPopup());
 
@@ -34,6 +37,8 @@ namespace NumberMatch
 #else
             MakeNumberMatchGrid(COLUMNS, ROWS);
             game = new GameBackend(COLUMNS, ROWS, this);
+
+            game.CheckStageCompletion();
 
 
             /*this.Behaviors.Add(new StatusBarBehavior
@@ -45,17 +50,21 @@ namespace NumberMatch
 
             SynchronizeGrid(game.gameData.GameGrid);
             LoadSettings();
+            //AddBtn.Padding = new Thickness(0);
         }
 
+        // Load and enable the app settings
         public void LoadSettings()
         {
+            // enable the debug button if the developer options are enabled
             if (Preferences.ContainsKey("DeveloperOptions"))
             {
                 DebugBtn.IsEnabled = Preferences.Get("DeveloperOptions", false);
                 DebugBtn.IsVisible = Preferences.Get("DeveloperOptions", false);
             }
 
-            if(Preferences.Get("OledDarkmode", false))
+            //  set the app theme
+            if (Preferences.Get("OledDarkmode", false))
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, Colors.Black);
             else
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, dynamicBackgroundColor);
@@ -73,26 +82,28 @@ namespace NumberMatch
             {
                 for (int col = 0; col < columns; col++)
                 {
-                    Button button = new Button
+                    Button tile = new Button
                     {
-                        //Text = $"Button {row * 14 + col + 1}",
-                        //Text = col.ToString(),
                         //CornerRadius = 0, //  maybe more modern with rounded corners
-                        BorderColor = dynamicPrimaryColor,
-                        BackgroundColor = dynamicBackgroundColor,
-                        TextColor = dynamicPrimaryColor,
+                        //BorderColor = dynamicPrimaryColor,
+                        //BackgroundColor = dynamicBackgroundColor,
+                        //TextColor = dynamicPrimaryColor,
                         BorderWidth = 2,
                         // set the fontsize to large
                         FontSize = 30,
                         Padding = new Thickness(0), // Remove padding
                     };
 
-                    button.Clicked += GridButtonClicked;
+                    tile.SetDynamicResource(Button.BorderColorProperty, "Primary");
+                    tile.SetDynamicResource(Button.TextColorProperty, "Primary");
+                    tile.SetDynamicResource(Button.BackgroundColorProperty, "Background");
 
-                    NumberMatchGrid.Children.Add(button);
+                    tile.Clicked += GridButtonClicked;
 
-                    Grid.SetRow(button, row);
-                    Grid.SetColumn(button, col);
+                    NumberMatchGrid.Children.Add(tile);
+
+                    Grid.SetRow(tile, row);
+                    Grid.SetColumn(tile, col);
                 }
             }
         }
@@ -130,80 +141,87 @@ namespace NumberMatch
 
         private void GridButtonClicked(object sender, EventArgs e)
         {
-            Button tile = (Button)sender;
-
-            // Uncheck button if checked, don't check for match
-            if (tile.BackgroundColor == dynamicPrimaryColor)
+            try
             {
-                tile.BackgroundColor = dynamicBackgroundColor;
-                tile.TextColor = dynamicPrimaryColor;
+                Button tile = (Button)sender;
 
-                if(Grid.GetRow(tile) == previousPressedButton.Item1 && Grid.GetColumn(tile) == previousPressedButton.Item2)
+                // Uncheck button if checked, don't check for match
+                if (tile.BackgroundColor == dynamicPrimaryColor)
                 {
-                    previousPressedButton = null;
-                }
-            }
+                    tile.BackgroundColor = dynamicBackgroundColor;
+                    tile.TextColor = dynamicPrimaryColor;
 
-            // Check for match if the button is initialized
-            else if (tile.Text != null)
-            {
-                int row = Grid.GetRow(tile);
-                int col = Grid.GetColumn(tile);
-
-                tile.BackgroundColor = dynamicPrimaryColor;
-                tile.TextColor = dynamicBackgroundColor;
-
-                if(previousPressedButton == null)
-                {
-                    previousPressedButton = new Tuple<int, int>(row, col);
-                }
-                else
-                {
-                    if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
+                    if (Grid.GetRow(tile) == previousPressedButton.Item1 && Grid.GetColumn(tile) == previousPressedButton.Item2)
                     {
                         previousPressedButton = null;
+                    }
+                }
 
+                // Check for match if the button is initialized
+                else if (tile.Text != null)
+                {
+                    int row = Grid.GetRow(tile);
+                    int col = Grid.GetColumn(tile);
 
+                    tile.BackgroundColor = dynamicPrimaryColor;
+                    tile.TextColor = dynamicBackgroundColor;
 
-                        // temp
-                        foreach (Button b in NumberMatchGrid.Children)
-                        {
-                            if (b.BackgroundColor == dynamicPrimaryColor)
-                            {
-                                b.BackgroundColor = dynamicBackgroundColor;
-                                b.TextColor = dynamicPrimaryColor;
-                            }
-                        }
-
-
-
-                        game.RemoveEmptyRowsAndShiftUp();
-
-                        SynchronizeGrid(game.GetGameGrid());
-
-                        LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
-
-                        ///////////ShowToast("Matched");
+                    if (previousPressedButton == null)
+                    {
+                        previousPressedButton = new Tuple<int, int>(row, col);
                     }
                     else
                     {
-                        previousPressedButton = null;
-
-                        // uncheck the selected tiles
-                        foreach (Button b in NumberMatchGrid.Children)
+                        if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
                         {
-                            if (b.BackgroundColor == dynamicPrimaryColor)
-                            {
-                                b.BackgroundColor = dynamicBackgroundColor;
-                                b.TextColor = dynamicPrimaryColor;
-                            }
-                        }
+                            previousPressedButton = null;
 
-                        ShowToast("No match found");
+
+
+                            // temp
+                            foreach (Button b in NumberMatchGrid.Children)
+                            {
+                                if (b.BackgroundColor == dynamicPrimaryColor)
+                                {
+                                    b.BackgroundColor = dynamicBackgroundColor;
+                                    b.TextColor = dynamicPrimaryColor;
+                                }
+                            }
+
+
+                            game.CheckStageCompletion();
+                            game.RemoveEmptyRowsAndShiftUp();
+
+                            SynchronizeGrid(game.GetGameGrid());
+
+                            LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
+
+                            ///////////ShowToast("Matched");
+                        }
+                        else
+                        {
+                            previousPressedButton = null;
+
+                            // uncheck the selected tiles
+                            foreach (Button b in NumberMatchGrid.Children)
+                            {
+                                if (b.BackgroundColor == dynamicPrimaryColor)
+                                {
+                                    b.BackgroundColor = dynamicBackgroundColor;
+                                    b.TextColor = dynamicPrimaryColor;
+                                }
+                            }
+
+                            ShowToast("No match found");
+                        }
                     }
                 }
-
-                game.SaveData();
+                
+                game.SaveGameData();
+            }
+            catch (Exception ex)
+            {
+                ShowToast(ex.Message);
             }
         }
 
@@ -224,7 +242,11 @@ namespace NumberMatch
 
         private void HelpButtonClicked(object sender, EventArgs e)
         {
-            this.ShowPopup(new Pages.TutorialPopup());
+            //this.ShowPopup(new Pages.TutorialPopup());
+
+            int amountOfNumbers = game.gameData.GameGrid.SelectMany(x => x).Count(n => n != 0);
+
+            ShowToast($"Amount of numbers: {amountOfNumbers}");
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)
@@ -237,9 +259,10 @@ namespace NumberMatch
             game.gameData.NumbersMatched = 0;
             game.gameData.Stage = 0;
             SynchronizeGrid(game.gameData.GameGrid);
-            game.SaveData();
+            game.SaveGameData();
         }
 
+        // debug option
         public void ShowBackendGrid(List<List<int>> grid)
         {
             this.ShowPopup(new Pages.Popups.gridPopup(grid));

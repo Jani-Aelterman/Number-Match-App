@@ -9,20 +9,25 @@ using Microsoft.Maui.Storage;
 using Microsoft.Maui.Controls;
 using NumberMatch.Data;
 using static NumberMatch.Helpers.Tools;
+using static Java.Util.Jar.Attributes;
+using Android.Service.Notification;
+using System.Linq.Expressions;
 
 namespace NumberMatch.Helpers
 {
     public class GameBackend
     {
         public GameData gameData { get; private set; } = new GameData();
-
+        private Tuple<int, int> gridsize;
         private MainPage page;
 
         public GameBackend(int columns, int rows, MainPage mainpage)
         {
             this.page = mainpage;
 
-            LoadData(columns, rows);
+            gridsize = new Tuple<int, int>(columns, rows);
+
+            LoadGameData(columns, rows);
         }
 
         public List<List<int>> GetGameGrid()
@@ -46,20 +51,40 @@ namespace NumberMatch.Helpers
 
                 gameData.GameGrid.Add(row);
             }
+
+            // removes a number from the grid if the amount of numbers isn't even
+            int amountOfNumbers = gameData.GameGrid.SelectMany(x => x).Count(n => n != 0);
+
+            if(amountOfNumbers % 2 != 0)
+            {
+                int row = random.Next(0, 5);
+                int col = random.Next(0, columns);
+
+                while (gameData.GameGrid[row][col] == 0)
+                {
+                    row = random.Next(0, 5);
+                    col = random.Next(0, columns);
+                }
+
+                gameData.GameGrid[row][col] = 0;
+                amountOfNumbers--;
+            }
+
+            ShowToast($"Amount of numbers: {amountOfNumbers}");
         }
 
         //  save game data
-        public void SaveData()
+        public void SaveGameData()
         {
             Preferences.Set("numbersMatched", gameData.NumbersMatched);
             Preferences.Set("stage", gameData.Stage);
             Preferences.Set("gameGrid", ConvertGameGridToJsonString(gameData.GameGrid));
         }
 
-        public void LoadData(int columns, int rows)
+        public void LoadGameData(int columns, int rows)
         {
             gameData.NumbersMatched = Preferences.Get("numbersMatched", 0);
-            gameData.Stage = Preferences.Get("stage", 0);
+            gameData.Stage = Preferences.Get("stage", 1);
             string gameGridJson = Preferences.Get("gameGrid", "");
 
             if (string.IsNullOrEmpty(gameGridJson))
@@ -89,7 +114,7 @@ namespace NumberMatch.Helpers
             if ((gameData.GameGrid[row1][col1] == gameData.GameGrid[row2][col2]) || (gameData.GameGrid[row1][col1] + gameData.GameGrid[row2][col2] == 10))
             {
                 //  check if the numbers are at the right position to match
-                if (CheckAdjacent(row1, col1, row2, col2))
+                if (CheckAdjacent(row1, col1, row2, col2) || CheckForMatch(row1, col1, row2, col2))
                 {
                     //  remove the numbers from the grid
                     gameData.GameGrid[row1][col1] = 0;
@@ -170,6 +195,30 @@ namespace NumberMatch.Helpers
             return true;
         }
 
+        private bool CheckForMatch(int row1, int col1, int row2, int col2)
+        {
+            //check if the rows are next to each other  and the numbers aren't on the same row
+            if(Math.Abs(row1 - row2) == 1) // check if the rows are next to eachother
+            {
+                int higherRow = Math.Min(row1, row2);
+                int lowerRow = Math.Max(row1, row2);
+                int colHigherRow = (row1 > row2) ? col2 : col1;
+                int colLowerRow = (row1 < row2) ? col2 : col1;
+
+                // check if the numbers from the columns before the higher rows selected column are 0
+                if (gameData.GameGrid[higherRow].Take(colHigherRow).All(x => x == 0))
+                {
+                    // check if the numbers from the columns after the lower rows selected column are 0
+                    if (gameData.GameGrid[lowerRow].Skip(colLowerRow+1).All(x => x == 0))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         /*public void RemoveEmptyRowsAndShiftUp()
         {
             for (int i = 0; i < gameData.GameGrid.Count; i++)
@@ -188,49 +237,60 @@ namespace NumberMatch.Helpers
             }
         }
 
-        // add numbers to the grid containing only numbers that are already in the grid
-        /*public void AddNumbersToGrid()
+        public void CheckStageCompletion()
         {
-            Random random = new Random();
-
-            int rowsToAdd = 5 - gameData.GameGrid.Count;
-
-            // If rowsToAdd is odd, increment it by 1 to make it even
-            /*if (rowsToAdd % 2 != 0)
+            // check if every number is matched and every number in the grid is 0
+            if (gameData.GameGrid.All(x => x.All(y => y == 0)) || !gameData.GameGrid.Any())
             {
-                rowsToAdd++;
-            }*
-
-            for (int i = 0; i < rowsToAdd; i++)
-            {
-                List<int> row = new List<int>();
-
-                for (int j = 0; j < gameData.GameGrid[0].Count; j++)
-                {
-                    int number = random.Next(1, 10);
-
-                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                        number = random.Next(1, 10);
-
-                    row.Add(number);
-                }
-
-                // If the row contains an odd number of elements, add one more
-                if (row.Count % 2 != 0)
-                {
-                    int number = random.Next(1, 10);
-
-                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                        number = random.Next(1, 10);
-
-                    row.Add(number);
-                }
-
-                gameData.GameGrid.Insert(0, row);
+                //gameData.NumbersMatched = 0;
+                gameData.Stage++;
+                InitializeGrid(gridsize.Item1, gridsize.Item2);
             }
-        }*/
+        }
 
-        public void AddNumbersToGrid()
+            // add numbers to the grid containing only numbers that are already in the grid
+            /*public void AddNumbersToGrid()
+            {
+                Random random = new Random();
+
+                int rowsToAdd = 5 - gameData.GameGrid.Count;
+
+                // If rowsToAdd is odd, increment it by 1 to make it even
+                /*if (rowsToAdd % 2 != 0)
+                {
+                    rowsToAdd++;
+                }*
+
+                for (int i = 0; i < rowsToAdd; i++)
+                {
+                    List<int> row = new List<int>();
+
+                    for (int j = 0; j < gameData.GameGrid[0].Count; j++)
+                    {
+                        int number = random.Next(1, 10);
+
+                        while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
+                            number = random.Next(1, 10);
+
+                        row.Add(number);
+                    }
+
+                    // If the row contains an odd number of elements, add one more
+                    if (row.Count % 2 != 0)
+                    {
+                        int number = random.Next(1, 10);
+
+                        while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
+                            number = random.Next(1, 10);
+
+                        row.Add(number);
+                    }
+
+                    gameData.GameGrid.Insert(0, row);
+                }
+            }*/
+
+            public void AddNumbersToGrid()
         {
             Random random = new Random();
             int maxColumns = gameData.GameGrid.FirstOrDefault().Count; // Define the maximum number of columns

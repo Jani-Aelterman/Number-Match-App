@@ -22,7 +22,10 @@ namespace NumberMatch
                 })
                 .UseUraniumUI()
                 .UseUraniumUIMaterial()
-                .UseMaterialColors()
+                .UseMaterialColors(options =>
+                {
+                    options.FallbackSeed = 0x05affc;
+                })
                 .UseMaterialComponents();
 
 #if DEBUG

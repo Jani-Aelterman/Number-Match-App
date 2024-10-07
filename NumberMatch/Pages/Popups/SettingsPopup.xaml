@@ -3,17 +3,39 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
            xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+           xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+           xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
            x:Class="NumberMatch.Pages.Popups.SettingsPopup"
            CanBeDismissedByTappingOutsideOfPopup="True"
            Color="Transparent">
     <Grid>
-        <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
+        <Frame x:Name="PopupBackground" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
             <VerticalStackLayout VerticalOptions="Center">
-                <Label Text="Settings"
-                       FontSize="32"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       TextColor="{DynamicResource Secondary}"/>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0">
+                        <Image.Source>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Settings}" Color="{DynamicResource Secondary}" />
+                        </Image.Source>
+                    </Image>
+
+                    <Label Text="Settings"
+                           FontSize="32"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           TextColor="{DynamicResource Secondary}"
+                           Grid.Column="1"/>
+
+                </Grid>
 
                 <Grid x:Name="Grid" ColumnSpacing="100">
                     <Grid.RowDefinitions>
@@ -36,18 +58,17 @@
 
                     <mdc:Switch
                         x:Name="OledDarkmode"
-                        ThumbColor="{DynamicResource Primary}"
-                        IconColor="{DynamicResource Secondary}"
-                        StateLayerColor="{DynamicResource Secondary}"
+                        ThumbColor="{DynamicResource Secondary}"
                         OutlineColor="{DynamicResource Secondary}"
+                        BackgroundColor="{DynamicResource Background}"
                         Grid.Row="0"
                         Grid.Column="1"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
                         SelectedChanged="OledDarkmodeChanged"/>
 
-                    
-                    <!-- andere instelling -->
+
+                    <!-- Developer options -->
                     <Label Text="Developer options"
                            Grid.Row="1"
                            Grid.Column="0"
@@ -57,16 +78,50 @@
 
                     <mdc:Switch
                         x:Name="DeveloperOptions"
-                        ThumbColor="{DynamicResource Primary}"
+                        ThumbColor="{DynamicResource Secondary}"
                         IconColor="{DynamicResource Secondary}"
                         StateLayerColor="{DynamicResource Secondary}"
                         OutlineColor="{DynamicResource Secondary}"
+                        BackgroundColor="{DynamicResource Background}"
                         Grid.Row="1"
                         Grid.Column="1"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
                         SelectedChanged="DeveloperOptionsChanged"/>
+
+                    <!-- <buttons:SfSwitch
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"/> -->
                 </Grid>
+
+                <Button x:Name="btnBackendGrid"
+                        IsVisible="False"
+                        StyleClass="FilledButton"
+                        BackgroundColor="{DynamicResource InversePrimary}"
+                        TextColor="{DynamicResource Secondary}"
+                        Margin="5"
+                        Text="Show Backend Grid"
+                        Clicked="developerBtnClicked"/>
+
+                <Button x:Name="btnRemoveRows"
+                        IsVisible="False"
+                        StyleClass="FilledButton"
+                        BackgroundColor="{DynamicResource InversePrimary}"
+                        TextColor="{DynamicResource Secondary}"
+                        Margin="5"
+                        Text="Remove Empty Rows"
+                        Clicked="developerBtnClicked"/>
+
+                <Button x:Name="btnStageCompletion"
+                        IsVisible="False"
+                        StyleClass="FilledButton"
+                        BackgroundColor="{DynamicResource InversePrimary}"
+                        TextColor="{DynamicResource Secondary}"
+                        Margin="5"
+                        Text="Check For Stage Completion"
+                        Clicked="developerBtnClicked"/>
             </VerticalStackLayout>
         </Frame>
     </Grid>
