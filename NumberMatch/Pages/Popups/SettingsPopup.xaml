@@ -103,7 +103,7 @@
                         TextColor="{DynamicResource Secondary}"
                         Margin="5"
                         Text="Show Backend Grid"
-                        Clicked="developerBtnClicked"/>
+                        Clicked="developerBtnBackendGridClicked"/>
 
                 <Button x:Name="btnRemoveRows"
                         IsVisible="False"
@@ -112,7 +112,7 @@
                         TextColor="{DynamicResource Secondary}"
                         Margin="5"
                         Text="Remove Empty Rows"
-                        Clicked="developerBtnClicked"/>
+                        Clicked="developerBtnRemoveRowsClicked"/>
 
                 <Button x:Name="btnStageCompletion"
                         IsVisible="False"
@@ -121,7 +121,7 @@
                         TextColor="{DynamicResource Secondary}"
                         Margin="5"
                         Text="Check For Stage Completion"
-                        Clicked="developerBtnClicked"/>
+                        Clicked="developerBtnStageCompletionClicked"/>
             </VerticalStackLayout>
         </Frame>
     </Grid>

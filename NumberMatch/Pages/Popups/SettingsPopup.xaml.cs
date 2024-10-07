@@ -4,6 +4,7 @@ using NumberMatch.Helpers;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using static Java.Util.Jar.Attributes;
 
 namespace NumberMatch.Pages.Popups;
 
@@ -64,17 +65,18 @@ public partial class SettingsPopup : Popup
         //LoadTheme();
     }
 
-    private void developerBtnClicked(object sender, EventArgs e)
+    private void developerBtnBackendGridClicked(object sender, EventArgs e)
     {
-        Tools.ShowToast(sender.ToString());
+        page.ShowPopup(new Pages.Popups.gridPopup(page.game.GetGameGrid()));
+    }
 
-        //Button btn = (Button)sender;
-        //this.label1.Text = (btn.Name + " pressed");
+    private void developerBtnRemoveRowsClicked(object sender, EventArgs e)
+    {
+        page.game.RemoveEmptyRowsAndShiftUp();
+    }
 
-
-        //show the name of the pressed button
-
-
-        //this.page.developerOption(sender.ToString);
+    private void developerBtnStageCompletionClicked(object sender, EventArgs e)
+    {
+        page.game.CheckStageCompletion();
     }
 }

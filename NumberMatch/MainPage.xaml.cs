@@ -13,7 +13,7 @@ namespace NumberMatch
 {
     public partial class MainPage : ContentPage
     {
-        private GameBackend game;
+        public GameBackend game { private set; get; }
         private const int COLUMNS = 9, ROWS = 13;
         private Tuple<int, int> previousPressedButton = null; //  previous pressed button, row and column
         private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Background"] ?? Colors.Black);
@@ -56,13 +56,6 @@ namespace NumberMatch
         // Load and enable the app settings
         public void LoadSettings()
         {
-            // enable the debug button if the developer options are enabled
-            if (Preferences.ContainsKey("DeveloperOptions"))
-            {
-                DebugBtn.IsEnabled = Preferences.Get("DeveloperOptions", false);
-                DebugBtn.IsVisible = Preferences.Get("DeveloperOptions", false);
-            }
-
             //  set the app theme
             if (Preferences.Get("OledDarkmode", false))
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, Colors.Black);
@@ -242,11 +235,7 @@ namespace NumberMatch
 
         private void HelpButtonClicked(object sender, EventArgs e)
         {
-            //this.ShowPopup(new Pages.TutorialPopup());
-
-            int amountOfNumbers = game.gameData.GameGrid.SelectMany(x => x).Count(n => n != 0);
-
-            ShowToast($"Amount of numbers: {amountOfNumbers}");
+            this.ShowPopup(new Pages.TutorialPopup());
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)

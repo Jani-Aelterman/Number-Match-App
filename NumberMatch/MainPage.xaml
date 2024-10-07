@@ -58,7 +58,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <!-- <ColumnDefinition Width="Auto"/> -->
                     <!-- <ColumnDefinition Width="Auto"/> -->
                 </Grid.ColumnDefinitions>
 
@@ -75,14 +75,14 @@
                                 IconColor="Black"
                                 BackgroundColor="White"/>-->
 
-                <Button x:Name="HelpBtn"
+                <!-- <Button x:Name="HelpBtn"
                     Text="Help"
                     Grid.Row="0"
                     Grid.Column="3"
                     Clicked="HelpButtonClicked"
                     BackgroundColor="{DynamicResource Primary}"
                     TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                    CornerRadius="20" />
+                    CornerRadius="20" /> -->
 
                 <Button x:Name="ResetBtn"
                         Text="Reset"
@@ -92,18 +92,6 @@
                         BackgroundColor="{DynamicResource Primary}"
                         TextColor="{DynamicResource OnPrimary}"
                         CornerRadius="20"/>
-
-                <Button x:Name="DebugBtn"
-                        Text="Debug"
-                        IsEnabled="False"
-                        IsVisible="False"
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Clicked="DebugButtonClicked"
-                        BackgroundColor="{DynamicResource Primary}"
-                        BorderColor="{DynamicResource Primary}"
-                        TextColor="{DynamicResource Primary}"    
-                        StyleClass="OutlinedButton"/>
 
             </Grid>
 
