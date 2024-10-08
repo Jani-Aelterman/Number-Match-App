@@ -4,7 +4,6 @@ using NumberMatch.Helpers;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
-using static Java.Util.Jar.Attributes;
 
 namespace NumberMatch.Pages.Popups;
 
@@ -49,6 +48,7 @@ public partial class SettingsPopup : Popup
             btnBackendGrid.IsVisible = DeveloperOptions.IsSelected;
             btnRemoveRows.IsVisible = DeveloperOptions.IsSelected;
             btnStageCompletion.IsVisible = DeveloperOptions.IsSelected;
+            btnRefreshGridColors.IsVisible = DeveloperOptions.IsSelected;
         }
     }
 
@@ -78,5 +78,10 @@ public partial class SettingsPopup : Popup
     private void developerBtnStageCompletionClicked(object sender, EventArgs e)
     {
         page.game.CheckStageCompletion();
+    }
+
+    private void developerBtnRefreshGridColorsClicked(object sender, EventArgs e)
+    {
+        page.RefreshGridColors();
     }
 }

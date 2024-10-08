@@ -59,7 +59,6 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <!-- <ColumnDefinition Width="Auto"/> -->
-                    <!-- <ColumnDefinition Width="Auto"/> -->
                 </Grid.ColumnDefinitions>
 
                 <Button x:Name="AddBtn"

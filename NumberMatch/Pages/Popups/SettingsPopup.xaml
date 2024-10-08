@@ -122,6 +122,15 @@
                         Margin="5"
                         Text="Check For Stage Completion"
                         Clicked="developerBtnStageCompletionClicked"/>
+
+                <Button x:Name="btnRefreshGridColors"
+                        IsVisible="False"
+                        StyleClass="FilledButton"
+                        BackgroundColor="{DynamicResource InversePrimary}"
+                        TextColor="{DynamicResource Secondary}"
+                        Margin="5"
+                        Text="RefreshGridColors"
+                        Clicked="developerBtnRefreshGridColorsClicked"/>
             </VerticalStackLayout>
         </Frame>
     </Grid>

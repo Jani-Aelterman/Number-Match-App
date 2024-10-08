@@ -9,8 +9,6 @@ using Microsoft.Maui.Storage;
 using Microsoft.Maui.Controls;
 using NumberMatch.Data;
 using static NumberMatch.Helpers.Tools;
-using static Java.Util.Jar.Attributes;
-using Android.Service.Notification;
 using System.Linq.Expressions;
 
 namespace NumberMatch.Helpers
@@ -19,27 +17,29 @@ namespace NumberMatch.Helpers
     {
         public GameData gameData { get; private set; } = new GameData();
         private Tuple<int, int> gridsize;
-        private MainPage page;
+        //private readonly MainPage page;
 
-        public GameBackend(int columns, int rows, MainPage mainpage)
+        public GameBackend(int columns, int rows/*, MainPage mainpage*/)
         {
-            this.page = mainpage;
+            //this.page = mainpage;
 
             gridsize = new Tuple<int, int>(columns, rows);
 
             LoadGameData(columns, rows);
         }
 
+        // getter for the gamegrid used to sync with the grid in the mainpage
         public List<List<int>> GetGameGrid()
         {
             return gameData.GameGrid;
         }
 
+        //  initialize the grid with random numbers
         public void InitializeGrid(int columns, int rows)
         {
             Random random = new Random();
 
-            // Ensure gameData.GameGrid is initialized
+            // Remove existing grid
             gameData.GameGrid = new List<List<int>>();
 
             for (int i = 0; i < 5; i++)
@@ -67,10 +67,10 @@ namespace NumberMatch.Helpers
                 }
 
                 gameData.GameGrid[row][col] = 0;
-                amountOfNumbers--;
+                //amountOfNumbers--;
             }
 
-            ShowToast($"Amount of numbers: {amountOfNumbers}");
+            //ShowToast($"Amount of numbers: {amountOfNumbers}");
         }
 
         //  save game data
@@ -81,6 +81,7 @@ namespace NumberMatch.Helpers
             Preferences.Set("gameGrid", ConvertGameGridToJsonString(gameData.GameGrid));
         }
 
+        //  load game data
         public void LoadGameData(int columns, int rows)
         {
             gameData.NumbersMatched = Preferences.Get("numbersMatched", 0);
@@ -97,14 +98,16 @@ namespace NumberMatch.Helpers
             }
         }
 
+        //  convert the game grid to a json string
         private static string ConvertGameGridToJsonString(List<List<int>> gameGrid)
         {
             return JsonConvert.SerializeObject(gameGrid);
         }
 
-        private List<List<int>> ConvertJsonStringToGameGrid(string testGridJsonString)
+        //  convert the json string to a game grid
+        private List<List<int>> ConvertJsonStringToGameGrid(string GridJsonString)
         {
-            return JsonConvert.DeserializeObject<List<List<int>>>(testGridJsonString);
+            return JsonConvert.DeserializeObject<List<List<int>>>(GridJsonString);
         }
 
         //  check if the numbers match, gets the position of the numbers as arguments
@@ -121,6 +124,9 @@ namespace NumberMatch.Helpers
                     gameData.GameGrid[row2][col2] = 0;
 
                     gameData.NumbersMatched ++;
+
+                    RemoveEmptyRowsAndShiftUp();
+                    CheckStageCompletion();
 
                     return true;
                 }
@@ -140,9 +146,6 @@ namespace NumberMatch.Helpers
 
             return false;
         }*/
-
-
-
 
         private bool CheckAdjacent(int row1, int col1, int row2, int col2)
         {
@@ -177,7 +180,9 @@ namespace NumberMatch.Helpers
                 if (row2 < row1)
                 {
                     (row2, row1) = (row1, row2);
-                    (col2, col1) = (col1, col2);
+                    ////////////(col2, col1) = (col1, col2); // problem?
+                    if(col2 < col1)
+                        (col2, col1) = (col1, col2);
                 }
 
                 // Check the tiles between the two given tiles
@@ -209,7 +214,7 @@ namespace NumberMatch.Helpers
                 if (gameData.GameGrid[higherRow].Take(colHigherRow).All(x => x == 0))
                 {
                     // check if the numbers from the columns after the lower rows selected column are 0
-                    if (gameData.GameGrid[lowerRow].Skip(colLowerRow+1).All(x => x == 0))
+                    if (gameData.GameGrid[lowerRow].Skip(colLowerRow + 1).All(x => x == 0))
                     {
                         return true;
                     }
@@ -219,30 +224,20 @@ namespace NumberMatch.Helpers
             return false;
         }
 
-        /*public void RemoveEmptyRowsAndShiftUp()
-        {
-            for (int i = 0; i < gameData.GameGrid.Count; i++)
-                if (gameData.GameGrid[i].All(x => x == 0))
-                    gameData.GameGrid.RemoveAt(i);
-        }*/
-
+        //  remove empty rows and shift the rows up
         public void RemoveEmptyRowsAndShiftUp()
         {
             for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
-            {
                 if (gameData.GameGrid[i].All(x => x == 0))
-                {
                     gameData.GameGrid.RemoveAt(i);
-                }
-            }
         }
 
+        // Check if the grid is empty and add new numbers to the grid and increment the stage
         public void CheckStageCompletion()
         {
             // check if every number is matched and every number in the grid is 0
             if (gameData.GameGrid.All(x => x.All(y => y == 0)) || !gameData.GameGrid.Any())
             {
-                //gameData.NumbersMatched = 0;
                 gameData.Stage++;
                 InitializeGrid(gridsize.Item1, gridsize.Item2);
             }
@@ -290,11 +285,13 @@ namespace NumberMatch.Helpers
                 }
             }*/
 
-            public void AddNumbersToGrid()
+        public void AddNumbersToGrid()
         {
             Random random = new Random();
-            int maxColumns = gameData.GameGrid.FirstOrDefault().Count; // Define the maximum number of columns
-            int rowsToAdd = 5 - gameData.GameGrid.Count;
+            int maxColumns = gridsize.Item1;
+            int maxRows = gridsize.Item2;
+            //int maxColumns = gameData.GameGrid.FirstOrDefault().Count; // Define the maximum number of columns
+            int rowsToAdd = (/*5*/ maxRows - gameData.GameGrid.Count) / 3;
 
             for (int i = 0; i < rowsToAdd; i++)
             {

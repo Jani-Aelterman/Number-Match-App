@@ -19,6 +19,6 @@ namespace NumberMatch.Data
             set => GameGridJson = JsonConvert.SerializeObject(value);
         }*/
 
-        public List<List<int>> GameGrid;
+        public List<List<int>> GameGrid = new List<List<int>>();
     }
 }

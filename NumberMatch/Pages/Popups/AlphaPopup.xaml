@@ -19,14 +19,6 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     
-                    <!-- <Button
-                        Grid.Column="0"
-                        Text="Cancel"
-                        BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                        StyleClass="FilledButton"
-                        x:Name="CancelButton"/> -->
-                    
                     <mdc:Button
                         Grid.Column="1"
                         Text="OK"
