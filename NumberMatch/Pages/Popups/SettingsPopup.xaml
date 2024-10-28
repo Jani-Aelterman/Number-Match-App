@@ -88,12 +88,6 @@
                         HorizontalOptions="End"
                         VerticalOptions="Center"
                         SelectedChanged="DeveloperOptionsChanged"/>
-
-                    <!-- <buttons:SfSwitch
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center"/> -->
                 </Grid>
 
                 <Button x:Name="btnBackendGrid"

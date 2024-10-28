@@ -174,6 +174,7 @@ namespace NumberMatch.Helpers
                         return false;
             }
             // Check if the tiles are on the same diagonal
+            //everything in the if needs checking, condition is good
             else if (Math.Abs(row1 - row2) == Math.Abs(col1 - col2))
             {
                 // Ensure row1 is the topmost row
@@ -242,49 +243,8 @@ namespace NumberMatch.Helpers
                 InitializeGrid(gridsize.Item1, gridsize.Item2);
             }
         }
-
-            // add numbers to the grid containing only numbers that are already in the grid
-            /*public void AddNumbersToGrid()
-            {
-                Random random = new Random();
-
-                int rowsToAdd = 5 - gameData.GameGrid.Count;
-
-                // If rowsToAdd is odd, increment it by 1 to make it even
-                /*if (rowsToAdd % 2 != 0)
-                {
-                    rowsToAdd++;
-                }*
-
-                for (int i = 0; i < rowsToAdd; i++)
-                {
-                    List<int> row = new List<int>();
-
-                    for (int j = 0; j < gameData.GameGrid[0].Count; j++)
-                    {
-                        int number = random.Next(1, 10);
-
-                        while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                            number = random.Next(1, 10);
-
-                        row.Add(number);
-                    }
-
-                    // If the row contains an odd number of elements, add one more
-                    if (row.Count % 2 != 0)
-                    {
-                        int number = random.Next(1, 10);
-
-                        while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                            number = random.Next(1, 10);
-
-                        row.Add(number);
-                    }
-
-                    gameData.GameGrid.Insert(0, row);
-                }
-            }*/
-
+        
+        // needs work
         public void AddNumbersToGrid()
         {
             Random random = new Random();
