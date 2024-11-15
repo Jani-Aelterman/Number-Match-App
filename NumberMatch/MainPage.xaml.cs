@@ -33,10 +33,10 @@ namespace NumberMatch
 
 #if WINDOWS
             MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
-            game = new GameBackend(ROWS + 8, COLUMNS + 5/*, this*/);
+            game = new GameBackend(ROWS + 8, COLUMNS + 5, this);
 #else
             MakeNumberMatchGrid(COLUMNS, ROWS);
-            game = new GameBackend(COLUMNS, ROWS/*, this*/);
+            game = new GameBackend(COLUMNS, ROWS, this);
 
             game.CheckStageCompletion();
 
@@ -132,7 +132,7 @@ namespace NumberMatch
             LabelStage.Text = "Stage: " + game.gameData.Stage;
         }
 
-        private void GridButtonClicked(object sender, EventArgs e)
+        private async void GridButtonClicked(object sender, EventArgs e)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace NumberMatch
                     }
                     else // second tile pressed
                     {
-                        if (game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
+                        if (await game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
                         {
                             SynchronizeGrid(game.GetGameGrid());
 
@@ -237,5 +237,44 @@ namespace NumberMatch
         {
             this.ShowPopup(new Pages.Popups.SettingsPopup(this));
         }
+        
+        
+        
+        
+        public async Task AnimateWaveEffect(int rowIndex)
+        {
+            var row = NumberMatchGrid[rowIndex];
+            for (int col = 0; col < COLUMNS; col++)
+            {
+                // Assuming you have a method to get the UI element for a specific cell
+                var cell = GetCellUIElement(rowIndex, col);
+                if (cell != null)
+                {
+                    await cell.TranslateTo(0, -10, 50); // Move up
+                    await cell.TranslateTo(0, 10, 50);  // Move down
+                    await cell.TranslateTo(0, 0, 50);   // Move back to original position
+                }
+            }
+        }
+
+        // Example method to get the UI element for a specific cell
+        private View GetCellUIElement(int row, int col)
+        {
+            // Implement this method to return the UI element for the given cell
+            // This is just a placeholder implementation
+            //return null;
+            
+            // Assuming NumberMatchGrid is a Grid defined in MainPage.xaml
+            // and each cell is added with a specific name or tag to identify its position
+            foreach (Microsoft.Maui.Controls.View child in NumberMatchGrid.Children)
+            {
+                if (NumberMatchGrid.GetRow(child) == row && NumberMatchGrid.GetColumn(child) == col)
+                {
+                    return child;
+                }
+            }
+            return null;
+        }
+        
     }
 }

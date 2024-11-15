@@ -17,11 +17,11 @@ namespace NumberMatch.Helpers
     {
         public GameData gameData { get; private set; } = new GameData();
         private Tuple<int, int> gridsize;
-        //private readonly MainPage page;
+        private readonly MainPage page;
 
-        public GameBackend(int columns, int rows/*, MainPage mainpage*/)
+        public GameBackend(int columns, int rows, MainPage mainpage)
         {
-            //this.page = mainpage;
+            this.page = mainpage;
 
             gridsize = new Tuple<int, int>(columns, rows);
 
@@ -111,7 +111,7 @@ namespace NumberMatch.Helpers
         }
 
         //  check if the numbers match, gets the position of the numbers as arguments
-        public bool CheckMatch(int row1, int col1, int row2, int col2)
+        public async Task<bool> CheckMatch(int row1, int col1, int row2, int col2)
         {
             //  check if the numbers match
             if ((gameData.GameGrid[row1][col1] == gameData.GameGrid[row2][col2]) || (gameData.GameGrid[row1][col1] + gameData.GameGrid[row2][col2] == 10))
@@ -125,7 +125,7 @@ namespace NumberMatch.Helpers
 
                     gameData.NumbersMatched ++;
 
-                    RemoveEmptyRowsAndShiftUp();
+                    await RemoveEmptyRowsAndShiftUp();
                     CheckStageCompletion();
 
                     return true;
@@ -226,12 +226,12 @@ namespace NumberMatch.Helpers
         }
 
         //  remove empty rows and shift the rows up
-        public void RemoveEmptyRowsAndShiftUp()
+        /*public void RemoveEmptyRowsAndShiftUp()
         {
             for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
                 if (gameData.GameGrid[i].All(x => x == 0))
                     gameData.GameGrid.RemoveAt(i);
-        }
+        }*/
 
         // Check if the grid is empty and add new numbers to the grid and increment the stage
         public void CheckStageCompletion()
@@ -241,6 +241,7 @@ namespace NumberMatch.Helpers
             {
                 gameData.Stage++;
                 InitializeGrid(gridsize.Item1, gridsize.Item2);
+                ShowToast("Stage completed!");
             }
         }
         
@@ -250,8 +251,7 @@ namespace NumberMatch.Helpers
             Random random = new Random();
             int maxColumns = gridsize.Item1;
             int maxRows = gridsize.Item2;
-            //int maxColumns = gameData.GameGrid.FirstOrDefault().Count; // Define the maximum number of columns
-            int rowsToAdd = (/*5*/ maxRows - gameData.GameGrid.Count) / 3;
+            int rowsToAdd = (maxRows - gameData.GameGrid.Count) / 3;
 
             for (int i = 0; i < rowsToAdd; i++)
             {
@@ -277,10 +277,131 @@ namespace NumberMatch.Helpers
 
                     row.Add(number);
                 }
+                
+                if (i == rowsToAdd - 1)
+                {
+                    //int number = random.Next(1, 10);
 
-                gameData.GameGrid.Insert(0, row);
+                    //while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
+                        //number = random.Next(1, 10);
+
+                    //row.Add(number);
+                    
+                    // check if the total amount of numbers in the grid is even and remove a number from the row if it isn't
+                    int amountOfNumbers = gameData.GameGrid.SelectMany(x => x).Count(n => n != 0);
+                    int amountOfRowNumbers = row.Count(n => n != 0);
+                    
+                    if ((amountOfNumbers % 2 != 0 && amountOfRowNumbers % 2 == 0) || (amountOfNumbers % 2 == 0 && amountOfRowNumbers % 2 != 0))
+                    {
+                        int col = random.Next(0, maxColumns);
+
+                        while (row[col] == 0)
+                            col = random.Next(0, maxColumns);
+
+                        row[col] = 0;
+                    }
+                }
+                
+                gameData.GameGrid.Add(row);
             }
         }
+        
+        
+        
+        
+        /*public async Task AnimateWaveEffect(int rowIndex)
+        {
+            var row = gameData.GameGrid[rowIndex];
+            for (int col = 0; col < row.Count; col++)
+            {
+                // Assuming you have a method to get the UI element for a specific cell
+                var cell = GetCellUIElement(rowIndex, col);
+                if (cell != null)
+                {
+                    await cell.TranslateTo(0, -10, 100); // Move up
+                    await cell.TranslateTo(0, 10, 100);  // Move down
+                    await cell.TranslateTo(0, 0, 100);   // Move back to original position
+                }
+            }
+        }*/
+
+        public async Task RemoveEmptyRowsAndShiftUp()
+        {
+            for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
+            {
+                if (gameData.GameGrid[i].All(x => x == 0))
+                {
+                    await page.AnimateWaveEffect(i);
+                    gameData.GameGrid.RemoveAt(i);
+                }
+            }
+        }
+
+        // Example method to get the UI element for a specific cell
+        /*private View GetCellUIElement(int row, int col)
+        {
+            // Implement this method to return the UI element for the given cell
+            // This is just a placeholder implementation
+            //return null;
+            
+            // Assuming NumberMatchGrid is a Grid defined in MainPage.xaml
+            // and each cell is added with a specific name or tag to identify its position
+            foreach (var child in Grid.Children)
+            {
+                if (Grid.GetRow(child) == row && Grid.GetColumn(child) == col)
+                {
+                    return child;
+                }
+            }
+            return null;
+        }*/
+        
+        
+        /*public async Task AnimateWaveEffect(int rowIndex)
+        {
+            var row = gameData.GameGrid[rowIndex];
+            int center = row.Count / 2;
+
+            for (int offset = 0; offset <= center; offset++)
+            {
+                int leftIndex = center - offset;
+                int rightIndex = center + offset;
+
+                if (leftIndex >= 0)
+                {
+                    var leftCell = Grid(rowIndex, leftIndex);
+                    if (leftCell != null)
+                    {
+                        leftCell.BackgroundColor = Colors.Red; // Change to desired color
+                        await Task.Delay(50); // Delay for wave effect
+                        leftCell.BackgroundColor = Colors.Transparent; // Reset color
+                    }
+                }
+
+                if (rightIndex < row.Count)
+                {
+                    var rightCell = GetCellUIElement(rowIndex, rightIndex);
+                    if (rightCell != null)
+                    {
+                        rightCell.BackgroundColor = Colors.Red; // Change to desired color
+                        await Task.Delay(50); // Delay for wave effect
+                        rightCell.BackgroundColor = Colors.Transparent; // Reset color
+                    }
+                }
+            }
+        }*/
+
+        /*public async void RemoveEmptyRowsAndShiftUp()
+        {
+            for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
+            {
+                if (gameData.GameGrid[i].All(x => x == 0))
+                {
+                    await AnimateWaveEffect(i);
+                    gameData.GameGrid.RemoveAt(i);
+                }
+            }
+        }*/
 
     }
 }
