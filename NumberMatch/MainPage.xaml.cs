@@ -20,6 +20,7 @@ namespace NumberMatch
         private readonly Color dynamicPrimaryColor = (Color)Application.Current.Resources["Primary"];
         private readonly Color dynamicSecondaryColor = (Color)Application.Current.Resources["Secondary"];
         private readonly Color dynamicTertiaryColor = (Color)Application.Current.Resources["Tertiary"];
+        private bool hapticFeedbackEnabled = true;
         //button.SetDynamicResource(Button.BackgroundProperty, "Primary");
 
         public MainPage()
@@ -61,6 +62,10 @@ namespace NumberMatch
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, Colors.Black);
             else
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, dynamicBackgroundColor);
+            
+            //  set the vibration
+            if (Preferences.ContainsKey("Vibration"))
+                hapticFeedbackEnabled = Preferences.Get("Vibration", true);
         }
 
         private void MakeNumberMatchGrid(int columns, int rows) //  make the grid with buttons
@@ -141,6 +146,12 @@ namespace NumberMatch
                 // Uncheck button if checked, don't check for match
                 if (tile.BackgroundColor == dynamicPrimaryColor)
                 {
+/*#if __MOBILE__
+                    if (hapticFeedbackEnabled)
+                        HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+#endif*/
+                    HapticClick();
+                    
                     tile.BackgroundColor = dynamicBackgroundColor;
                     tile.TextColor = dynamicPrimaryColor;
 
@@ -153,6 +164,12 @@ namespace NumberMatch
                 // Check for match if the button is initialized
                 else if (tile.Text != null)
                 {
+/*# if __MOBILE__
+                    if(hapticFeedbackEnabled)
+                        HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+# endif*/
+                    HapticClick();
+                    
                     int row = Grid.GetRow(tile);
                     int col = Grid.GetColumn(tile);
 
@@ -176,6 +193,12 @@ namespace NumberMatch
                         else
                         {
                             ShowToast("No match found");
+                            
+                            // shake the buttons that are not a match
+                            await shakeUnmatchedButtons(previousPressedButton, new Tuple<int, int>(row, col));
+                            
+                            // give error haptic feedback
+                            //await ErrorHaptic();
                         }
 
                         previousPressedButton = null;
@@ -211,17 +234,21 @@ namespace NumberMatch
 
         private void AddButtonClicked(object sender, EventArgs e)
         {
+            HapticClick();
             game.AddNumbersToGrid();
             SynchronizeGrid(game.GetGameGrid());
         }
 
         private void HelpButtonClicked(object sender, EventArgs e)
         {
+            HapticClick();
             this.ShowPopup(new Pages.TutorialPopup());
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)
         {
+            HapticClick();
+            
 #if WINDOWS
             game.InitializeGrid(ROWS + 8, COLUMNS + 5);
 #else
@@ -235,12 +262,35 @@ namespace NumberMatch
 
         private void SettingsButtonClicked(object sender, EventArgs e)
         {
+            HapticClick();
             this.ShowPopup(new Pages.Popups.SettingsPopup(this));
         }
-        
-        
-        
-        
+
+
+        private async Task shakeUnmatchedButtons(Tuple<int, int> previousPressedButton,
+            Tuple<int, int> currentPressedButton)
+        {
+            // shake the buttons that are not a match horizontally
+            //var row = NumberMatchGrid[rowIndex];
+            ErrorHaptic();
+            for (int col = 0; col < 3; col++)
+            {
+                // Assuming you have a method to get the UI element for a specific cell
+                var cell1 = GetCellUIElement(previousPressedButton.Item1, previousPressedButton.Item2);
+                var cell2 = GetCellUIElement(currentPressedButton.Item1, currentPressedButton.Item2);
+                if (cell1 != null && cell2 != null)
+                {
+                    await cell1.TranslateTo(0 - 5, 0, 20); // Move up
+                    await cell2.TranslateTo(0 - 5, 0, 20); // Move up
+                    await cell1.TranslateTo(5, 0, 20); // Move down
+                    await cell2.TranslateTo(5, 0, 20); // Move down
+                    await cell2.TranslateTo(0, 0, 20); // Move back to original position
+                    await cell1.TranslateTo(0, 0, 20); // Move back to original position
+                    //HapticClick();
+                }
+            }
+        }
+
         public async Task AnimateWaveEffect(int rowIndex)
         {
             var row = NumberMatchGrid[rowIndex];
@@ -250,9 +300,10 @@ namespace NumberMatch
                 var cell = GetCellUIElement(rowIndex, col);
                 if (cell != null)
                 {
-                    await cell.TranslateTo(0, -10, 50); // Move up
-                    await cell.TranslateTo(0, 10, 50);  // Move down
-                    await cell.TranslateTo(0, 0, 50);   // Move back to original position
+                    await cell.TranslateTo(0, -10, 25); // Move up
+                    await cell.TranslateTo(0, 10, 25);  // Move down
+                    await cell.TranslateTo(0, 0, 25);   // Move back to original position
+                    await HapticClick();
                 }
             }
         }
@@ -275,6 +326,27 @@ namespace NumberMatch
             }
             return null;
         }
-        
+
+        private async Task HapticClick()
+        {
+#if __MOBILE__
+            if(hapticFeedbackEnabled)
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+#endif
+        }
+
+        private async Task ErrorHaptic()
+        {
+#if __MOBILE__
+            if (hapticFeedbackEnabled)
+            {
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                await Task.Delay(100);
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                await Task.Delay(150);
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+            }
+#endif
+        }
     }
 }
