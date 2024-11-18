@@ -141,6 +141,8 @@ namespace NumberMatch
                 // Uncheck button if checked, don't check for match
                 if (tile.BackgroundColor == dynamicPrimaryColor)
                 {
+                    HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                    
                     tile.BackgroundColor = dynamicBackgroundColor;
                     tile.TextColor = dynamicPrimaryColor;
 
@@ -153,6 +155,8 @@ namespace NumberMatch
                 // Check for match if the button is initialized
                 else if (tile.Text != null)
                 {
+                    HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                    
                     int row = Grid.GetRow(tile);
                     int col = Grid.GetColumn(tile);
 
@@ -176,6 +180,11 @@ namespace NumberMatch
                         else
                         {
                             ShowToast("No match found");
+                            // give error haptic feedback
+                            //HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                            //HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                            //HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                            await ErrorHaptic();
                         }
 
                         previousPressedButton = null;
@@ -250,9 +259,9 @@ namespace NumberMatch
                 var cell = GetCellUIElement(rowIndex, col);
                 if (cell != null)
                 {
-                    await cell.TranslateTo(0, -10, 50); // Move up
-                    await cell.TranslateTo(0, 10, 50);  // Move down
-                    await cell.TranslateTo(0, 0, 50);   // Move back to original position
+                    await cell.TranslateTo(0, -10, 25); // Move up
+                    await cell.TranslateTo(0, 10, 25);  // Move down
+                    await cell.TranslateTo(0, 0, 25);   // Move back to original position
                 }
             }
         }
@@ -275,6 +284,15 @@ namespace NumberMatch
             }
             return null;
         }
-        
+
+        public async Task ErrorHaptic()
+        {
+            // Haptic feedback for error
+            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+            await Task.Delay(100);
+            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+            await Task.Delay(100);
+            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+        }
     }
 }
