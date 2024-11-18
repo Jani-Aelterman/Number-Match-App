@@ -39,8 +39,18 @@ public partial class SettingsPopup : Popup
 
     private void LoadSettings()
     {
-        if(Preferences.ContainsKey("OledDarkmode"))
+        if (Preferences.ContainsKey("OledDarkmode"))
             OledDarkmode.IsSelected = Preferences.Get("OledDarkmode", false);
+
+#if __MOBILE__
+        if (Preferences.ContainsKey("Vibration"))
+            VibrationSwitch.IsSelected = Preferences.Get("Vibration", true);
+        VibrationLabel.IsVisible = true;
+        VibrationSwitch.IsVisible = true;
+#else
+    VibrationLabel.IsVisible = false;
+    VibrationSwitch.IsVisible = false;
+#endif
 
         if (Preferences.ContainsKey("DeveloperOptions"))
         {
@@ -55,6 +65,12 @@ public partial class SettingsPopup : Popup
     private void OledDarkmodeChanged(object sender, EventArgs e)
     {
         Preferences.Set("OledDarkmode", OledDarkmode.IsSelected);
+        page.LoadSettings();
+    }
+    
+    private void  VibrationChanged(object sender, EventArgs e)
+    {
+        Preferences.Set("Vibration", VibrationSwitch.IsSelected);
         page.LoadSettings();
     }
 
