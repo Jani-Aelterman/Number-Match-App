@@ -329,5 +329,44 @@ namespace NumberMatch
             }
 #endif
         }*/
+        
+        
+        
+        public async Task AnimateStageCompletion()
+        {
+            int centerRow = ROWS / 2;
+            int centerCol = COLUMNS / 2;
+
+            for (int distance = 0; distance <= Math.Max(centerRow, centerCol); distance++)
+            {
+                List<Task> animationTasks = new List<Task>();
+
+                for (int row = Math.Max(0, centerRow - distance); row <= Math.Min(ROWS - 1, centerRow + distance); row++)
+                {
+                    for (int col = Math.Max(0, centerCol - distance); col <= Math.Min(COLUMNS - 1, centerCol + distance); col++)
+                    {
+                        if (Math.Abs(centerRow - row) == distance || Math.Abs(centerCol - col) == distance)
+                        {
+                            var cell = GetCellUIElement(row, col);
+                            if (cell != null)
+                            {
+                                animationTasks.Add(AnimateCell(cell));
+                            }
+                        }
+                    }
+                }
+
+                await Task.WhenAll(animationTasks);
+            }
+        }
+
+        private async Task AnimateCell(View cell)
+        {
+            await cell.TranslateTo(0, -10, 50); // Move up
+            await cell.TranslateTo(0, 10, 50);  // Move down
+            await cell.TranslateTo(0, 0, 50);   // Move back to original position
+        }
+        
+        
     }
 }

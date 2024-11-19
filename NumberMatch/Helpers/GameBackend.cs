@@ -126,7 +126,8 @@ namespace NumberMatch.Helpers
                     gameData.NumbersMatched ++;
 
                     await RemoveEmptyRows();
-                    CheckStageCompletion();
+                    await CheckStageCompletion();
+                    //await RemoveEmptyRows();
 
                     return true;
                 }
@@ -274,14 +275,15 @@ namespace NumberMatch.Helpers
         }
         
         // Check if the grid is empty and add new numbers to the grid and increment the stage
-        public void CheckStageCompletion()
+        public async Task CheckStageCompletion()
         {
             // check if every number is matched and every number in the grid is 0
             if (gameData.GameGrid.All(x => x.All(y => y == 0)) || !gameData.GameGrid.Any())
             {
                 gameData.Stage++;
-                InitializeGrid(gridsize.Item1, gridsize.Item2);
                 ShowToast("Stage completed!");
+                await page.AnimateStageCompletion();
+                InitializeGrid(gridsize.Item1, gridsize.Item2);
             }
         }
         
