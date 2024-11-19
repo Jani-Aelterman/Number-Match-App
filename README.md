@@ -2,7 +2,7 @@
 
 **Number Match** is a simple and engaging number matching game designed for both mobile and PC platforms. Built using C# and .NET MAUI, this app leverages material design principles and dynamic material colors to provide a visually appealing and user-friendly experience.
 
-![Screen From Number Match App](Images/NumberMatch_Screenshot.png)
+<img src="Images/NumberMatch_Screenshot.png" alt="Screen From Number Match App" width="200"/>
 
 ## Features
 
