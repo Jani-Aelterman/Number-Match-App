@@ -88,7 +88,7 @@ public partial class SettingsPopup : Popup
 
     private void developerBtnRemoveRowsClicked(object sender, EventArgs e)
     {
-        page.game.RemoveEmptyRowsAndShiftUp();
+        page.game.RemoveEmptyRows();
     }
 
     private void developerBtnStageCompletionClicked(object sender, EventArgs e)
