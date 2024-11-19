@@ -2,7 +2,7 @@
 
 **Number Match** is a simple and engaging number matching game designed for both mobile and PC platforms. Built using C# and .NET MAUI, this app leverages material design principles and dynamic material colors to provide a visually appealing and user-friendly experience.
 
-<img src="Images/NumberMatch_Screenshot.png" alt="Screen From Number Match App" width="200"/>
+<img src="Images/NumberMatch_Screenshot.png" alt="Screen From Number Match App" width="250"/>
 
 ## Features
 
@@ -15,14 +15,13 @@
 
 ### Prerequisites
 
-- [.NET MAUI](https://dotnet.microsoft.com/apps/maui)
-- [Visual Studio](https://visualstudio.microsoft.com/) with .NET MAUI workload installed
+- [Visual Studio](https://visualstudio.microsoft.com/) or [Jetbrains Rider](https://www.jetbrains.com/rider/) with .NET MAUI workload installed
 
 ### Installation
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/Jani-Aelterman-HoGent/NumberMatch.git
+    git clone https://github.com/Jani-Aelterman/NumberMatch.git
     ```
 2. Open the solution in Visual Studio.
 3. Restore the NuGet packages:
