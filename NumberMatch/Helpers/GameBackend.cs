@@ -175,6 +175,37 @@ namespace NumberMatch.Helpers
             return false;
         }
         
+        /*private bool DiagonalMatch(int row1, int col1, int row2, int col2)
+        {
+            // Check if the tiles are on the same diagonal
+            if (Math.Abs(row1 - row2) == Math.Abs(col1 - col2))
+            {
+                //ShowToast("Numbers are on the same diagonal");
+                
+                // Ensure row1 is the topmost row
+                if (row2 < row1)
+                    (row2, row1) = (row1, row2);
+                
+                // Ensure col1 is the rightmost column
+                if(col1 < col2)
+                    (col2, col1) = (col1, col2);
+
+                // Check the tiles between the two given tiles
+                for (int i = 1; i < Math.Abs(row1 - row2); i++)
+                {
+                    if (gameData.GameGrid[row2 + i][col2 + i] != 0) // can give a index out of range error
+                    {
+                        ShowToast($"number in between is not 0: {gameData.GameGrid[row1 + i][col1 + i]}");;
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            
+            return false;
+        }*/
+        
         private bool DiagonalMatch(int row1, int col1, int row2, int col2)
         {
             // Check if the tiles are on the same diagonal
@@ -182,20 +213,26 @@ namespace NumberMatch.Helpers
             {
                 // Ensure row1 is the topmost row
                 if (row2 < row1)
+                {
                     (row2, row1) = (row1, row2);
-                
-                // Ensure col1 is the leftmost column
-                if(col2 < col1)
                     (col2, col1) = (col1, col2);
+                }
 
                 // Check the tiles between the two given tiles
+                int rowIncrement = (row2 > row1) ? 1 : -1;
+                int colIncrement = (col2 > col1) ? 1 : -1;
+
                 for (int i = 1; i < Math.Abs(row1 - row2); i++)
-                    if (gameData.GameGrid[row1 + i][col1 + i] != 0) // can give a index out of range error
+                {
+                    if (gameData.GameGrid[row1 + i * rowIncrement][col1 + i * colIncrement] != 0)
+                    {
                         return false;
-                
+                    }
+                }
+
                 return true;
             }
-            
+
             return false;
         }
 
