@@ -117,7 +117,7 @@ namespace NumberMatch.Helpers
             if ((gameData.GameGrid[row1][col1] == gameData.GameGrid[row2][col2]) || (gameData.GameGrid[row1][col1] + gameData.GameGrid[row2][col2] == 10))
             {
                 //  check if the numbers are at the right position to match
-                if (CheckAdjacent(row1, col1, row2, col2) || CheckForMatch(row1, col1, row2, col2))
+                if (HorizontalMatch(row1, col1, row2, col2) || VerticalMatch(row1, col1, row2, col2) || DiagonalMatch(row1, col1, row2, col2) || CheckForMatch(row1, col1, row2, col2))
                 {
                     //  remove the numbers from the grid
                     gameData.GameGrid[row1][col1] = 0;
@@ -125,7 +125,7 @@ namespace NumberMatch.Helpers
 
                     gameData.NumbersMatched ++;
 
-                    await RemoveEmptyRowsAndShiftUp();
+                    await RemoveEmptyRows();
                     CheckStageCompletion();
 
                     return true;
@@ -135,19 +135,7 @@ namespace NumberMatch.Helpers
             return false;
         }
 
-        //  check if the numbers are next to eachother
-        /*private static bool CheckAdjacent(int row1, int col1, int row2, int col2)
-        {
-            bool adjecent = (row1 == row2 && Math.Abs(col1 - col2) == 1) || (col1 == col2 && Math.Abs(row1 - row2) == 1);
-            bool diagonal = (Math.Abs(row1 - row2) == 1 && Math.Abs(col1 - col2) == 1);
-            
-            if (adjecent || diagonal)
-                    return true;
-
-            return false;
-        }*/
-
-        private bool CheckAdjacent(int row1, int col1, int row2, int col2)
+        private bool HorizontalMatch(int row1, int col1, int row2, int col2)
         {
             // Check if the tiles are on the same row
             if (row1 == row2)
@@ -160,9 +148,17 @@ namespace NumberMatch.Helpers
                 for (int col = col1 + 1; col < col2; col++)
                     if (gameData.GameGrid[row1][col] != 0)
                         return false;
+
+                return true;
             }
+            
+            return false;
+        }
+        
+        private bool VerticalMatch(int row1, int col1, int row2, int col2)
+        {
             // Check if the tiles are in the same column
-            else if (col1 == col2)
+            if (col1 == col2)
             {
                 // Ensure row1 is the topmost row
                 if (row2 < row1)
@@ -172,33 +168,35 @@ namespace NumberMatch.Helpers
                 for (int row = row1 + 1; row < row2; row++)
                     if (gameData.GameGrid[row][col1] != 0)
                         return false;
+                
+                return true;
             }
+
+            return false;
+        }
+        
+        private bool DiagonalMatch(int row1, int col1, int row2, int col2)
+        {
             // Check if the tiles are on the same diagonal
-            //everything in the if needs checking, condition is good
-            else if (Math.Abs(row1 - row2) == Math.Abs(col1 - col2))
+            if (Math.Abs(row1 - row2) == Math.Abs(col1 - col2))
             {
                 // Ensure row1 is the topmost row
                 if (row2 < row1)
-                {
                     (row2, row1) = (row1, row2);
-                    ////////////(col2, col1) = (col1, col2); // problem?
-                    if(col2 < col1)
-                        (col2, col1) = (col1, col2);
-                }
+                
+                // Ensure col1 is the leftmost column
+                if(col2 < col1)
+                    (col2, col1) = (col1, col2);
 
                 // Check the tiles between the two given tiles
                 for (int i = 1; i < Math.Abs(row1 - row2); i++)
                     if (gameData.GameGrid[row1 + i][col1 + i] != 0) // can give a index out of range error
                         return false;
+                
+                return true;
             }
-            else
-            {
-                // The tiles are not on the same row, column, or diagonal
-                return false;
-            }
-
-            // All tiles between the two given tiles are empty
-            return true;
+            
+            return false;
         }
 
         private bool CheckForMatch(int row1, int col1, int row2, int col2)
@@ -224,15 +222,20 @@ namespace NumberMatch.Helpers
 
             return false;
         }
-
-        //  remove empty rows and shift the rows up
-        /*public void RemoveEmptyRowsAndShiftUp()
+        
+        //  remove empty rows and show an animation
+        public async Task RemoveEmptyRows()
         {
             for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
+            {
                 if (gameData.GameGrid[i].All(x => x == 0))
+                {
+                    await page.AnimateWaveEffect(i);
                     gameData.GameGrid.RemoveAt(i);
-        }*/
-
+                }
+            }
+        }
+        
         // Check if the grid is empty and add new numbers to the grid and increment the stage
         public void CheckStageCompletion()
         {
@@ -305,103 +308,5 @@ namespace NumberMatch.Helpers
                 gameData.GameGrid.Add(row);
             }
         }
-        
-        
-        
-        
-        /*public async Task AnimateWaveEffect(int rowIndex)
-        {
-            var row = gameData.GameGrid[rowIndex];
-            for (int col = 0; col < row.Count; col++)
-            {
-                // Assuming you have a method to get the UI element for a specific cell
-                var cell = GetCellUIElement(rowIndex, col);
-                if (cell != null)
-                {
-                    await cell.TranslateTo(0, -10, 100); // Move up
-                    await cell.TranslateTo(0, 10, 100);  // Move down
-                    await cell.TranslateTo(0, 0, 100);   // Move back to original position
-                }
-            }
-        }*/
-
-        public async Task RemoveEmptyRowsAndShiftUp()
-        {
-            for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
-            {
-                if (gameData.GameGrid[i].All(x => x == 0))
-                {
-                    await page.AnimateWaveEffect(i);
-                    gameData.GameGrid.RemoveAt(i);
-                }
-            }
-        }
-
-        // Example method to get the UI element for a specific cell
-        /*private View GetCellUIElement(int row, int col)
-        {
-            // Implement this method to return the UI element for the given cell
-            // This is just a placeholder implementation
-            //return null;
-            
-            // Assuming NumberMatchGrid is a Grid defined in MainPage.xaml
-            // and each cell is added with a specific name or tag to identify its position
-            foreach (var child in Grid.Children)
-            {
-                if (Grid.GetRow(child) == row && Grid.GetColumn(child) == col)
-                {
-                    return child;
-                }
-            }
-            return null;
-        }*/
-        
-        
-        /*public async Task AnimateWaveEffect(int rowIndex)
-        {
-            var row = gameData.GameGrid[rowIndex];
-            int center = row.Count / 2;
-
-            for (int offset = 0; offset <= center; offset++)
-            {
-                int leftIndex = center - offset;
-                int rightIndex = center + offset;
-
-                if (leftIndex >= 0)
-                {
-                    var leftCell = Grid(rowIndex, leftIndex);
-                    if (leftCell != null)
-                    {
-                        leftCell.BackgroundColor = Colors.Red; // Change to desired color
-                        await Task.Delay(50); // Delay for wave effect
-                        leftCell.BackgroundColor = Colors.Transparent; // Reset color
-                    }
-                }
-
-                if (rightIndex < row.Count)
-                {
-                    var rightCell = GetCellUIElement(rowIndex, rightIndex);
-                    if (rightCell != null)
-                    {
-                        rightCell.BackgroundColor = Colors.Red; // Change to desired color
-                        await Task.Delay(50); // Delay for wave effect
-                        rightCell.BackgroundColor = Colors.Transparent; // Reset color
-                    }
-                }
-            }
-        }*/
-
-        /*public async void RemoveEmptyRowsAndShiftUp()
-        {
-            for (int i = gameData.GameGrid.Count - 1; i >= 0; i--)
-            {
-                if (gameData.GameGrid[i].All(x => x == 0))
-                {
-                    await AnimateWaveEffect(i);
-                    gameData.GameGrid.RemoveAt(i);
-                }
-            }
-        }*/
-
     }
 }

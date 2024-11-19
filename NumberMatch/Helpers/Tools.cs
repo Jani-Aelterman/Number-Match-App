@@ -15,5 +15,27 @@ namespace NumberMatch.Helpers
 
             await toast.Show(new CancellationTokenSource().Token);
         }
+        
+        public static async Task HapticClick(bool hapticFeedbackEnabled)
+        {
+#if __MOBILE__
+            if(hapticFeedbackEnabled)
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+#endif
+        }
+
+        public static async Task ErrorHaptic(bool hapticFeedbackEnabled)
+        {
+#if __MOBILE__
+            if (hapticFeedbackEnabled)
+            {
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                await Task.Delay(100);
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+                await Task.Delay(150);
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+            }
+#endif
+        }
     }
 }
