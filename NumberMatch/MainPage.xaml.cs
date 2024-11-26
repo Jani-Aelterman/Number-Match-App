@@ -33,7 +33,8 @@ namespace NumberMatch
             //this.ShowPopup(new Pages.TutorialPopup());
 
 #if WINDOWS
-            MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
+    //COLUMNS = 21;
+MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             game = new GameBackend(ROWS + 8, COLUMNS + 5, this);
 #else
             MakeNumberMatchGrid(COLUMNS, ROWS);
@@ -278,19 +279,40 @@ namespace NumberMatch
 
         public async Task AnimateWaveEffect(int rowIndex)
         {
-            var row = NumberMatchGrid[rowIndex];
-            for (int col = 0; col < COLUMNS; col++)
+            int centerCol = COLUMNS / 2;
+
+            for (int distance = 0; distance <= centerCol; distance++)
             {
-                // Assuming you have a method to get the UI element for a specific cell
-                var cell = GetCellUIElement(rowIndex, col);
-                if (cell != null)
+                List<Task> animationTasks = new List<Task>();
+
+                if (centerCol - distance >= 0)
                 {
-                    await cell.TranslateTo(0, -10, 25); // Move up
-                    await cell.TranslateTo(0, 10, 25);  // Move down
-                    await cell.TranslateTo(0, 0, 25);   // Move back to original position
-                    await Tools.HapticClick(hapticFeedbackEnabled);
+                    var leftCell = GetCellUIElement(rowIndex, centerCol - distance);
+                    if (leftCell != null)
+                    {
+                        animationTasks.Add(AnimateCell(leftCell));
+                    }
                 }
+
+                if (centerCol + distance < COLUMNS)
+                {
+                    var rightCell = GetCellUIElement(rowIndex, centerCol + distance);
+                    if (rightCell != null)
+                    {
+                        animationTasks.Add(AnimateCell(rightCell));
+                    }
+                }
+
+                await Task.WhenAll(animationTasks);
             }
+        }
+
+        private async Task AnimateCell(View cell)
+        {
+            await cell.TranslateTo(0, -10, 25); // Move up
+            await cell.TranslateTo(0, 10, 25);  // Move down
+            await cell.TranslateTo(0, 0, 25);   // Move back to original position
+            await Tools.HapticClick(hapticFeedbackEnabled);
         }
 
         // Example method to get the UI element for a specific cell
@@ -360,12 +382,12 @@ namespace NumberMatch
             }
         }
 
-        private async Task AnimateCell(View cell)
+        /*private async Task AnimateCell(View cell)
         {
             await cell.TranslateTo(0, -10, 50); // Move up
             await cell.TranslateTo(0, 10, 50);  // Move down
             await cell.TranslateTo(0, 0, 50);   // Move back to original position
-        }
+        }*/
         
         
     }
