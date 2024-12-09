@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             x:Class="NumberMatch.Pages.SettingsPage"
+             NavigationPage.HasNavigationBar="True"
+             BackgroundColor="{DynamicResource Background}">
+    <NavigationPage.TitleView>
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Label Text="Instellingen"
+                   FontSize="32"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="{DynamicResource Primary}" />
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="20">
+            <Grid ColumnSpacing="20" RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Oled Darkmode -->
+                <Label Text="Oled darkmode"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       TextColor="{DynamicResource Secondary}" />
+
+                <mdc:Switch
+                    x:Name="OledDarkmode"
+                    ThumbColor="{DynamicResource Secondary}"
+                    OutlineColor="{DynamicResource Secondary}"
+                    BackgroundColor="{DynamicResource Background}"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    SelectedChanged="OledDarkmodeChanged"/>
+
+                <!-- Vibration -->
+                <Label x:Name="VibrationLabel"
+                       Text="Enable Haptic Feedback"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       TextColor="{DynamicResource Secondary}" />
+
+                <mdc:Switch x:Name="VibrationSwitch"
+                            ThumbColor="{DynamicResource Secondary}"
+                            IconColor="{DynamicResource Secondary}"
+                            StateLayerColor="{DynamicResource Secondary}"
+                            OutlineColor="{DynamicResource Secondary}"
+                            BackgroundColor="{DynamicResource Background}"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            SelectedChanged="VibrationChanged"/>
+
+                <!-- Developer options -->
+                <Label Text="Developer options"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       TextColor="{DynamicResource Secondary}" />
+
+                <mdc:Switch
+                    x:Name="DeveloperOptions"
+                    ThumbColor="{DynamicResource Secondary}"
+                    IconColor="{DynamicResource Secondary}"
+                    StateLayerColor="{DynamicResource Secondary}"
+                    OutlineColor="{DynamicResource Secondary}"
+                    BackgroundColor="{DynamicResource Background}"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    SelectedChanged="DeveloperOptionsChanged"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

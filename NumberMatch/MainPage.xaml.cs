@@ -7,7 +7,10 @@ using CommunityToolkit.Maui.Views;
 using Newtonsoft.Json.Linq;
 using NumberMatch.Helpers;
 using System.Runtime.CompilerServices;
+using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
 using static NumberMatch.Helpers.Tools;
+using NumberMatch.Pages;
 
 namespace NumberMatch
 {
@@ -31,6 +34,13 @@ namespace NumberMatch
             //this.ShowPopup(new Pages.AlphaPopup());
 
             //this.ShowPopup(new Pages.TutorialPopup());
+            
+#if __MOBILE__
+            this.Behaviors.Add(new StatusBarBehavior
+            {
+                StatusBarColor = dynamicBackgroundColor
+            });
+#endif
 
 #if WINDOWS
             MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
@@ -247,10 +257,16 @@ namespace NumberMatch
             game.SaveGameData();
         }
 
-        private void SettingsButtonClicked(object sender, EventArgs e)
+        /*private void SettingsButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
             this.ShowPopup(new Pages.Popups.SettingsPopup(this));
+        }*/
+        
+        private async void SettingsButtonClicked(object sender, EventArgs e)
+        {
+            Tools.HapticClick(hapticFeedbackEnabled);
+            await Navigation.PushAsync(new SettingsPage());
         }
         
         private async Task shakeUnmatchedButtons(Tuple<int, int> previousPressedButton, Tuple<int, int> currentPressedButton)
