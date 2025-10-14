@@ -1,10 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.aelterman.numbermatch" android:versionName="beta 1">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		  package="com.aelterman.numbermatch"
+		  android:versionName="beta 1">
 	<application android:allowBackup="true"
-				 		  android:icon="@mipmap/ic_launcher"
-				 		  android:supportsRtl="true"
-				 		  android:label="Number Match"
-				 		  android:enableOnBackInvokedCallback="true">
+                 android:icon="@mipmap/ic_launcher"
+                 android:supportsRtl="true"
+                 android:label="Number Match"
+                 android:enableOnBackInvokedCallback="true">
 	</application>
 	<uses-permission android:name="android.permission.VIBRATE" />
 </manifest>

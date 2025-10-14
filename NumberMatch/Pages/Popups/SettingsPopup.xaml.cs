@@ -4,6 +4,7 @@ using NumberMatch.Helpers;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using HorusStudio.Maui.MaterialDesignControls;
 
 namespace NumberMatch.Pages.Popups;
 
@@ -13,6 +14,7 @@ public partial class SettingsPopup : Popup
     private readonly Color dynamicBackgroundColor = (Color)(Microsoft.Maui.Controls.Application.Current.Resources["Background"] ?? Colors.Black);
     public SettingsPopup(MainPage mainpage)
     {
+        this.BackgroundColor = dynamicBackgroundColor;
         this.page = mainpage;
         InitializeComponent();
         this.LoadSettings();
@@ -31,20 +33,21 @@ public partial class SettingsPopup : Popup
 
     private void LoadTheme()
     {
-        if(Preferences.Get("OledDarkmode", false))
-            this.SetAppTheme(ColorProperty, dynamicBackgroundColor, Colors.Black);
+        // Fix: Use BackgroundColorProperty instead of ColorProperty
+        if (Preferences.Get("OledDarkmode", false))
+            this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, Colors.Black);
         else
-            this.SetAppTheme(ColorProperty, dynamicBackgroundColor, dynamicBackgroundColor);
+            this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, dynamicBackgroundColor);
     }
 
     private void LoadSettings()
     {
         if (Preferences.ContainsKey("OledDarkmode"))
-            OledDarkmode.IsSelected = Preferences.Get("OledDarkmode", false);
+            OledDarkmode.IsToggled = Preferences.Get("OledDarkmode", false);
 
 #if __MOBILE__
         if (Preferences.ContainsKey("Vibration"))
-            VibrationSwitch.IsSelected = Preferences.Get("Vibration", true);
+            VibrationSwitch.IsToggled = Preferences.Get("Vibration", true);
         VibrationLabel.IsVisible = true;
         VibrationSwitch.IsVisible = true;
 #else
@@ -54,36 +57,38 @@ public partial class SettingsPopup : Popup
 
         if (Preferences.ContainsKey("DeveloperOptions"))
         {
-            DeveloperOptions.IsSelected = Preferences.Get("DeveloperOptions", false);
-            btnBackendGrid.IsVisible = DeveloperOptions.IsSelected;
-            btnRemoveRows.IsVisible = DeveloperOptions.IsSelected;
-            btnStageCompletion.IsVisible = DeveloperOptions.IsSelected;
-            btnRefreshGridColors.IsVisible = DeveloperOptions.IsSelected;
+            DeveloperOptions.IsToggled = Preferences.Get("DeveloperOptions", false);
+            btnBackendGrid.IsVisible = DeveloperOptions.IsToggled;
+            btnRemoveRows.IsVisible = DeveloperOptions.IsToggled;
+            btnStageCompletion.IsVisible = DeveloperOptions.IsToggled;
+            btnRefreshGridColors.IsVisible = DeveloperOptions.IsToggled;
         }
     }
 
     private void OledDarkmodeChanged(object sender, EventArgs e)
     {
-        Preferences.Set("OledDarkmode", OledDarkmode.IsSelected);
+        Preferences.Set("OledDarkmode", OledDarkmode.IsToggled);
         page.LoadSettings();
     }
-    
-    private void  VibrationChanged(object sender, EventArgs e)
+
+    private void VibrationChanged(object sender, EventArgs e)
     {
-        Preferences.Set("Vibration", VibrationSwitch.IsSelected);
+        Preferences.Set("Vibration", VibrationSwitch.IsToggled);
         page.LoadSettings();
     }
 
     private void DeveloperOptionsChanged(object sender, EventArgs e)
     {
-        Preferences.Set("DeveloperOptions", DeveloperOptions.IsSelected);
+        Preferences.Set("DeveloperOptions", DeveloperOptions.IsToggled);
         page.LoadSettings();
         //LoadTheme();
     }
 
     private void developerBtnBackendGridClicked(object sender, EventArgs e)
     {
-        page.ShowPopup(new Pages.Popups.gridPopup(page.game.GetGameGrid()));
+        //page.ShowPopup(new Pages.Popups.gridPopup(page.game.GetGameGrid()));
+
+        throw new NotImplementedException("Not implemented yet");
     }
 
     private void developerBtnRemoveRowsClicked(object sender, EventArgs e)

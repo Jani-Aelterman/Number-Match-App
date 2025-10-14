@@ -14,10 +14,14 @@
     <text x="76" y="76" class="cell-text">5</text>
     <text x="228" y="76" class="cell-text">3</text>
     <text x="380" y="76" class="cell-text">8</text>
-    <text x="76" y="228" class="cell-text">1</text>
-    <text x="228" y="228" class="cell-text-6-4">6</text>
-    <text x="380" y="228" class="cell-text-6-4">4</text>
-    <text x="76" y="380" class="cell-text">7</text>
-    <text x="228" y="380" class="cell-text">2</text>
-    <text x="380" y="380" class="cell-text">9</text>
+    <text x="76" y="236" class="cell-text">1</text>
+        <!-- Omcirkel blauwe 6 -->
+    <rect x="172" y="172" width="112" height="112" rx="28" ry="28" fill="none" stroke="#2196F3" stroke-width="10"/>
+        <text x="228" y="236" class="cell-text-6-4">6</text>
+        <!-- Omcirkel blauwe 4 -->
+    <rect x="324" y="172" width="112" height="112" rx="28" ry="28" fill="none" stroke="#2196F3" stroke-width="10"/>
+        <text x="380" y="236" class="cell-text-6-4">4</text>
+    <text x="76" y="390" class="cell-text">7</text>
+    <text x="228" y="390" class="cell-text">2</text>
+    <text x="380" y="390" class="cell-text">9</text>
 </svg>

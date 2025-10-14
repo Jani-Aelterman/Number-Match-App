@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using Material.Components.Maui.Extensions;
+using HorusStudio.Maui.MaterialDesignControls;
+using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
-using UraniumUI;
 using MaterialColorUtilities.Maui;
 
 namespace NumberMatch
@@ -13,23 +12,20 @@ namespace NumberMatch
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                    fonts.AddMaterialIconFonts();
                 })
-                .UseUraniumUI()
-                .UseUraniumUIMaterial()
+                .UseMauiCommunityToolkit()
                 .UseMaterialColors(options =>
                 {
-                    options.FallbackSeed = 0x05affc;
+                    options.FallbackSeed = 0x5574e1;
                 })
-                .UseMaterialComponents();
+                .UseMaterialDesignControls();
 
 #if DEBUG
-            builder.Logging.AddDebug();
+    		builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

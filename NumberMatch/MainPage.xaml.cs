@@ -1,13 +1,15 @@
-﻿/// <summary>
+/// <summary>
 /// The front end of the game.
 /// Made by: Jani Aelterman.
 /// </summary>
 
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
 using Newtonsoft.Json.Linq;
-using NumberMatch.Helpers;
 using System.Runtime.CompilerServices;
 using static NumberMatch.Helpers.Tools;
+using HorusStudio.Maui.MaterialDesignControls;
+using NumberMatch.Helpers;
 
 namespace NumberMatch
 {
@@ -63,7 +65,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, Colors.Black);
             else
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, dynamicBackgroundColor);
-            
+
             //  set the vibration
             if (Preferences.ContainsKey("Vibration"))
                 hapticFeedbackEnabled = Preferences.Get("Vibration", true);
@@ -81,6 +83,13 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             {
                 for (int col = 0; col < columns; col++)
                 {
+                    /*MaterialButton materialTile = new MaterialButton()
+                    {
+                        BorderWidth = 2,
+                        FontSize = 30,
+                        Padding = new Thickness(0),
+                    };*/
+                    
                     Button tile = new Button
                     {
                         //CornerRadius = 0, //  maybe more modern with rounded corners
@@ -89,7 +98,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                         //TextColor = dynamicPrimaryColor,
                         BorderWidth = 2,
                         // set the fontsize to large
-                        FontSize = 30,
+                        FontSize = 33,
                         Padding = new Thickness(0), // Remove padding
                     };
 
@@ -148,7 +157,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                 if (tile.BackgroundColor == dynamicPrimaryColor)
                 {
                     Tools.HapticClick(hapticFeedbackEnabled);
-                    
+
                     tile.BackgroundColor = dynamicBackgroundColor;
                     tile.TextColor = dynamicPrimaryColor;
 
@@ -162,7 +171,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                 else if (tile.Text != null)
                 {
                     Tools.HapticClick(hapticFeedbackEnabled);
-                    
+
                     int row = Grid.GetRow(tile);
                     int col = Grid.GetColumn(tile);
 
@@ -202,7 +211,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                         }
                     }
                 }
-                
+
                 game.SaveGameData();
             }
             catch (Exception ex)
@@ -210,7 +219,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                 ShowToast(ex.Message);
             }
         }
-        
+
         public void RefreshGridColors()
         {
             foreach (Button tile in NumberMatchGrid.Children.Cast<Button>())
@@ -230,13 +239,13 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
         private void HelpButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
-            this.ShowPopup(new Pages.TutorialPopup());
+            ///////////////////this.ShowPopup(new Pages.TutorialPopup());
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
-            
+
 #if WINDOWS
             game.InitializeGrid(ROWS + 8, COLUMNS + 5);
 #else
@@ -253,7 +262,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             Tools.HapticClick(hapticFeedbackEnabled);
             this.ShowPopup(new Pages.Popups.SettingsPopup(this));
         }
-        
+
         private async Task shakeUnmatchedButtons(Tuple<int, int> previousPressedButton, Tuple<int, int> currentPressedButton)
         {
             // shake the buttons that are not a match horizontally
@@ -351,9 +360,9 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             }
 #endif
         }*/
-        
-        
-        
+
+
+
         public async Task AnimateStageCompletion()
         {
             int centerRow = ROWS / 2;
@@ -388,7 +397,23 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             await cell.TranslateTo(0, 10, 50);  // Move down
             await cell.TranslateTo(0, 0, 50);   // Move back to original position
         }*/
-        
-        
+
+        /*public async Task AnimateWrongMatch(int row1, int col1, int row2, int col2)
+            {
+            var cell1 = GetCellUIElement(row1, col1);
+            var cell2 = GetCellUIElement(row2, col2);
+            if (cell1 != null && cell2 != null)
+            {
+                await Task.WhenAll(ShakeCell(cell1), ShakeCell(cell2));
+            }
+        }
+
+        // Add this method to fix CS0103 errors for 'ShakeCell'
+        private async Task ShakeCell(View cell)
+        {
+            await cell.TranslateTo(-5, 0, 20); // Move left
+            await cell.TranslateTo(5, 0, 20);  // Move right
+            await cell.TranslateTo(0, 0, 20);  // Move back to original position
+        }*/
     }
 }

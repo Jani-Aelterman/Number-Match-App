@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-           xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
-           x:Class="NumberMatch.Pages.TutorialPopup"
-           CanBeDismissedByTappingOutsideOfPopup="False"
-           Color="Transparent">
-    
+           xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+           x:Class="NumberMatchMaui.Pages.TutorialPopup">
+
     <Grid>
         <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
             <VerticalStackLayout VerticalOptions="Center">
@@ -56,24 +54,23 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="100" />
                     </Grid.ColumnDefinitions>
-                    
-                    <mdc:Button
+
+                    <material:MaterialButton
                         Grid.Column="0"
                         Text="Cancel"
                         BackgroundColor="{DynamicResource Primary}"
-                        FontColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         StyleClass="FilledButton"
                         x:Name="CancelButton"/>
-                    
-                    <mdc:Button
+
+                    <material:MaterialButton
                         Grid.Column="1"
                         Text="Skip Tutorial"
                         BackgroundColor="{DynamicResource Primary}"
-                        FontColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                        StyleClass="FilledButton"
-                        Clicked="Button_Clicked" />
+                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        StyleClass="FilledButton" />
                 </Grid>
             </VerticalStackLayout>
         </Frame>
     </Grid>
-</mct:Popup>
+</ContentView>

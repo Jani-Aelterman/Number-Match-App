@@ -1,9 +1,8 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:NumberMatch"
-             x:Class="NumberMatch.App"
-             xmlns:mds="clr-namespace:Material.Components.Maui.Styles;assembly=Material.Components.Maui"
+             xmlns:local="clr-namespace:NumberMatchMaui"
+             x:Class="NumberMatchMaui.App"
              xmlns:mcu="clr-namespace:MaterialColorUtilities.Maui;assembly=MaterialColorUtilities.Maui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
     <Application.Resources>
@@ -15,8 +14,6 @@
 
                 <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
-
-                <material:StyleResource ColorsOverride="{x:Reference appColors}" BasedOn="{x:Reference appStyles}" />
 
                 <!-- Define colors and brushes first -->
                 <ResourceDictionary>
@@ -88,8 +85,7 @@
 
                 <!-- Now reference them in MaterialStyles -->
                 <mcu:MaterialColorResourceDictionary />
-                <mds:MaterialStyles Light="#05affc" Dark="#05affc"/>
-                
+
                 <!-- End custom design resources -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

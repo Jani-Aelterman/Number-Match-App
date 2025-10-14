@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Maui.Storage;
 using Microsoft.Maui.Controls;
-using NumberMatch.Data;
 using static NumberMatch.Helpers.Tools;
 using System.Linq.Expressions;
+using NumberMatch.Data;
 
 namespace NumberMatch.Helpers
 {
@@ -55,7 +55,7 @@ namespace NumberMatch.Helpers
             // removes a number from the grid if the amount of numbers isn't even
             int amountOfNumbers = gameData.GameGrid.SelectMany(x => x).Count(n => n != 0);
 
-            if(amountOfNumbers % 2 != 0)
+            if (amountOfNumbers % 2 != 0)
             {
                 int row = random.Next(0, 5);
                 int col = random.Next(0, columns);
@@ -123,7 +123,7 @@ namespace NumberMatch.Helpers
                     gameData.GameGrid[row1][col1] = 0;
                     gameData.GameGrid[row2][col2] = 0;
 
-                    gameData.NumbersMatched ++;
+                    gameData.NumbersMatched++;
 
                     await RemoveEmptyRows();
                     await CheckStageCompletion();
@@ -152,10 +152,10 @@ namespace NumberMatch.Helpers
 
                 return true;
             }
-            
+
             return false;
         }
-        
+
         private bool VerticalMatch(int row1, int col1, int row2, int col2)
         {
             // Check if the tiles are in the same column
@@ -169,44 +169,13 @@ namespace NumberMatch.Helpers
                 for (int row = row1 + 1; row < row2; row++)
                     if (gameData.GameGrid[row][col1] != 0)
                         return false;
-                
+
                 return true;
             }
 
             return false;
         }
-        
-        /*private bool DiagonalMatch(int row1, int col1, int row2, int col2)
-        {
-            // Check if the tiles are on the same diagonal
-            if (Math.Abs(row1 - row2) == Math.Abs(col1 - col2))
-            {
-                //ShowToast("Numbers are on the same diagonal");
-                
-                // Ensure row1 is the topmost row
-                if (row2 < row1)
-                    (row2, row1) = (row1, row2);
-                
-                // Ensure col1 is the rightmost column
-                if(col1 < col2)
-                    (col2, col1) = (col1, col2);
 
-                // Check the tiles between the two given tiles
-                for (int i = 1; i < Math.Abs(row1 - row2); i++)
-                {
-                    if (gameData.GameGrid[row2 + i][col2 + i] != 0) // can give a index out of range error
-                    {
-                        ShowToast($"number in between is not 0: {gameData.GameGrid[row1 + i][col1 + i]}");;
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-            
-            return false;
-        }*/
-        
         private bool DiagonalMatch(int row1, int col1, int row2, int col2)
         {
             // Check if the tiles are on the same diagonal
@@ -240,7 +209,7 @@ namespace NumberMatch.Helpers
         private bool CheckForMatch(int row1, int col1, int row2, int col2)
         {
             //check if the rows are next to each other  and the numbers aren't on the same row
-            if(Math.Abs(row1 - row2) == 1) // check if the rows are next to eachother
+            if (Math.Abs(row1 - row2) == 1) // check if the rows are next to eachother
             {
                 int higherRow = Math.Min(row1, row2);
                 int lowerRow = Math.Max(row1, row2);
@@ -260,7 +229,7 @@ namespace NumberMatch.Helpers
 
             return false;
         }
-        
+
         //  remove empty rows and show an animation
         public async Task RemoveEmptyRows()
         {
@@ -273,7 +242,7 @@ namespace NumberMatch.Helpers
                 }
             }
         }
-        
+
         // Check if the grid is empty and add new numbers to the grid and increment the stage
         public async Task CheckStageCompletion()
         {
@@ -286,7 +255,7 @@ namespace NumberMatch.Helpers
                 InitializeGrid(gridsize.Item1, gridsize.Item2);
             }
         }
-        
+
         // needs work
         public void AddNumbersToGrid()
         {
@@ -319,20 +288,20 @@ namespace NumberMatch.Helpers
 
                     row.Add(number);
                 }
-                
+
                 if (i == rowsToAdd - 1)
                 {
                     //int number = random.Next(1, 10);
 
                     //while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                        //number = random.Next(1, 10);
+                    //number = random.Next(1, 10);
 
                     //row.Add(number);
-                    
+
                     // check if the total amount of numbers in the grid is even and remove a number from the row if it isn't
                     int amountOfNumbers = gameData.GameGrid.SelectMany(x => x).Count(n => n != 0);
                     int amountOfRowNumbers = row.Count(n => n != 0);
-                    
+
                     if ((amountOfNumbers % 2 != 0 && amountOfRowNumbers % 2 == 0) || (amountOfNumbers % 2 == 0 && amountOfRowNumbers % 2 != 0))
                     {
                         int col = random.Next(0, maxColumns);
@@ -343,7 +312,7 @@ namespace NumberMatch.Helpers
                         row[col] = 0;
                     }
                 }
-                
+
                 gameData.GameGrid.Add(row);
             }
         }

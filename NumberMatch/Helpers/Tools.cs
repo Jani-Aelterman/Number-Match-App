@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Alerts;
 
 using CommunityToolkit.Maui.Core;
 using System.Threading.Tasks;
@@ -15,11 +15,11 @@ namespace NumberMatch.Helpers
 
             await toast.Show(new CancellationTokenSource().Token);
         }
-        
+
         public static async Task HapticClick(bool hapticFeedbackEnabled)
         {
 #if __MOBILE__
-            if(hapticFeedbackEnabled)
+            if (hapticFeedbackEnabled)
                 HapticFeedback.Default.Perform(HapticFeedbackType.Click);
 #endif
         }

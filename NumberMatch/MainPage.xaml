@@ -1,54 +1,54 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NumberMatch.MainPage"
-             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
-             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             x:Class="NumberMatchMaui.MainPage"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="{DynamicResource Background}">
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{DynamicResource Background}" StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
+    </ContentPage.Behaviors>
 
     <ScrollView>
 
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+        Spacing="25"
+        Padding="30,0"
+        VerticalOptions="Center">
 
             <!-- <mdc:Button Text="Settings"
-                        IconData="{x:Static m:MaterialSharp.Settings}"
-                        BackgroundColor="Transparent"
-                        IconColor="{DynamicResource Secondary}"
-                        FontColor="{DynamicResource Secondary}"/> -->
+                    IconData="{x:Static m:MaterialSharp.Settings}"
+                    BackgroundColor="Transparent"
+                    IconColor="{DynamicResource Secondary}"
+                    FontColor="{DynamicResource Secondary}"/> -->
 
             <!-- <mdc:Button Text="button" IconData="add" /> -->
 
-            <Button x:Name="Title"
-                    Text="Number Match"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    TextColor="{DynamicResource Primary}"
-                    BackgroundColor="Transparent"
-                    BorderColor="{DynamicResource Primary}"
-                    CornerRadius="10"
-                    Padding="0"
-                    VerticalOptions="Center"
-                    Clicked="SettingsButtonClicked"
-                    HorizontalOptions="Center" />
+            <material:MaterialButton x:Name="Title"
+                Text="Number Match"
+                FontSize="32"
+                FontAttributes="Bold"
+                TextColor="{DynamicResource Primary}"
+                BackgroundColor="Transparent"
+                BorderColor="{DynamicResource Primary}"
+                BorderWidth="1"
+                CornerRadius="10"
+                Padding="0"
+                VerticalOptions="Center"
+                Clicked="SettingsButtonClicked"
+                HorizontalOptions="Center" />
 
             <Label x:Name="LabelAmmountMatchedNumbers"
-                   Text="Matched numbers: 0"
-                   TextColor="{DynamicResource OnBackground}"
-                   HorizontalOptions="Center" />
+               Text="Matched numbers: 0"
+               HorizontalOptions="Center" />
 
             <Label x:Name="LabelStage"
-                   Text="Stage: 0"
-                   TextColor="{DynamicResource OnBackground}"
-                   HorizontalOptions="Start" />
+               Text="Stage: 0"
+               HorizontalOptions="Start" />
 
-            <Grid x:Name="NumberMatchGrid" HorizontalOptions="Center" VerticalOptions="Center"></Grid>
+            <Grid x:Name="NumberMatchGrid" VerticalOptions="Center"></Grid>
 
             <Grid HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="30">
                 <Grid.RowDefinitions>
@@ -61,39 +61,38 @@
                     <!-- <ColumnDefinition Width="Auto"/> -->
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="AddBtn"
-                        Text="+"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Clicked="AddButtonClicked"
-                        BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{DynamicResource OnPrimary}"
-                        CornerRadius="20"/>
+                <material:MaterialButton x:Name="AddBtn"
+                    Text="+"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    FontSize="30"
+                    TouchAnimationType="Bounce"
+                    Clicked="AddButtonClicked" />
 
                 <!--<mdc:IconButton IconData="{Static m:MaterialRound.Plus_one}"
-                                IconColor="Black"
-                                BackgroundColor="White"/>-->
+                            IconColor="Black"
+                            BackgroundColor="White"/>-->
 
                 <!-- <Button x:Name="HelpBtn"
-                    Text="Help"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Clicked="HelpButtonClicked"
-                    BackgroundColor="{DynamicResource Primary}"
-                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                    CornerRadius="20" /> -->
+                Text="Help"
+                Grid.Row="0"
+                Grid.Column="3"
+                Clicked="HelpButtonClicked"
+                BackgroundColor="{DynamicResource Primary}"
+                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                CornerRadius="20" /> -->
 
-                <Button x:Name="ResetBtn"
-                        Text="Reset"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Clicked="ResetButtonClicked"
-                        BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{DynamicResource OnPrimary}"
-                        CornerRadius="20"/>
+                <material:MaterialButton x:Name="ResetBtn"
+                    Text="Reset"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    FontSize="20"
+                    TouchAnimationType="Bounce"
+                    Clicked="ResetButtonClicked" />
 
             </Grid>
 
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>

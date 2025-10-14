@@ -2,15 +2,20 @@
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-           xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
-           xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
-           xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
-           x:Class="NumberMatch.Pages.Popups.SettingsPopup"
+           xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+           x:Class="NumberMatchMaui.Pages.Popups.SettingsPopup"
            CanBeDismissedByTappingOutsideOfPopup="True"
-           Color="Transparent">
+           BackgroundColor="{DynamicResource Background}"
+           Margin="40">
+
+    <!--<mct:Popup.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{DynamicResource Background}" StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
+    </mct:Popup.Behaviors>-->
+    
     <Grid>
-        <Frame x:Name="PopupBackground" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-            <VerticalStackLayout VerticalOptions="Center">
+        <!--<Border x:Name="PopupBackground" Background="{DynamicResource Background}" StrokeShape="RoundRectangle 20" VerticalOptions="Center" HorizontalOptions="Center" Padding="20">-->
+            <VerticalStackLayout VerticalOptions="Center" BackgroundColor="{DynamicResource Background}">
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -22,11 +27,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Image Grid.Column="0">
+                    <!--<Image Grid.Column="0">
                         <Image.Source>
                             <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Settings}" Color="{DynamicResource Secondary}" />
                         </Image.Source>
-                    </Image>
+                    </Image>-->
 
                     <Label Text="Settings"
                            FontSize="32"
@@ -57,16 +62,13 @@
                            VerticalOptions="Center"
                            TextColor="{DynamicResource Secondary}" />
 
-                    <mdc:Switch
+                    <material:MaterialSwitch
                         x:Name="OledDarkmode"
-                        ThumbColor="{DynamicResource Secondary}"
-                        OutlineColor="{DynamicResource Secondary}"
-                        BackgroundColor="{DynamicResource Background}"
                         Grid.Row="0"
                         Grid.Column="1"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
-                        SelectedChanged="OledDarkmodeChanged"/>
+                        Toggled="OledDarkmodeChanged" />
 
                     <!-- Vibration -->
                     <Label x:Name="VibrationLabel"
@@ -77,17 +79,12 @@
                            VerticalOptions="Center"
                            TextColor="{DynamicResource Secondary}" />
 
-                    <mdc:Switch x:Name="VibrationSwitch"
-                                ThumbColor="{DynamicResource Secondary}"
-                                IconColor="{DynamicResource Secondary}"
-                                StateLayerColor="{DynamicResource Secondary}"
-                                OutlineColor="{DynamicResource Secondary}"
-                                BackgroundColor="{DynamicResource Background}"
+                    <material:MaterialSwitch x:Name="VibrationSwitch"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 HorizontalOptions="End"
                                 VerticalOptions="Center"
-                                SelectedChanged="VibrationChanged"/>
+                                Toggled="VibrationChanged" />
 
                     <!-- Developer options -->
                     <Label Text="Developer options"
@@ -97,56 +94,39 @@
                            VerticalOptions="Center"
                            TextColor="{DynamicResource Secondary}" />
 
-                    <mdc:Switch
+                    <material:MaterialSwitch
                         x:Name="DeveloperOptions"
-                        ThumbColor="{DynamicResource Secondary}"
-                        IconColor="{DynamicResource Secondary}"
-                        StateLayerColor="{DynamicResource Secondary}"
-                        OutlineColor="{DynamicResource Secondary}"
-                        BackgroundColor="{DynamicResource Background}"
                         Grid.Row="2"
                         Grid.Column="1"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
-                        SelectedChanged="DeveloperOptionsChanged"/>
+                        Toggled="DeveloperOptionsChanged"/>
                 </Grid>
 
-                <Button x:Name="btnBackendGrid"
+                <material:MaterialButton x:Name="btnBackendGrid"
                         IsVisible="False"
-                        StyleClass="FilledButton"
-                        BackgroundColor="{DynamicResource InversePrimary}"
-                        TextColor="{DynamicResource Secondary}"
                         Margin="5"
                         Text="Show Backend Grid"
                         Clicked="developerBtnBackendGridClicked"/>
 
-                <Button x:Name="btnRemoveRows"
+                <material:MaterialButton x:Name="btnRemoveRows"
                         IsVisible="False"
-                        StyleClass="FilledButton"
-                        BackgroundColor="{DynamicResource InversePrimary}"
-                        TextColor="{DynamicResource Secondary}"
                         Margin="5"
                         Text="Remove Empty Rows"
                         Clicked="developerBtnRemoveRowsClicked"/>
 
-                <Button x:Name="btnStageCompletion"
+                <material:MaterialButton x:Name="btnStageCompletion"
                         IsVisible="False"
-                        StyleClass="FilledButton"
-                        BackgroundColor="{DynamicResource InversePrimary}"
-                        TextColor="{DynamicResource Secondary}"
                         Margin="5"
                         Text="Check For Stage Completion"
                         Clicked="developerBtnStageCompletionClicked"/>
 
-                <Button x:Name="btnRefreshGridColors"
+                <material:MaterialButton x:Name="btnRefreshGridColors"
                         IsVisible="False"
-                        StyleClass="FilledButton"
-                        BackgroundColor="{DynamicResource InversePrimary}"
-                        TextColor="{DynamicResource Secondary}"
                         Margin="5"
                         Text="RefreshGridColors"
                         Clicked="developerBtnRefreshGridColorsClicked"/>
             </VerticalStackLayout>
-        </Frame>
+        <!--</Border>-->
     </Grid>
 </mct:Popup>
