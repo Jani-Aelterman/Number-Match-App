@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+           x:Class="NumberMatchMaui.Pages.Popups.SettingsPopup"
+           CanBeDismissedByTappingOutsideOfPopup="True"
+           BackgroundColor="{DynamicResource Background}"
+           Margin="40">
+
+    <!--<mct:Popup.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{DynamicResource Background}" StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
+    </mct:Popup.Behaviors>-->
+    
+    <Grid>
+        <!--<Border x:Name="PopupBackground" Background="{DynamicResource Background}" StrokeShape="RoundRectangle 20" VerticalOptions="Center" HorizontalOptions="Center" Padding="20">-->
+            <VerticalStackLayout VerticalOptions="Center" BackgroundColor="{DynamicResource Background}">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--<Image Grid.Column="0">
+                        <Image.Source>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Settings}" Color="{DynamicResource Secondary}" />
+                        </Image.Source>
+                    </Image>-->
+
+                    <Label Text="Settings"
+                           FontSize="32"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           TextColor="{DynamicResource Secondary}"
+                           Grid.Column="1"/>
+
+                </Grid>
+
+                <Grid x:Name="Grid" ColumnSpacing="20" RowSpacing="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Oled Darkmode -->
+                    <Label Text="Oled darkmode"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           TextColor="{DynamicResource Secondary}" />
+
+                    <material:MaterialSwitch
+                        x:Name="OledDarkmode"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Toggled="OledDarkmodeChanged" />
+
+                    <!-- Vibration -->
+                    <Label x:Name="VibrationLabel"
+                           Text="Enable Haptic Feedback"
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           TextColor="{DynamicResource Secondary}" />
+
+                    <material:MaterialSwitch x:Name="VibrationSwitch"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                Toggled="VibrationChanged" />
+
+                    <!-- Developer options -->
+                    <Label Text="Developer options"
+                           Grid.Row="2"
+                           Grid.Column="0"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           TextColor="{DynamicResource Secondary}" />
+
+                    <material:MaterialSwitch
+                        x:Name="DeveloperOptions"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Toggled="DeveloperOptionsChanged"/>
+                </Grid>
+
+                <material:MaterialButton x:Name="btnBackendGrid"
+                        IsVisible="False"
+                        Margin="5"
+                        Text="Show Backend Grid"
+                        Clicked="developerBtnBackendGridClicked"/>
+
+                <material:MaterialButton x:Name="btnRemoveRows"
+                        IsVisible="False"
+                        Margin="5"
+                        Text="Remove Empty Rows"
+                        Clicked="developerBtnRemoveRowsClicked"/>
+
+                <material:MaterialButton x:Name="btnStageCompletion"
+                        IsVisible="False"
+                        Margin="5"
+                        Text="Check For Stage Completion"
+                        Clicked="developerBtnStageCompletionClicked"/>
+
+                <material:MaterialButton x:Name="btnRefreshGridColors"
+                        IsVisible="False"
+                        Margin="5"
+                        Text="RefreshGridColors"
+                        Clicked="developerBtnRefreshGridColorsClicked"/>
+            </VerticalStackLayout>
+        <!--</Border>-->
+    </Grid>
+</mct:Popup>

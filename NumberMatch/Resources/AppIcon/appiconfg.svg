@@ -1,0 +1,27 @@
+<svg width="456" height="456" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .grid-line { stroke: black; stroke-width: 10; stroke-linecap: round; }
+        .cell-text { font: bold 100px sans-serif; text-anchor: middle; dominant-baseline: middle; fill: black; }
+        .cell-text-6-4 { font: bold 100px sans-serif; text-anchor: middle; dominant-baseline: middle; fill: #2196F3; }
+    </style>
+    <!-- Vertical lines -->
+    <line x1="152" y1="0" x2="152" y2="456" class="grid-line"/>
+    <line x1="304" y1="0" x2="304" y2="456" class="grid-line"/>
+    <!-- Horizontal lines -->
+    <line x1="0" y1="152" x2="456" y2="152" class="grid-line"/>
+    <line x1="0" y1="304" x2="456" y2="304" class="grid-line"/>
+    <!-- Random numbers in cells -->
+    <text x="76" y="76" class="cell-text">5</text>
+    <text x="228" y="76" class="cell-text">3</text>
+    <text x="380" y="76" class="cell-text">8</text>
+    <text x="76" y="236" class="cell-text">1</text>
+        <!-- Omcirkel blauwe 6 -->
+    <rect x="172" y="172" width="112" height="112" rx="28" ry="28" fill="none" stroke="#2196F3" stroke-width="10"/>
+        <text x="228" y="236" class="cell-text-6-4">6</text>
+        <!-- Omcirkel blauwe 4 -->
+    <rect x="324" y="172" width="112" height="112" rx="28" ry="28" fill="none" stroke="#2196F3" stroke-width="10"/>
+        <text x="380" y="236" class="cell-text-6-4">4</text>
+    <text x="76" y="390" class="cell-text">7</text>
+    <text x="228" y="390" class="cell-text">2</text>
+    <text x="380" y="390" class="cell-text">9</text>
+</svg>
