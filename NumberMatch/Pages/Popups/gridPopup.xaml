@@ -2,10 +2,8 @@
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-           xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
            x:Class="NumberMatch.Pages.Popups.gridPopup"
-           CanBeDismissedByTappingOutsideOfPopup="True"
-           Color="Transparent">
+           CanBeDismissedByTappingOutsideOfPopup="True">
     <Grid>
         <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
             <VerticalStackLayout VerticalOptions="Center">
@@ -25,11 +23,11 @@
                         TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         StyleClass="FilledButton"
                         x:Name="CancelButton"/> -->
-                    <mdc:Button
+                    <Button
                         Grid.Column="1"
                         Text="OK"
                         BackgroundColor="{DynamicResource Primary}"
-                        FontColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         Clicked="Button_Clicked" />
                 </Grid>
             </VerticalStackLayout>

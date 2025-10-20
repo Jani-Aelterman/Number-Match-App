@@ -12,8 +12,8 @@
 		<MauiVersion>9.0.90</MauiVersion>
 
 		<!-- Display name -->
-		<ApplicationTitle>NumberMatchMaui</ApplicationTitle>
-		<ApplicationId>com.companyname.numbermatchmaui</ApplicationId>
+		<ApplicationTitle>Number Match</ApplicationTitle>
+		<ApplicationId>com.aelterman.numbermatch</ApplicationId>
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 

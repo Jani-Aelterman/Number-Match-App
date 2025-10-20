@@ -11,6 +11,6 @@ public partial class NotImplementedPopup : Popup
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        Close();
+        //Close();
     }
 }

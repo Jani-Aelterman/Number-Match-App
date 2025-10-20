@@ -29,6 +29,6 @@ public partial class gridPopup : Popup
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        Close();
+        //Close();
     }
 }
