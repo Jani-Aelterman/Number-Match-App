@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             x:Class="NumberMatch.Pages.SettingsPage"
+             BackgroundColor="{DynamicResource Background}"
+             Shell.NavBarIsVisible="False"
+             Title="Settings"
+             Padding="{OnPlatform iOS='0,40,0,0', Android='0,24,0,0', WinUI='0,0,0,0'}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Reduce spacing between material cards globally -->
+            <Style TargetType="material:MaterialCard">
+                <Setter Property="Margin" Value="0,2,0,2" />
+                <Setter Property="Padding" Value="8" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <Grid>
+            <!-- Reduced spacing and inner padding so cards sit closer -->
+            <VerticalStackLayout VerticalOptions="Center" Spacing="0" Padding="8">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Settings"
+                           FontSize="32"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           TextColor="{DynamicResource Secondary}"
+                           Grid.Column="1"/>
+                </Grid>
+
+                <material:MaterialIconButton x:Name="BackButton"
+                                             Clicked="BackButtonClicked"
+                                             HorizontalOptions="Start"
+                                             ImageSource="arrow_back.png"
+                                             Type="Filled"
+                                             BackgroundColor="{DynamicResource InverseOnSurface}"
+                                             ApplyIconTintColor="True"
+                                             IconTintColor="{DynamicResource OnBackground}"
+                                             Margin="0,0,0,6"/>
+
+                <!-- Color swatches card -->
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="20">
+                    <Grid ColumnSpacing="8" RowSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Frame BackgroundColor="{DynamicResource Primary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="0" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource Secondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="0" Grid.Column="1" />
+                        <Frame BackgroundColor="{DynamicResource Tertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="0" Grid.Column="2" />
+                        <Frame BackgroundColor="{DynamicResource InversePrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="0" Grid.Column="3" />
+                        <Frame BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="0" Grid.Column="4" />
+
+                        <Frame BackgroundColor="{DynamicResource InverseSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource Background}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="1" />
+                        <Frame BackgroundColor="{DynamicResource OnBackground}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="2" />
+                        <Frame BackgroundColor="{DynamicResource OnPrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="3" />
+                        <Frame BackgroundColor="{DynamicResource OnPrimaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="4" />
+
+                        <Frame BackgroundColor="{DynamicResource OnSecondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource OnSecondaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="1" />
+                        <Frame BackgroundColor="{DynamicResource OnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="2" />
+                        <Frame BackgroundColor="{DynamicResource OnSurfaceVariant}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="3" />
+                        <Frame BackgroundColor="{DynamicResource OnTertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="4" />
+
+                        <Frame BackgroundColor="{DynamicResource OnTertiaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource Outline}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="1" />
+                    </Grid>
+                </material:MaterialCard>
+
+                <material:MaterialDivider Margin="5" Color="Transparent"/>
+
+                <material:MaterialCard CornerRadius="20,20,5,5" BackgroundColor="{DynamicResource InverseOnSurface}">
+                    <material:MaterialSwitch x:Name="OledDarkmode"
+                                             Text="Oled darkmode"
+                                             TextColor="{DynamicResource OnSurface}"
+                                             Toggled="OledDarkmodeChanged" />
+                </material:MaterialCard>
+
+                <material:MaterialCard CornerRadius="5,5,20,20" BackgroundColor="{DynamicResource InverseOnSurface}">
+                    <material:MaterialSwitch x:Name="VibrationSwitch"
+                                             Text="Enable Haptic Feedback"
+                                             TextColor="{DynamicResource OnSurface}"
+                                             Toggled="VibrationChanged" />
+                </material:MaterialCard>
+
+                <material:MaterialDivider Margin="5" Color="Transparent"/>
+
+                <material:MaterialCard CornerRadius="20,20,5,5" BackgroundColor="{DynamicResource InverseOnSurface}">
+                    <material:MaterialSwitch x:Name="DeveloperOptions"
+                                             Text="Developer Options"
+                                             TextColor="{DynamicResource OnSurface}"
+                                             Toggled="DeveloperOptionsChanged" />
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                    <material:MaterialButton x:Name="btnBackendGrid"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="Show Backend Grid"
+                                             Clicked="developerBtnBackendGridClicked"/>
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                    <material:MaterialButton x:Name="btnRemoveRows"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="Remove Empty Rows"
+                                             Clicked="developerBtnRemoveRowsClicked"/>
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                    <material:MaterialButton x:Name="btnStageCompletion"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="Check For Stage Completion"
+                                             Clicked="developerBtnStageCompletionClicked"/>
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5,5,20,20">
+                    <material:MaterialButton x:Name="btnRefreshGridColors"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="RefreshGridColors"
+                                             Clicked="developerBtnRefreshGridColorsClicked"/>
+                </material:MaterialCard>
+
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

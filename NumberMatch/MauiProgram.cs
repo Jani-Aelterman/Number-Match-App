@@ -24,8 +24,12 @@ namespace NumberMatch
                 })
                 .UseMaterialDesignControls();
 
+            // Register pages and MainPage so DI can resolve MainPage when constructing SettingsPage
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<Pages.SettingsPage>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

@@ -30,7 +30,7 @@ namespace NumberMatch
             InitializeComponent();
 
             // Show popup of the build
-            //this.ShowPopup(new Pages.AlphaPopup());
+            //this.ShowPopup(new Pages.VersionPopup());
 
             //this.ShowPopup(new Pages.TutorialPopup());
 
@@ -60,6 +60,8 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
         // Load and enable the app settings
         public void LoadSettings()
         {
+            //Tools.ShowToast("Settings loaded");
+
             //  set the app theme
             if (Preferences.Get("OledDarkmode", false))
                 this.SetAppTheme(BackgroundColorProperty, dynamicBackgroundColor, Colors.Black);
@@ -239,7 +241,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
         private void HelpButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
-            ///////////////////this.ShowPopup(new Pages.TutorialPopup());
+            this.ShowPopup(new Pages.TutorialPopup());
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)
@@ -257,10 +259,14 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             game.SaveGameData();
         }
 
-        private void SettingsButtonClicked(object sender, EventArgs e)
+        private async void SettingsButtonClicked(object sender, EventArgs e)
         {
-            Tools.HapticClick(hapticFeedbackEnabled);
-            this.ShowPopup(new Pages.Popups.SettingsPopup(this));
+            await Tools.HapticClick(hapticFeedbackEnabled);
+
+            // Use the registered route name (or match the route you registered in AppShell)
+            ////await Shell.Current.GoToAsync(nameof(Pages.SettingsPage));
+            // Or for absolute navigation to a top-level route:
+            await Shell.Current.GoToAsync("//SettingsPage");
         }
 
         private async Task shakeUnmatchedButtons(Tuple<int, int> previousPressedButton, Tuple<int, int> currentPressedButton)

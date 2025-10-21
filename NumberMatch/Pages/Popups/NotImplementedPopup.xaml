@@ -2,6 +2,7 @@
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
            x:Class="NumberMatch.Pages.NotImplementedPopup"
            CanBeDismissedByTappingOutsideOfPopup="False">
     <Grid>
@@ -18,11 +19,9 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button
+                    <material:MaterialButton
                         Grid.Column="1"
                         Text="OK"
-                        BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         Clicked="Button_Clicked" />
                 </Grid>
             </VerticalStackLayout>

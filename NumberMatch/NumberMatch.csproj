@@ -55,10 +55,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\Popups\VersionPopup.xaml.cs">
+	    <DependentUpon>VersionPopup.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\Popups\SettingsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Popups\TutorialPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

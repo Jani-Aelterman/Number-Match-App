@@ -2,9 +2,9 @@ using CommunityToolkit.Maui.Views;
 
 namespace NumberMatch.Pages;
 
-public partial class AlphaPopup : Popup
+public partial class VersionPopup : Popup
 {
-    public AlphaPopup()
+    public VersionPopup()
     {
         InitializeComponent();
     }
@@ -12,5 +12,6 @@ public partial class AlphaPopup : Popup
     private void Button_Clicked(object sender, EventArgs e)
     {
         //Close();
+        this.CloseAsync();
     }
 }

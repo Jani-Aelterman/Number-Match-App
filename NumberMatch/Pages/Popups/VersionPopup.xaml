@@ -2,14 +2,17 @@
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-           x:Class="NumberMatch.Pages.AlphaPopup"
-           CanBeDismissedByTappingOutsideOfPopup="True">
+           xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+           x:Class="NumberMatch.Pages.VersionPopup"
+           BackgroundColor="{DynamicResource Background}"
+           Margin="0"
+           CanBeDismissedByTappingOutsideOfPopup="False">
     <Grid>
-        <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
-            <VerticalStackLayout VerticalOptions="Center">
+        <!--<Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">-->
+            <VerticalStackLayout VerticalOptions="Center" BackgroundColor="{DynamicResource Background}">
                 <Label x:Name="lbl" Text="This is an alpha build of Number Match, everything is subject to change. Please report any issues you find on GitHub. Thank you for testing!"
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center" />
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -17,14 +20,12 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     
-                    <Button
+                    <material:MaterialButton
                         Grid.Column="1"
                         Text="OK"
-                        BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         Clicked="Button_Clicked" />
                 </Grid>
             </VerticalStackLayout>
-        </Frame>
+        <!--</Frame>-->
     </Grid>
 </mct:Popup>

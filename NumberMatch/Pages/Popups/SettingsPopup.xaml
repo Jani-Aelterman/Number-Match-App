@@ -7,7 +7,7 @@
            x:Class="NumberMatch.Pages.Popups.SettingsPopup"
            CanBeDismissedByTappingOutsideOfPopup="True"
            BackgroundColor="{DynamicResource Background}"
-           Margin="40">
+           Margin="0">
 
     <!--<mct:Popup.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{DynamicResource Background}" StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
@@ -15,7 +15,7 @@
     
     <Grid>
         <!--<Border x:Name="PopupBackground" Background="{DynamicResource Background}" StrokeShape="RoundRectangle 20" VerticalOptions="Center" HorizontalOptions="Center" Padding="20">-->
-            <VerticalStackLayout VerticalOptions="Center" BackgroundColor="{DynamicResource Background}">
+            <VerticalStackLayout VerticalOptions="Center" Spacing="10">
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -27,12 +27,6 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <!--<Image Grid.Column="0">
-                        <Image.Source>
-                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Settings}" Color="{DynamicResource Secondary}" />
-                        </Image.Source>
-                    </Image>-->
-
                     <Label Text="Settings"
                            FontSize="32"
                            HorizontalOptions="Center"
@@ -42,90 +36,184 @@
 
                 </Grid>
 
-                <Grid x:Name="Grid" ColumnSpacing="20" RowSpacing="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <!-- Color swatches card -->
+                <material:MaterialCard BackgroundColor="{DynamicResource Surface}" CornerRadius="8" Padding="8" Margin="0">
+                    <Grid ColumnSpacing="8" RowSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Frame BackgroundColor="{DynamicResource Primary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="0" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource Secondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="0" Grid.Column="1" />
+                        <Frame BackgroundColor="{DynamicResource Tertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="0" Grid.Column="2" />
+                        <Frame BackgroundColor="{DynamicResource InversePrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="0" Grid.Column="3" />
+                        <Frame BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="0" Grid.Column="4" />
+
+                        <Frame BackgroundColor="{DynamicResource InverseSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="1" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource Background}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="1" Grid.Column="1" />
+                        <Frame BackgroundColor="{DynamicResource OnBackground}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="1" Grid.Column="2" />
+                        <Frame BackgroundColor="{DynamicResource OnPrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="1" Grid.Column="3" />
+                        <Frame BackgroundColor="{DynamicResource OnPrimaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="1" Grid.Column="4" />
+
+                        <Frame BackgroundColor="{DynamicResource OnSecondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="2" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource OnSecondaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="2" Grid.Column="1" />
+                        <Frame BackgroundColor="{DynamicResource OnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="2" Grid.Column="2" />
+                        <Frame BackgroundColor="{DynamicResource OnSurfaceVariant}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="2" Grid.Column="3" />
+                        <Frame BackgroundColor="{DynamicResource OnTertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="2" Grid.Column="4" />
+
+                        <Frame BackgroundColor="{DynamicResource OnTertiaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="3" Grid.Column="0" />
+                        <Frame BackgroundColor="{DynamicResource Outline}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="False" Grid.Row="3" Grid.Column="1" />
+                    </Grid>
+                </material:MaterialCard>
+
+                <material:MaterialCard CornerRadius="20,20,5,5" BackgroundColor="{DynamicResource InverseOnSurface}">
+                    <material:MaterialSwitch x:Name="OledDarkmode"
+                                             Text="Oled darkmode"
+                                             Toggled="OledDarkmodeChanged" />
+                </material:MaterialCard>
+
+                <material:MaterialCard CornerRadius="5" BackgroundColor="{DynamicResource InverseOnSurface}">
+                    <material:MaterialSwitch x:Name="VibrationSwitch"
+                                             Text="Enable Haptic Feedback"
+                                             TextColor="{DynamicResource Secondary}"
+                                             Toggled="VibrationChanged" />
+                </material:MaterialCard>
+
+                <material:MaterialCard CornerRadius="5" BackgroundColor="{DynamicResource InverseOnSurface}">
+                    <material:MaterialSwitch x:Name="DeveloperOptions"
+                                             Text="Developer Options"
+                                             Toggled="DeveloperOptionsChanged" />
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                    <material:MaterialButton x:Name="btnBackendGrid"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="Show Backend Grid"
+                                             Clicked="developerBtnBackendGridClicked"/>
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                    <material:MaterialButton x:Name="btnRemoveRows"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="Remove Empty Rows"
+                                             Clicked="developerBtnRemoveRowsClicked"/>
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                    <material:MaterialButton x:Name="btnStageCompletion"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="Check For Stage Completion"
+                                             Clicked="developerBtnStageCompletionClicked"/>
+                </material:MaterialCard>
+
+                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5,5,20,20">
+                    <material:MaterialButton x:Name="btnRefreshGridColors"
+                                             IsVisible="False"
+                                             Margin="5"
+                                             Text="RefreshGridColors"
+                                             Clicked="developerBtnRefreshGridColorsClicked"/>
+                </material:MaterialCard>
+ 
+                
+                
+
+                <!--<Grid x:Name="Grid" ColumnSpacing="20" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- Oled Darkmode -->
-                    <Label Text="Oled darkmode"
-                           Grid.Row="0"
-                           Grid.Column="0"
-                           HorizontalOptions="Start"
-                           VerticalOptions="Center"
-                           TextColor="{DynamicResource Secondary}" />
+                    <- Oled Darkmode
+                        <Label Text="Oled darkmode"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"
+                               TextColor="{DynamicResource Secondary}" />
 
-                    <material:MaterialSwitch
-                        x:Name="OledDarkmode"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Toggled="OledDarkmodeChanged" />
+                        <material:MaterialSwitch
+                            x:Name="OledDarkmode"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Toggled="OledDarkmodeChanged" />
 
-                    <!-- Vibration -->
-                    <Label x:Name="VibrationLabel"
-                           Text="Enable Haptic Feedback"
-                           Grid.Row="1"
-                           Grid.Column="0"
-                           HorizontalOptions="Start"
-                           VerticalOptions="Center"
-                           TextColor="{DynamicResource Secondary}" />
+                        <!- Vibration -
+                        <Label x:Name="VibrationLabel"
+                               Text="Enable Haptic Feedback"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"
+                               TextColor="{DynamicResource Secondary}" />
 
-                    <material:MaterialSwitch x:Name="VibrationSwitch"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalOptions="End"
-                                VerticalOptions="Center"
-                                Toggled="VibrationChanged" />
+                        <material:MaterialSwitch x:Name="VibrationSwitch"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    Toggled="VibrationChanged" />
 
-                    <!-- Developer options -->
-                    <Label Text="Developer options"
-                           Grid.Row="2"
-                           Grid.Column="0"
-                           HorizontalOptions="Start"
-                           VerticalOptions="Center"
-                           TextColor="{DynamicResource Secondary}" />
+                        <!- Developer options -
+                        <Label Text="Developer options"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"
+                               TextColor="{DynamicResource Secondary}" />
 
-                    <material:MaterialSwitch
-                        x:Name="DeveloperOptions"
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Toggled="DeveloperOptionsChanged"/>
-                </Grid>
+                        <material:MaterialSwitch
+                            x:Name="DeveloperOptions"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Toggled="DeveloperOptionsChanged"/>
+                    </Grid>-->
 
-                <material:MaterialButton x:Name="btnBackendGrid"
-                        IsVisible="False"
-                        Margin="5"
-                        Text="Show Backend Grid"
-                        Clicked="developerBtnBackendGridClicked"/>
+                    <!--<material:MaterialButton x:Name="btnBackendGrid"
+                            IsVisible="False"
+                            Margin="5"
+                            Text="Show Backend Grid"
+                            Clicked="developerBtnBackendGridClicked"/>
 
-                <material:MaterialButton x:Name="btnRemoveRows"
-                        IsVisible="False"
-                        Margin="5"
-                        Text="Remove Empty Rows"
-                        Clicked="developerBtnRemoveRowsClicked"/>
+                    <material:MaterialButton x:Name="btnRemoveRows"
+                            IsVisible="False"
+                            Margin="5"
+                            Text="Remove Empty Rows"
+                            Clicked="developerBtnRemoveRowsClicked"/>
 
-                <material:MaterialButton x:Name="btnStageCompletion"
-                        IsVisible="False"
-                        Margin="5"
-                        Text="Check For Stage Completion"
-                        Clicked="developerBtnStageCompletionClicked"/>
+                    <material:MaterialButton x:Name="btnStageCompletion"
+                            IsVisible="False"
+                            Margin="5"
+                            Text="Check For Stage Completion"
+                            Clicked="developerBtnStageCompletionClicked"/>
 
-                <material:MaterialButton x:Name="btnRefreshGridColors"
-                        IsVisible="False"
-                        Margin="5"
-                        Text="RefreshGridColors"
-                        Clicked="developerBtnRefreshGridColorsClicked"/>
+                    <material:MaterialButton x:Name="btnRefreshGridColors"
+                            IsVisible="False"
+                            Margin="5"
+                            Text="RefreshGridColors"
+                            Clicked="developerBtnRefreshGridColorsClicked"/>-->
             </VerticalStackLayout>
         <!--</Border>-->
     </Grid>

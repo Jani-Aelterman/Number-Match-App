@@ -48,10 +48,10 @@ public partial class SettingsPopup : Popup
 #if __MOBILE__
         if (Preferences.ContainsKey("Vibration"))
             VibrationSwitch.IsToggled = Preferences.Get("Vibration", true);
-        VibrationLabel.IsVisible = true;
+        //VibrationLabel.IsVisible = true;
         VibrationSwitch.IsVisible = true;
 #else
-    VibrationLabel.IsVisible = false;
+    //VibrationLabel.IsVisible = false;
     VibrationSwitch.IsVisible = false;
 #endif
 

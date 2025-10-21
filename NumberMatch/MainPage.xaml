@@ -40,13 +40,15 @@
                 Clicked="SettingsButtonClicked"
                 HorizontalOptions="Center" />
 
-            <Label x:Name="LabelAmmountMatchedNumbers"
-               Text="Matched numbers: 0"
-               HorizontalOptions="Center" />
+            <material:MaterialCard HorizontalOptions="Center" BackgroundColor="{DynamicResource InverseOnSurface}" Padding="10">
+                <Label x:Name="LabelAmmountMatchedNumbers"
+                       Text="Matched numbers: 0" />
+            </material:MaterialCard>
 
-            <Label x:Name="LabelStage"
-               Text="Stage: 0"
-               HorizontalOptions="Start" />
+            <material:MaterialCard HorizontalOptions="Start" BackgroundColor="{DynamicResource InverseOnSurface}" Padding="10">
+                <Label x:Name="LabelStage"
+                       Text="Stage: 0" />
+            </material:MaterialCard>
 
             <Grid x:Name="NumberMatchGrid" VerticalOptions="Center"></Grid>
 
