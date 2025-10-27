@@ -241,12 +241,15 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
         private void HelpButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
-            this.ShowPopup(new Pages.TutorialPopup());
+            //this.ShowPopup(new Pages.TutorialPopup());
+            Tools.ShowToast("Help is not implemented yet");
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
+
+            // Show confirmation popup
 
 #if WINDOWS
             game.InitializeGrid(ROWS + 8, COLUMNS + 5);

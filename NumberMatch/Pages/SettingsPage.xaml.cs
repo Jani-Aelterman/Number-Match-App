@@ -1,19 +1,41 @@
 using HorusStudio.Maui.MaterialDesignControls;
 using Microsoft.Maui.Controls;
 using System;
+using System.Windows.Input;
 using NumberMatch.Helpers;
 
 namespace NumberMatch.Pages
 {
     public partial class SettingsPage : ContentPage
     {
-        private MainPage page;
+        private readonly MainPage page;
         private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Background"] ?? Colors.Black);
+
+        // Command bound to the top app bar leading icon
+        public ICommand GoBackCommand { get; }
 
         public SettingsPage(MainPage mainpage)
         {
             this.BackgroundColor = dynamicBackgroundColor;
             this.page = mainpage;
+
+            // Bind the page to itself so XAML bindings (like LeadingIconCommand) work
+            BindingContext = this;
+
+            // Initialize go-back command: refresh main page settings then navigate back
+            GoBackCommand = new Command(async () =>
+            {
+                try
+                {
+                    //page?.LoadSettings();
+                    await Shell.Current.GoToAsync("//MainPage");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"GoBackCommand failed: {ex.Message}");
+                }
+            });
+
             InitializeComponent();
             this.LoadSettings();
         }
@@ -31,7 +53,9 @@ namespace NumberMatch.Pages
             if (Preferences.ContainsKey("OledDarkmode"))
                 OledDarkmode.IsToggled = Preferences.Get("OledDarkmode", false);
 
-    #if __MOBILE__
+            //this.LoadTheme();
+
+#if __MOBILE__
             if (Preferences.ContainsKey("Vibration"))
                 VibrationSwitch.IsToggled = Preferences.Get("Vibration", true);
             //VibrationLabel.IsVisible = true;
@@ -60,13 +84,13 @@ namespace NumberMatch.Pages
         private void VibrationChanged(object sender, EventArgs e)
         {
             Preferences.Set("Vibration", VibrationSwitch.IsToggled);
-            //page.LoadSettings();
+            page.LoadSettings();
         }
 
         private void DeveloperOptionsChanged(object sender, EventArgs e)
         {
             Preferences.Set("DeveloperOptions", DeveloperOptions.IsToggled);
-            //page.LoadSettings();
+            page.LoadSettings();
         }
 
         private void developerBtnBackendGridClicked(object sender, EventArgs e)
@@ -76,17 +100,17 @@ namespace NumberMatch.Pages
 
         private void developerBtnRemoveRowsClicked(object sender, EventArgs e)
         {
-            //page.game.RemoveEmptyRows();
+            page.game.RemoveEmptyRows();
         }
 
         private void developerBtnStageCompletionClicked(object sender, EventArgs e)
         {
-            //page.game.CheckStageCompletion();
+            page.game.CheckStageCompletion();
         }
 
         private void developerBtnRefreshGridColorsClicked(object sender, EventArgs e)
         {
-            //page.RefreshGridColors();
+            page.RefreshGridColors();
         }
 
         // Back button handler: navigate back to the MainPage and refresh settings on the main page if available

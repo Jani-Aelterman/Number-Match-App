@@ -7,53 +7,79 @@
              BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="False"
              Title="Settings"
-             Padding="{OnPlatform iOS='0,40,0,0', Android='0,24,0,0', WinUI='0,0,0,0'}">
+             Padding="{OnPlatform iOS='0,40,0,0', Android='0,45,0,0', WinUI='0,0,0,0'}">
+
+
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!-- Reduce spacing between material cards globally -->
-            <Style TargetType="material:MaterialCard">
-                <Setter Property="Margin" Value="0,2,0,2" />
+            <!-- Default (global) small spacing -->
+            <!-- Give the base style an explicit key so other styles can reference it in MAUI -->
+            <Style x:Key="MaterialCard" TargetType="material:MaterialCard">
+                <!--<Setter Property="Margin" Value="0,2,0,2" />-->
                 <Setter Property="Padding" Value="8" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource InverseOnSurface}" />
+            </Style>
+
+            <!-- Start card -->
+            <Style x:Key="MaterialCardStart" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
+                <Setter Property="CornerRadius" Value="20,20,5,5" />
+                <Setter Property="Margin" Value="0,5,0,1" />
+            </Style>
+
+            <!-- Middle card -->
+            <Style x:Key="MaterialCardMiddle" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="Margin" Value="0,1,0,1" />
+            </Style>
+
+            <!-- End card -->
+            <Style x:Key="MaterialCardEnd" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
+                <Setter Property="CornerRadius" Value="5,5,20,20" />
+                <Setter Property="Margin" Value="0,1,0,5" />
+            </Style>
+
+            <!-- Standalone card -->
+            <Style x:Key="MaterialCardStandAlone" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="Margin" Value="0,5,0,5" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView VerticalScrollBarVisibility="Never">
-        <Grid>
-            <!-- Reduced spacing and inner padding so cards sit closer -->
-            <VerticalStackLayout VerticalOptions="Center" Spacing="0" Padding="8">
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+    <Grid
+        RowDefinitions="Auto,*">
+        <material:MaterialTopAppBar
+            Headline="Settings"
+            HeadlineColor="{DynamicResource OnBackground}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIcon="arrow_back.png"
+            ScrollViewName="scrollView"
+            Type="Large">
+            <!--<material:MaterialTopAppBar.Triggers>
+                <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{Binding TopBarIsCollapsed}" Value="True">
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}" />
+                    <Setter Property="Shadow" Value="{x:Static material:MaterialElevation.Level2}" />
+                    <Setter Property="ZIndex" Value="1000" />
+                </DataTrigger>
+            </material:MaterialTopAppBar.Triggers>-->
+        </material:MaterialTopAppBar>
 
-                    <Label Text="Settings"
-                           FontSize="32"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           TextColor="{DynamicResource Secondary}"
-                           Grid.Column="1"/>
-                </Grid>
+        <ScrollView
+            x:Name="scrollView"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Style="{StaticResource MainLayout}">
 
-                <material:MaterialIconButton x:Name="BackButton"
-                                             Clicked="BackButtonClicked"
-                                             HorizontalOptions="Start"
-                                             ImageSource="arrow_back.png"
-                                             Type="Filled"
-                                             BackgroundColor="{DynamicResource InverseOnSurface}"
-                                             ApplyIconTintColor="True"
-                                             IconTintColor="{DynamicResource OnBackground}"
-                                             Margin="0,0,0,6"/>
 
-                <!-- Color swatches card -->
-                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="20">
+
+
+
+
+                <!-- Color swatches card (begin) -->
+                <material:MaterialCard Style="{StaticResource MaterialCardStandAlone}">
                     <Grid ColumnSpacing="8" RowSpacing="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -92,65 +118,101 @@
                     </Grid>
                 </material:MaterialCard>
 
-                <material:MaterialDivider Margin="5" Color="Transparent"/>
+                <!--<material:MaterialDivider Margin="5" Color="Transparent"/>-->
 
-                <material:MaterialCard CornerRadius="20,20,5,5" BackgroundColor="{DynamicResource InverseOnSurface}">
+                <material:MaterialCard Style="{StaticResource MaterialCardStart}">
                     <material:MaterialSwitch x:Name="OledDarkmode"
-                                             Text="Oled darkmode"
-                                             TextColor="{DynamicResource OnSurface}"
-                                             Toggled="OledDarkmodeChanged" />
+                             Text="Oled darkmode"
+                             TextColor="{DynamicResource OnSurface}"
+                             Toggled="OledDarkmodeChanged" />
                 </material:MaterialCard>
 
-                <material:MaterialCard CornerRadius="5,5,20,20" BackgroundColor="{DynamicResource InverseOnSurface}">
+                <material:MaterialCard Style="{StaticResource MaterialCardEnd}">
                     <material:MaterialSwitch x:Name="VibrationSwitch"
-                                             Text="Enable Haptic Feedback"
-                                             TextColor="{DynamicResource OnSurface}"
-                                             Toggled="VibrationChanged" />
+                             Text="Enable Haptic Feedback"
+                             TextColor="{DynamicResource OnSurface}"
+                             Toggled="VibrationChanged" />
                 </material:MaterialCard>
 
-                <material:MaterialDivider Margin="5" Color="Transparent"/>
+                <material:MaterialCard Style="{StaticResource MaterialCardStart}">
+                    <Grid x:Name="test">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                <material:MaterialCard CornerRadius="20,20,5,5" BackgroundColor="{DynamicResource InverseOnSurface}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="smart_display.png" Grid.Column="0" />
+
+                        <material:MaterialLabel HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Text="Replay Tutorial" Grid.Column="1" />
+                    </Grid>
+                </material:MaterialCard>
+
+                <material:MaterialCard Style="{StaticResource MaterialCardEnd}">
+                    <!--<material:MaterialButton Text="Show version info" />-->
+
+                    <Grid x:Name="test2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="info.png" Grid.Column="0" />
+
+                        <material:MaterialLabel HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Text="Show version info" Grid.Column="1" />
+                    </Grid>
+
+                </material:MaterialCard>
+
+                <!--<material:MaterialDivider Margin="5" Color="Transparent"/>-->
+
+                <material:MaterialCard Style="{StaticResource MaterialCardStart}">
                     <material:MaterialSwitch x:Name="DeveloperOptions"
-                                             Text="Developer Options"
-                                             TextColor="{DynamicResource OnSurface}"
-                                             Toggled="DeveloperOptionsChanged" />
+                             Text="Developer Options"
+                             TextColor="{DynamicResource OnSurface}"
+                             Toggled="DeveloperOptionsChanged" />
                 </material:MaterialCard>
 
-                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                <material:MaterialCard Style="{StaticResource MaterialCardMiddle}">
                     <material:MaterialButton x:Name="btnBackendGrid"
-                                             IsVisible="False"
-                                             Margin="5"
-                                             Text="Show Backend Grid"
-                                             Clicked="developerBtnBackendGridClicked"/>
+                             IsVisible="False"
+                             Margin="5"
+                             Text="Show Backend Grid"
+                             Clicked="developerBtnBackendGridClicked"/>
                 </material:MaterialCard>
 
-                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                <material:MaterialCard Style="{StaticResource MaterialCardMiddle}">
                     <material:MaterialButton x:Name="btnRemoveRows"
-                                             IsVisible="False"
-                                             Margin="5"
-                                             Text="Remove Empty Rows"
-                                             Clicked="developerBtnRemoveRowsClicked"/>
+                             IsVisible="False"
+                             Margin="5"
+                             Text="Remove Empty Rows"
+                             Clicked="developerBtnRemoveRowsClicked"/>
                 </material:MaterialCard>
 
-                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5">
+                <material:MaterialCard Style="{StaticResource MaterialCardMiddle}">
                     <material:MaterialButton x:Name="btnStageCompletion"
-                                             IsVisible="False"
-                                             Margin="5"
-                                             Text="Check For Stage Completion"
-                                             Clicked="developerBtnStageCompletionClicked"/>
+                             IsVisible="False"
+                             Margin="5"
+                             Text="Check For Stage Completion"
+                             Clicked="developerBtnStageCompletionClicked"/>
                 </material:MaterialCard>
 
-                <material:MaterialCard BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="5,5,20,20">
+                <material:MaterialCard Style="{StaticResource MaterialCardEnd}">
                     <material:MaterialButton x:Name="btnRefreshGridColors"
-                                             IsVisible="False"
-                                             Margin="5"
-                                             Text="RefreshGridColors"
-                                             Clicked="developerBtnRefreshGridColorsClicked"/>
+                             IsVisible="False"
+                             Margin="5"
+                             Text="RefreshGridColors"
+                             Clicked="developerBtnRefreshGridColorsClicked"/>
                 </material:MaterialCard>
 
             </VerticalStackLayout>
-        </Grid>
-    </ScrollView>
-
+        </ScrollView>
+    </Grid>
 </ContentPage>
