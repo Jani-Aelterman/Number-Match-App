@@ -71,7 +71,7 @@
             x:Name="scrollView"
             Grid.Row="1"
             VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <VerticalStackLayout>
 
 
 

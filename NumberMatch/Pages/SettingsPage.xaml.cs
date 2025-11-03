@@ -1,6 +1,7 @@
 using HorusStudio.Maui.MaterialDesignControls;
 using Microsoft.Maui.Controls;
 using System;
+using System.Linq;
 using System.Windows.Input;
 using NumberMatch.Helpers;
 
@@ -14,10 +15,11 @@ namespace NumberMatch.Pages
         // Command bound to the top app bar leading icon
         public ICommand GoBackCommand { get; }
 
-        public SettingsPage(MainPage mainpage)
+        // Make the parameter optional so Shell can create the page without throwing
+        public SettingsPage(/*MainPage mainpage = null*/)
         {
-            this.BackgroundColor = dynamicBackgroundColor;
-            this.page = mainpage;
+            //this.BackgroundColor = dynamicBackgroundColor;
+            this.page = /*mainpage ??*/ FindMainPage();
 
             // Bind the page to itself so XAML bindings (like LeadingIconCommand) work
             BindingContext = this;
@@ -27,7 +29,9 @@ namespace NumberMatch.Pages
             {
                 try
                 {
-                    //page?.LoadSettings();
+                    // Only call if we found a MainPage reference
+                    page?.LoadSettings();
+
                     await Shell.Current.GoToAsync("//MainPage");
                 }
                 catch (Exception ex)
@@ -37,7 +41,32 @@ namespace NumberMatch.Pages
             });
 
             InitializeComponent();
+
             this.LoadSettings();
+        }
+
+        private MainPage FindMainPage()
+        {
+            try
+            {
+                // Try navigation stack first
+                var nav = Application.Current?.MainPage?.Navigation?.NavigationStack;
+                if (nav != null)
+                {
+                    var mp = nav.OfType<MainPage>().LastOrDefault();
+                    if (mp != null) return mp;
+                }
+
+                // Try Shell's current page
+                if (Shell.Current?.CurrentPage is MainPage mp2) return mp2;
+            }
+            catch
+            {
+                // swallow — fallback to null
+                Tools.ShowToast("MainPage not found");
+            }
+
+            return null;
         }
 
         private void LoadTheme()
@@ -53,7 +82,7 @@ namespace NumberMatch.Pages
             if (Preferences.ContainsKey("OledDarkmode"))
                 OledDarkmode.IsToggled = Preferences.Get("OledDarkmode", false);
 
-            //this.LoadTheme();
+            this.LoadTheme();
 
 #if __MOBILE__
             if (Preferences.ContainsKey("Vibration"))
