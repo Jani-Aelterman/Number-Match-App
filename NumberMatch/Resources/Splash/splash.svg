@@ -7,17 +7,21 @@
     <!-- Vertical lines -->
     <line x1="152" y1="0" x2="152" y2="456" class="grid-line"/>
     <line x1="304" y1="0" x2="304" y2="456" class="grid-line"/>
+	
     <!-- Horizontal lines -->
     <line x1="0" y1="152" x2="456" y2="152" class="grid-line"/>
     <line x1="0" y1="304" x2="456" y2="304" class="grid-line"/>
+	
     <!-- Random numbers in cells -->
     <text x="76" y="76" class="cell-text">5</text>
     <text x="228" y="76" class="cell-text">3</text>
     <text x="380" y="76" class="cell-text">8</text>
-    <text x="76" y="228" class="cell-text">1</text>
-    <text x="228" y="228" class="cell-text-6-4">6</text>
-    <text x="380" y="228" class="cell-text-6-4">4</text>
-    <text x="76" y="380" class="cell-text">7</text>
-    <text x="228" y="380" class="cell-text">2</text>
-    <text x="380" y="380" class="cell-text">9</text>
+	
+    <text x="76" y="260" class="cell-text">1</text>
+    <text x="228" y="260" class="cell-text-6-4">6</text>
+    <text x="380" y="260" class="cell-text-6-4">4</text>
+	
+    <text x="76" y="420" class="cell-text">7</text>
+    <text x="228" y="420" class="cell-text">2</text>
+    <text x="380" y="420" class="cell-text">9</text>
 </svg>
