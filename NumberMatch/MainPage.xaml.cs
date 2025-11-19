@@ -22,6 +22,7 @@ namespace NumberMatch
         private readonly Color dynamicPrimaryColor = (Color)Application.Current.Resources["Primary"];
         private readonly Color dynamicSecondaryColor = (Color)Application.Current.Resources["Secondary"];
         private readonly Color dynamicTertiaryColor = (Color)Application.Current.Resources["Tertiary"];
+        private readonly Color dynamicInversePrimaryColor = (Color)Application.Current.Resources["InversePrimary"];
         private bool hapticFeedbackEnabled = true;
         //button.SetDynamicResource(Button.BackgroundProperty, "Primary");
 
@@ -43,18 +44,10 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             game = new GameBackend(COLUMNS, ROWS, this);
 
             game.CheckStageCompletion();
-
-
-            /*this.Behaviors.Add(new StatusBarBehavior
-            {
-                StatusBarColor = Colors.Red,
-                StatusBarStyle = StatusBarStyle.LightContent
-            });*/
 #endif
 
             SynchronizeGrid(game.gameData.GameGrid);
             LoadSettings();
-            //AddBtn.Padding = new Thickness(0);
         }
 
         // Load and enable the app settings
@@ -242,7 +235,27 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
         {
             Tools.HapticClick(hapticFeedbackEnabled);
             //this.ShowPopup(new Pages.TutorialPopup());
-            Tools.ShowToast("Help is not implemented yet");
+            //Tools.ShowToast("Help is not implemented yet");
+
+            // Show 1 available match
+            Tuple<Tuple<int, int>, Tuple<int, int>> match = game.GetAvailableMove();
+            if (match != null)
+            {
+                // Highlight the buttons
+                var firstButton = GetCellUIElement(match.Item1.Item1, match.Item1.Item2) as Button;
+                var secondButton = GetCellUIElement(match.Item2.Item1, match.Item2.Item2) as Button;
+                if (firstButton != null && secondButton != null)
+                {
+                    firstButton.BackgroundColor = dynamicInversePrimaryColor;
+                    firstButton.TextColor = dynamicBackgroundColor;
+                    secondButton.BackgroundColor = dynamicInversePrimaryColor;
+                    secondButton.TextColor = dynamicBackgroundColor;
+                }
+            }
+            else
+            {
+                Tools.ShowToast("No available moves!");
+            }
         }
 
         private void ResetButtonClicked(object sender, EventArgs e)
@@ -269,7 +282,13 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             // Use the registered route name (or match the route you registered in AppShell)
             ////await Shell.Current.GoToAsync(nameof(Pages.SettingsPage));
             // Or for absolute navigation to a top-level route:
-            await Shell.Current.GoToAsync("//SettingsPage");
+            try
+            {
+                await Shell.Current.GoToAsync("//SettingsPage");
+            } catch(Exception ex)
+            {                 
+                Tools.ShowToast("Error opening settings: " + ex.Message);
+            }
         }
 
         private async Task shakeUnmatchedButtons(Tuple<int, int> previousPressedButton, Tuple<int, int> currentPressedButton)
@@ -347,30 +366,6 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             }
             return null;
         }
-
-        /*private async Task HapticClick()
-        {
-#if __MOBILE__
-            if(hapticFeedbackEnabled)
-                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
-#endif
-        }
-
-        private async Task ErrorHaptic()
-        {
-#if __MOBILE__
-            if (hapticFeedbackEnabled)
-            {
-                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
-                await Task.Delay(100);
-                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
-                await Task.Delay(150);
-                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
-            }
-#endif
-        }*/
-
-
 
         public async Task AnimateStageCompletion()
         {

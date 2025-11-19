@@ -10,6 +10,9 @@ using Microsoft.Maui.Controls;
 using static NumberMatch.Helpers.Tools;
 using System.Linq.Expressions;
 using NumberMatch.Data;
+using System.ComponentModel;
+using System.Diagnostics;
+using CommunityToolkit.Maui.Converters;
 
 namespace NumberMatch.Helpers
 {
@@ -117,7 +120,7 @@ namespace NumberMatch.Helpers
             if ((gameData.GameGrid[row1][col1] == gameData.GameGrid[row2][col2]) || (gameData.GameGrid[row1][col1] + gameData.GameGrid[row2][col2] == 10))
             {
                 //  check if the numbers are at the right position to match
-                if (HorizontalMatch(row1, col1, row2, col2) || VerticalMatch(row1, col1, row2, col2) || DiagonalMatch(row1, col1, row2, col2) || CheckForMatch(row1, col1, row2, col2))
+                if (HorizontalMatch(row1, col1, row2, col2) || VerticalMatch(row1, col1, row2, col2) || DiagonalMatch(row1, col1, row2, col2) || RowMatch(row1, col1, row2, col2))
                 {
                     //  remove the numbers from the grid
                     gameData.GameGrid[row1][col1] = 0;
@@ -127,7 +130,7 @@ namespace NumberMatch.Helpers
 
                     await RemoveEmptyRows();
                     await CheckStageCompletion();
-                    //await RemoveEmptyRows();
+                    //await CheckIfThereAreNoMovesLeft();
 
                     return true;
                 }
@@ -206,7 +209,7 @@ namespace NumberMatch.Helpers
             return false;
         }
 
-        private bool CheckForMatch(int row1, int col1, int row2, int col2)
+        private bool RowMatch(int row1, int col1, int row2, int col2)
         {
             //check if the rows are next to each other  and the numbers aren't on the same row
             if (Math.Abs(row1 - row2) == 1) // check if the rows are next to eachother
@@ -228,6 +231,102 @@ namespace NumberMatch.Helpers
             }
 
             return false;
+        }
+
+        public Tuple<Tuple<int, int>, Tuple<int, int>> GetAvailableMove()
+        {
+            // Scan the grid for any valid move. If none found, add numbers to the grid.
+            var rows = gameData.GameGrid.Count;
+
+            for (int r1 = 0; r1 < rows; r1++)
+            {
+                var row1 = gameData.GameGrid[r1];
+                for (int c1 = 0; c1 < row1.Count; c1++)
+                {
+                    int val1 = row1[c1];
+                    if (val1 == 0) continue;
+
+                    for (int r2 = r1; r2 < rows; r2++)
+                    {
+                        var row2 = gameData.GameGrid[r2];
+                        int startC2 = (r2 == r1) ? c1 + 1 : 0;
+
+                        for (int c2 = startC2; c2 < row2.Count; c2++)
+                        {
+                            int val2 = row2[c2];
+                            if (val2 == 0) continue;
+
+                            // check value rule: equal or sum to 10
+                            if (val1 == val2 || val1 + val2 == 10)
+                            {
+                                // if positioned so they can match, there is a move left
+                                if (HorizontalMatch(r1, c1, r2, c2) ||
+                                    VerticalMatch(r1, c1, r2, c2) ||
+                                    DiagonalMatch(r1, c1, r2, c2) ||
+                                    RowMatch(r1, c1, r2, c2))
+                                {
+                                    return new Tuple<Tuple<int, int>, Tuple<int, int>>(
+                                        new Tuple<int, int>(r1, c1),
+                                        new Tuple<int, int>(r2, c2)
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // No moves found -> add numbers and notify the user
+            //ShowToast("No moves left.");
+            return null;
+            //AddNumbersToGrid();
+            //SaveGameData();
+        }
+
+        private async Task CheckIfThereAreNoMovesLeft()
+        {
+            // Scan the grid for any valid move. If none found, add numbers to the grid.
+            var rows = gameData.GameGrid.Count;
+
+            for (int r1 = 0; r1 < rows; r1++)
+            {
+                var row1 = gameData.GameGrid[r1];
+                for (int c1 = 0; c1 < row1.Count; c1++)
+                {
+                    int val1 = row1[c1];
+                    if (val1 == 0) continue;
+
+                    for (int r2 = r1; r2 < rows; r2++)
+                    {
+                        var row2 = gameData.GameGrid[r2];
+                        int startC2 = (r2 == r1) ? c1 + 1 : 0;
+
+                        for (int c2 = startC2; c2 < row2.Count; c2++)
+                        {
+                            int val2 = row2[c2];
+                            if (val2 == 0) continue;
+
+                            // check value rule: equal or sum to 10
+                            if (val1 == val2 || val1 + val2 == 10)
+                            {
+                                // if positioned so they can match, there is a move left
+                                if (HorizontalMatch(r1, c1, r2, c2) ||
+                                    VerticalMatch(r1, c1, r2, c2) ||
+                                    DiagonalMatch(r1, c1, r2, c2) ||
+                                    RowMatch(r1, c1, r2, c2))
+                                {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // No moves found -> add numbers and notify the user
+            ShowToast("No moves left.");
+            //AddNumbersToGrid();
+            //SaveGameData();
         }
 
         //  remove empty rows and show an animation
