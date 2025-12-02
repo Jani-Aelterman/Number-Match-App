@@ -10,7 +10,7 @@ namespace NumberMatch.Pages
     public partial class SettingsPage : ContentPage
     {
         private readonly MainPage page;
-        private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Background"] ?? Colors.Black);
+        private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Surface1"] ?? Colors.Black);
 
         // Command bound to the top app bar leading icon
         public ICommand GoBackCommand { get; }

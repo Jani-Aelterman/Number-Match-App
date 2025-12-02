@@ -4,46 +4,8 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="NumberMatch.Pages.SettingsPage"
-             BackgroundColor="{DynamicResource Surface1}"
-             Shell.NavBarIsVisible="False"
              Title="Settings"
              Padding="{OnPlatform iOS='0,40,0,0', Android='0,45,0,0', WinUI='0,0,0,0'}">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!-- Default (global) small spacing -->
-            <!-- Give the base style an explicit key so other styles can reference it in MAUI -->
-            <Style x:Key="MaterialCard" TargetType="material:MaterialCard">
-                <!--<Setter Property="Margin" Value="0,2,0,2" />-->
-                <Setter Property="Padding" Value="8" />
-                <Setter Property="BackgroundColor" Value="{DynamicResource InverseOnSurface}" />
-            </Style>
-
-            <!-- Start card -->
-            <Style x:Key="MaterialCardStart" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
-                <Setter Property="CornerRadius" Value="20,20,5,5" />
-                <Setter Property="Margin" Value="0,5,0,1" />
-            </Style>
-
-            <!-- Middle card -->
-            <Style x:Key="MaterialCardMiddle" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
-                <Setter Property="CornerRadius" Value="5" />
-                <Setter Property="Margin" Value="0,1,0,1" />
-            </Style>
-
-            <!-- End card -->
-            <Style x:Key="MaterialCardEnd" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
-                <Setter Property="CornerRadius" Value="5,5,20,20" />
-                <Setter Property="Margin" Value="0,1,0,5" />
-            </Style>
-
-            <!-- Standalone card -->
-            <Style x:Key="MaterialCardStandAlone" TargetType="material:MaterialCard" BasedOn="{StaticResource MaterialCard}">
-                <Setter Property="CornerRadius" Value="20" />
-                <Setter Property="Margin" Value="0,5,0,5" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <Grid
         RowDefinitions="Auto,*">
