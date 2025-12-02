@@ -18,7 +18,7 @@ namespace NumberMatch
         public GameBackend game { private set; get; }
         private const int COLUMNS = 9, ROWS = 13;
         private Tuple<int, int> previousPressedButton = null; //  previous pressed button, row and column
-        private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Background"] ?? Colors.Black);
+        private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Surface1"] ?? Colors.Black);
         private readonly Color dynamicPrimaryColor = (Color)Application.Current.Resources["Primary"];
         private readonly Color dynamicSecondaryColor = (Color)Application.Current.Resources["Secondary"];
         private readonly Color dynamicTertiaryColor = (Color)Application.Current.Resources["Tertiary"];
@@ -289,6 +289,25 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             {                 
                 Tools.ShowToast("Error opening settings: " + ex.Message);
             }
+        }
+
+        private async void TutorialButtonClicked(object sender, EventArgs e)
+        {
+            await Tools.HapticClick(hapticFeedbackEnabled);
+
+            // Use the registered route name (or match the route you registered in AppShell)
+            ////await Shell.Current.GoToAsync(nameof(Pages.SettingsPage));
+            // Or for absolute navigation to a top-level route:
+            /*try
+            {
+                await Shell.Current.GoToAsync("//SettingsPage");
+            }
+            catch (Exception ex)
+            {
+                Tools.ShowToast("Error opening settings: " + ex.Message);
+            }*/
+
+            this.ShowPopup(new Pages.Popups.TutorialPopup());
         }
 
         private async Task shakeUnmatchedButtons(Tuple<int, int> previousPressedButton, Tuple<int, int> currentPressedButton)

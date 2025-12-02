@@ -5,115 +5,92 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{DynamicResource Surface1}">
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{DynamicResource Background}" StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
     </ContentPage.Behaviors>
 
-    <ScrollView>
+    <!-- Layout: header (Auto), scrollable content (*), footer (Auto) -->
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*">
 
-        <VerticalStackLayout
-        Spacing="25"
-        Padding="30,0"
-        VerticalOptions="Center">
-
-
-            <!--<material:MaterialTopAppBar
-    Headline="Number Match"
-    HeadlineColor="{DynamicResource Primary}"
-    HeadlineFontAttributes="Bold"
-                Type="CenterAligned"
-    ScrollViewName="scrollView">
-                <material:MaterialTopAppBar.TrailingIcons>
-                    <material:TrailingIcon
-                    Icon="arrow_back.png"  />
-                </material:MaterialTopAppBar.TrailingIcons>
-                <!<material:MaterialTopAppBar.Triggers>
-        <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{Binding TopBarIsCollapsed}" Value="True">
-            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}" />
-            <Setter Property="Shadow" Value="{x:Static material:MaterialElevation.Level2}" />
-            <Setter Property="ZIndex" Value="1000" />
-        </DataTrigger>
-    </material:MaterialTopAppBar.Triggers>
-            </material:MaterialTopAppBar>-->
-
-            <!-- <mdc:Button Text="Settings"
-                    IconData="{x:Static m:MaterialSharp.Settings}"
-                    BackgroundColor="Transparent"
-                    IconColor="{DynamicResource Secondary}"
-                    FontColor="{DynamicResource Secondary}"/> -->
-
+        <!-- Header: always on top -->
+        <VerticalStackLayout Grid.Row="0" Spacing="12" Padding="10,40,10,10" HorizontalOptions="Fill">
             <material:MaterialButton x:Name="Title"
-                Text="Number Match"
-                FontSize="32"
-                FontAttributes="Bold"
-                TextColor="{DynamicResource Primary}"
-                BackgroundColor="Transparent"
-                BorderColor="{DynamicResource Primary}"
-                BorderWidth="1"
-                CornerRadius="10"
-                Padding="0"
-                VerticalOptions="Center"
-                Clicked="SettingsButtonClicked"
-                HorizontalOptions="Center" />
+                                     Text="Number Match"
+                                     FontSize="32"
+                                     FontAttributes="Bold"
+                                     TextColor="{DynamicResource Primary}"
+                                     BackgroundColor="Transparent"
+                                     BorderColor="{DynamicResource Primary}"
+                                     BorderWidth="1"
+                                     CornerRadius="10"
+                                     Padding="0"
+                                     VerticalOptions="Center"
+                                     Clicked="SettingsButtonClicked"
+                                     HorizontalOptions="Center" />
 
-            <material:MaterialCard HorizontalOptions="Center" BackgroundColor="{DynamicResource InverseOnSurface}" Padding="10">
-                <Label x:Name="LabelAmmountMatchedNumbers"
-                       Text="Matched numbers: 0" />
-            </material:MaterialCard>
+            <material:MaterialCard HorizontalOptions="Center" BackgroundColor="{DynamicResource SecondaryContainer}" Padding="10">
+                    <Label x:Name="LabelAmmountMatchedNumbers"
+                           Text="Matched numbers: 0"
+                           TextColor="{DynamicResource OnSecondaryContainer}"/>
+                </material:MaterialCard>
 
-            <material:MaterialCard HorizontalOptions="Start" BackgroundColor="{DynamicResource InverseOnSurface}" Padding="10">
-                <Label x:Name="LabelStage"
-                       Text="Stage: 0" />
-            </material:MaterialCard>
+                <material:MaterialCard HorizontalOptions="Start" BackgroundColor="{DynamicResource SecondaryContainer}" Padding="10">
+                    <Label x:Name="LabelStage"
+                           Text="Stage: 0"
+                           TextColor="{DynamicResource OnSecondaryContainer}"/>
+                </material:MaterialCard>
+        </VerticalStackLayout>
 
-            <material:MaterialCard BackgroundColor="{DynamicResource Primary}" Padding="2" Margin="0" CornerRadius="8">
-                <Grid x:Name="NumberMatchGrid" VerticalOptions="Center"></Grid>
-            </material:MaterialCard>
+        <!-- Scrollable grid: occupies the middle and will scroll independently -->
+        <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+            <!-- Keep the MaterialCard that wraps the grid for styling -->
+            <VerticalStackLayout Padding="10,10,10,10" Spacing="12">
+                <material:MaterialCard BackgroundColor="{DynamicResource Primary}" Padding="2" Margin="0" CornerRadius="8">
+                    <!-- NumberMatchGrid is populated in code-behind; keep the same name -->
+                    <Grid x:Name="NumberMatchGrid" VerticalOptions="Start" HorizontalOptions="FillAndExpand" />
+                </material:MaterialCard>
+            </VerticalStackLayout>
+        </ScrollView>
 
-
-            <Grid HorizontalOptions="Center" VerticalOptions="Center" ColumnSpacing="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
+        <!-- Footer: always on bottom -->
+        <Grid Grid.Row="2" Padding="10,10,10,40" BackgroundColor="Transparent">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="15" VerticalOptions="Center">
                 <material:MaterialIconButton x:Name="AddBtn"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Filled"
-                    BackgroundColor="{DynamicResource Primary}"
-                    UseIconTintColor="True"
-                    IconTintColor="{DynamicResource OnPrimary}"
-                    ImageSource="add.png"
-                    TouchAnimationType="Bounce"
-                    Clicked="AddButtonClicked" />
+                                             Type="Filled"
+                                             BackgroundColor="{DynamicResource Primary}"
+                                             IconTintColor="{DynamicResource OnPrimary}"
+                                             ImageSource="add.png"
+                                             TouchAnimationType="Bounce"
+                                             Clicked="AddButtonClicked" />
 
-                <material:MaterialButton x:Name="HelpBtn"
-                                         Text="Help"
-                                         Grid.Row="0"
-                                         Grid.Column="1"
-                                         Clicked="HelpButtonClicked" />
+                <material:MaterialIconButton x:Name="HelpBtn"
+                                             ImageSource="lightbulb_2.png"
+                                             Type="Filled"
+                                             BackgroundColor="{DynamicResource Primary}"
+                                             IconTintColor="{DynamicResource OnPrimary}"
+                                             TouchAnimationType="Bounce"
+                                             Clicked="HelpButtonClicked" />
 
                 <material:MaterialIconButton x:Name="ResetBtn"
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    ImageSource="restart_alt.png"
-                    Type="Filled"
-                    BackgroundColor="{DynamicResource Primary}"
-                    IconTintColor="{DynamicResource OnPrimary}"
-                    TouchAnimationType="Bounce"
-                    Clicked="ResetButtonClicked" />
+                                             ImageSource="restart_alt.png"
+                                             Type="Filled"
+                                             BackgroundColor="{DynamicResource Primary}"
+                                             IconTintColor="{DynamicResource OnPrimary}"
+                                             TouchAnimationType="Bounce"
+                                             Clicked="ResetButtonClicked" />
 
-            </Grid>
+                <!-- <material:MaterialIconButton x:Name="TutorialBtn"
+                                             ImageSource="smart_display.png"
+                                             Type="Filled"
+                                             BackgroundColor="{DynamicResource Primary}"
+                                             IconTintColor="{DynamicResource OnPrimary}"
+                                             TouchAnimationType="Bounce"
+                                             Clicked="TutorialButtonClicked" /> -->
+            </HorizontalStackLayout>
+        </Grid>
 
-        </VerticalStackLayout>
-    </ScrollView>
-
+    </Grid>
 </ContentPage>
