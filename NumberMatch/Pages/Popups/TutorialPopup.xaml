@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
            xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-           x:Class="NumberMatch.Pages.TutorialPopup">
+           x:Class="NumberMatch.Pages.Popups.TutorialPopup"
+           Margin="0"
+           Padding="0">
 
-    <Grid>
-        <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
-            <VerticalStackLayout VerticalOptions="Center">
-                <Label x:Name="lbl" Text="Welcome to .NET MAUI!"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center" />
+    <Grid Padding="0" VerticalOptions="Center" HorizontalOptions="Center">
+        <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="16" VerticalOptions="Center" WidthRequest="360">
+            <VerticalStackLayout VerticalOptions="Center" Spacing="12" Padding="12">
 
-                <!-- game grid to show the tutorail with a size of 8X4-->
-                <Grid RowSpacing="0" ColumnSpacing="0" Padding="0" Margin="10">
+                <!-- Title -->
+                <Label x:Name="TitleLabel"
+                       Text="How to play"
+                       FontAttributes="Bold"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       TextColor="{DynamicResource OnBackground}" />
+
+                <!-- Description / feedback -->
+                <Label x:Name="DescriptionLabel"
+                       Text="Welcome to NumberMatch!"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       TextColor="{DynamicResource OnBackground}"
+                       HorizontalTextAlignment="Center" />
+
+                <!-- Small 4x4 interactive grid -->
+                <Grid x:Name="IllustrationGrid" RowSpacing="0" ColumnSpacing="0" Padding="0" Margin="6">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
@@ -28,49 +43,42 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="0" Text="1" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="1" Text="2" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="2" Text="3" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="0" Grid.Column="3" Text="4" FontSize="Large" Padding="0" />
+                    <!-- Buttons use same styling as main game grid -->
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="0" Grid.Column="0" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="0" Grid.Column="1" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="0" Grid.Column="2" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="0" Grid.Column="3" FontSize="Large" Padding="0" />
 
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="0" Text="5" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="1" Text="6" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="2" Text="7" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="1" Grid.Column="3" Text="8" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="1" Grid.Column="0" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="1" Grid.Column="1" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="1" Grid.Column="2" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="1" Grid.Column="3" FontSize="Large" Padding="0" />
 
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="0" Text="9" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="1" Text="10" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="2" Text="11" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="2" Grid.Column="3" Text="12" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="2" Grid.Column="0" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="2" Grid.Column="1" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="2" Grid.Column="2" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="2" Grid.Column="3" FontSize="Large" Padding="0" />
 
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="0" Text="13" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="1" Text="14" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="2" Text="15" FontSize="Large" Padding="0" />
-                    <Button BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource Primary}" BackgroundColor="{DynamicResource Background}" BorderWidth="2" Grid.Row="3" Grid.Column="3" Text="16" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="3" Grid.Column="0" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="3" Grid.Column="1" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="3" Grid.Column="2" FontSize="Large" Padding="0" />
+                    <Button Clicked="IllustrationButton_Clicked" BorderWidth="2" Grid.Row="3" Grid.Column="3" FontSize="Large" Padding="0" />
                 </Grid>
 
+                <!-- Navigation buttons -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <material:MaterialButton
-                        Grid.Column="0"
-                        Text="Cancel"
-                        BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                        StyleClass="FilledButton"
-                        x:Name="CancelButton"/>
-
-                    <material:MaterialButton
-                        Grid.Column="1"
-                        Text="Skip Tutorial"
-                        BackgroundColor="{DynamicResource Primary}"
-                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                        StyleClass="FilledButton" />
+                    <material:MaterialButton x:Name="BackButton" Grid.Column="0" Text="Back" IsVisible="False" Clicked="BackButton_Clicked" />
+                    <material:MaterialButton x:Name="CloseButton" Grid.Column="1" Text="Close" BackgroundColor="{DynamicResource Primary}" TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" Clicked="CloseButton_Clicked" HorizontalOptions="Center" />
+                    <material:MaterialButton x:Name="NextButton" Grid.Column="2" Text="Next" Clicked="NextButton_Clicked" IsEnabled="False" />
                 </Grid>
+
             </VerticalStackLayout>
         </Frame>
     </Grid>
-</ContentView>
+</mct:Popup>
