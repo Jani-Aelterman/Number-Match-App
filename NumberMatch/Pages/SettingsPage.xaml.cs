@@ -1,9 +1,13 @@
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Extensions;
 using HorusStudio.Maui.MaterialDesignControls;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
+using NumberMatch.Helpers;
 using System;
 using System.Linq;
 using System.Windows.Input;
-using NumberMatch.Helpers;
 
 namespace NumberMatch.Pages
 {
@@ -114,6 +118,26 @@ namespace NumberMatch.Pages
         {
             Preferences.Set("Vibration", VibrationSwitch.IsToggled);
             page.LoadSettings();
+        }
+
+        private async void ReplayTutorialClicked(object sender, EventArgs e)
+        {
+            var popup = new Pages.Popups.TutorialPopup();
+
+            await this.ShowPopupAsync(popup, new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = dynamicBackgroundColor,
+                    StrokeThickness = 0
+                }
+            }, CancellationToken.None);
+        }
+
+        private void VersionInfoClicked(object sender, EventArgs e)
+        {
+            Tools.ShowToast("Clicked");
         }
 
         private void DeveloperOptionsChanged(object sender, EventArgs e)

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:system="clr-namespace:System;assembly=mscorlib"
+       xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+       xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+       x:TypeArguments="system:Boolean"
+       x:Class="NumberMatch.Pages.Popups.ResetConfirmationPopup"
+       Padding="0"
+       Margin="0">
+
+    <material:MaterialCard Padding="12" CornerRadius="12" BackgroundColor="{DynamicResource SurfaceVariant}">
+        <VerticalStackLayout Spacing="10" Padding="4">
+            <Label Text="Reset game" 
+                   FontAttributes="Bold" 
+                   FontSize="16"
+                   TextColor="{DynamicResource OnSurfaceVariant}" />
+
+            <Label Text="Are you sure you want to reset? All progress will be lost."
+                   FontSize="14"
+                   TextColor="{DynamicResource OnSurfaceVariant}" />
+
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="End">
+                <material:MaterialButton Text="Cancel"
+                                         Type="Outlined"
+                                         BorderColor="{DynamicResource OnSurfaceVariant}"
+                                         TextColor="{DynamicResource OnSurfaceVariant}"
+                                         Clicked="Cancel_Clicked" />
+
+                <material:MaterialButton Text="Reset"
+                                         Type="Filled"
+                                         BackgroundColor="{DynamicResource Error}"
+                                         TextColor="{DynamicResource OnError}"
+                                         Clicked="Confirm_Clicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </material:MaterialCard>
+</toolkit:Popup>

@@ -3,13 +3,16 @@
 /// Made by: Jani Aelterman.
 /// </summary>
 
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
+using HorusStudio.Maui.MaterialDesignControls;
+using Microsoft.Maui.Controls.Shapes;
 using Newtonsoft.Json.Linq;
+using NumberMatch.Helpers;
 using System.Runtime.CompilerServices;
 using static NumberMatch.Helpers.Tools;
-using HorusStudio.Maui.MaterialDesignControls;
-using NumberMatch.Helpers;
 
 namespace NumberMatch
 {
@@ -258,21 +261,39 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             }
         }
 
-        private void ResetButtonClicked(object sender, EventArgs e)
+        private async void ResetButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
 
-            // Show confirmation popup
+            var popup = new Pages.Popups.ResetConfirmationPopup();
 
+            IPopupResult<bool> popupResult = await this.ShowPopupAsync<bool>(popup, new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = dynamicBackgroundColor,
+                    StrokeThickness = 0
+                }
+            }, CancellationToken.None);
+
+            if (popupResult.WasDismissedByTappingOutsideOfPopup)
+            {
+                return;
+            }
+
+            if (popupResult.Result is true)
+            {
 #if WINDOWS
-            game.InitializeGrid(ROWS + 8, COLUMNS + 5);
+                game.InitializeGrid(ROWS + 8, COLUMNS + 5);
 #else
-            game.InitializeGrid(COLUMNS, ROWS);
+                game.InitializeGrid(COLUMNS, ROWS);
 #endif
-            game.gameData.NumbersMatched = 0;
-            game.gameData.Stage = 0;
-            SynchronizeGrid(game.gameData.GameGrid);
-            game.SaveGameData();
+                game.gameData.NumbersMatched = 0;
+                game.gameData.Stage = 0;
+                SynchronizeGrid(game.gameData.GameGrid);
+                game.SaveGameData();
+            }
         }
 
         private async void SettingsButtonClicked(object sender, EventArgs e)
