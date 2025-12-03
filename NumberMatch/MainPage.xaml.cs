@@ -27,7 +27,6 @@ namespace NumberMatch
         private readonly Color dynamicTertiaryColor = (Color)Application.Current.Resources["Tertiary"];
         private readonly Color dynamicInversePrimaryColor = (Color)Application.Current.Resources["InversePrimary"];
         private bool hapticFeedbackEnabled = true;
-        //button.SetDynamicResource(Button.BackgroundProperty, "Primary");
 
         public MainPage()
         {
@@ -312,7 +311,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             }
         }
 
-        private async void TutorialButtonClicked(object sender, EventArgs e)
+        /*private async void TutorialButtonClicked(object sender, EventArgs e)
         {
             await Tools.HapticClick(hapticFeedbackEnabled);
 
@@ -326,10 +325,10 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             catch (Exception ex)
             {
                 Tools.ShowToast("Error opening settings: " + ex.Message);
-            }*/
+            }*
 
             this.ShowPopup(new Pages.Popups.TutorialPopup());
-        }
+        }*/
 
         private async Task shakeUnmatchedButtons(Tuple<int, int> previousPressedButton, Tuple<int, int> currentPressedButton)
         {

@@ -1,6 +1,6 @@
 using CommunityToolkit.Maui.Views;
 
-namespace NumberMatch.Pages;
+namespace NumberMatch.Pages.Popups;
 
 public partial class VersionPopup : Popup
 {

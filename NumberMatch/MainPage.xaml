@@ -77,14 +77,6 @@
                                              IconTintColor="{DynamicResource OnPrimary}"
                                              TouchAnimationType="Bounce"
                                              Clicked="ResetButtonClicked" />
-
-                <!-- <material:MaterialIconButton x:Name="TutorialBtn"
-                                             ImageSource="smart_display.png"
-                                             Type="Filled"
-                                             BackgroundColor="{DynamicResource Primary}"
-                                             IconTintColor="{DynamicResource OnPrimary}"
-                                             TouchAnimationType="Bounce"
-                                             Clicked="TutorialButtonClicked" /> -->
             </HorizontalStackLayout>
         </Grid>
 

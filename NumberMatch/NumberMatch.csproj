@@ -14,8 +14,10 @@
 		<!-- Display name -->
 		<ApplicationTitle>Number Match</ApplicationTitle>
 		<ApplicationId>com.aelterman.numbermatch</ApplicationId>
-		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
+		<ApplicationVersion>10200</ApplicationVersion>
+		<!-- optional explicit Android versionCode (uses same integer) -->
+		<AndroidVersionCode>10200</AndroidVersionCode>
 
 		<WindowsPackageType>None</WindowsPackageType>
 
@@ -55,12 +57,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Pages\Popups\VersionPopup.xaml.cs">
-	    <DependentUpon>VersionPopup.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Pages\Popups\ResetConfirmationPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -68,6 +64,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Popups\TutorialPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Popups\VersionPopup.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Popups\WhatsNewPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingsPage.xaml">

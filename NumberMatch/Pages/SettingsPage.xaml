@@ -174,7 +174,7 @@
                                                HorizontalTextAlignment="Start"
                                                Margin="12,0,0,0" />
 						<material:MaterialCard.GestureRecognizers>
-							<TapGestureRecognizer Tapped="VersionInfoClicked" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Tapped="ShowVersionInfoTapped" NumberOfTapsRequired="1" />
 						</material:MaterialCard.GestureRecognizers>
 					</Grid>
 				</material:MaterialCard>

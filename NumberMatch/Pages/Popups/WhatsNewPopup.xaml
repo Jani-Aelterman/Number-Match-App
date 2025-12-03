@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+       xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+       x:Class="NumberMatch.Pages.Popups.WhatsNewPopup"
+       Padding="0"
+       Margin="0">
+
+    <material:MaterialCard Padding="12" CornerRadius="12" BackgroundColor="{DynamicResource SurfaceVariant}">
+        <VerticalStackLayout Spacing="12" Padding="4" WidthRequest="320">
+            <Label x:Name="VersionLabel"
+                   FontAttributes="Bold"
+                   FontSize="16"
+                   TextColor="{DynamicResource OnSurface}" />
+
+            <ScrollView HeightRequest="220">
+                <Label x:Name="NotesLabel"
+                       LineBreakMode="WordWrap"
+                       TextColor="{DynamicResource OnSurface}" />
+            </ScrollView>
+
+            <HorizontalStackLayout HorizontalOptions="End">
+                <material:MaterialButton Text="Close"
+                                         Type="Filled"
+                                         Clicked="CloseButton_Clicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </material:MaterialCard>
+</mct:Popup>

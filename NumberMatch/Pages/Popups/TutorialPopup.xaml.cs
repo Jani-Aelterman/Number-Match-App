@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
+using NumberMatch.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ public partial class TutorialPopup : Popup
     private readonly Color inversePrimaryColor;
     private readonly Color primaryColor;
     private readonly Color backgroundColor;
+    private bool hapticFeedbackEnabled = true;
 
     public TutorialPopup()
     {
@@ -97,6 +99,9 @@ public partial class TutorialPopup : Popup
         }
 
         LoadStep();
+
+        if (Preferences.ContainsKey("Vibration"))
+            hapticFeedbackEnabled = Preferences.Get("Vibration", true);
     }
 
     private void LoadStep()
@@ -268,6 +273,8 @@ public partial class TutorialPopup : Popup
 
     private async void IllustrationButton_Clicked(object sender, EventArgs e)
     {
+        Tools.HapticClick(hapticFeedbackEnabled);
+        
         if (sender is not Button btn) return;
 
         int r = IllustrationGrid.GetRow(btn);
@@ -440,6 +447,8 @@ public partial class TutorialPopup : Popup
 
     private void BackButton_Clicked(object sender, EventArgs e)
     {
+        Tools.HapticClick(hapticFeedbackEnabled);
+        
         if (currentStep <= 0) return;
         currentStep--;
         LoadStep();
@@ -447,6 +456,8 @@ public partial class TutorialPopup : Popup
 
     private void NextButton_Clicked(object sender, EventArgs e)
     {
+        Tools.HapticClick(hapticFeedbackEnabled);
+        
         if (currentStep >= steps.Count - 1) return;
         currentStep++;
         LoadStep();
@@ -454,6 +465,8 @@ public partial class TutorialPopup : Popup
 
     private void CloseButton_Clicked(object sender, EventArgs e)
     {
+        Tools.HapticClick(hapticFeedbackEnabled);
+        
         CloseAsync();
     }
 

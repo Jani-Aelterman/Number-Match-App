@@ -8,12 +8,17 @@ using NumberMatch.Helpers;
 using System;
 using System.Linq;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Storage;
+using NumberMatch.Services;
 
 namespace NumberMatch.Pages
 {
     public partial class SettingsPage : ContentPage
     {
         private readonly MainPage page;
+        private bool hapticFeedbackEnabled = true;
         private readonly Color dynamicBackgroundColor = (Color)(Application.Current.Resources["Surface1"] ?? Colors.Black);
 
         // Command bound to the top app bar leading icon
@@ -90,11 +95,13 @@ namespace NumberMatch.Pages
 
 #if __MOBILE__
             if (Preferences.ContainsKey("Vibration"))
+            {
                 VibrationSwitch.IsToggled = Preferences.Get("Vibration", true);
-            //VibrationLabel.IsVisible = true;
+                hapticFeedbackEnabled = Preferences.Get("Vibration", true);
+            }
+
             VibrationSwitch.IsVisible = true;
     #else
-            //VibrationLabel.IsVisible = false;
             VibrationSwitch.IsVisible = false;
     #endif
 
@@ -110,19 +117,23 @@ namespace NumberMatch.Pages
 
         private void OledDarkmodeChanged(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
             Preferences.Set("OledDarkmode", OledDarkmode.IsToggled);
             page.LoadSettings();
         }
 
         private void VibrationChanged(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
             Preferences.Set("Vibration", VibrationSwitch.IsToggled);
             page.LoadSettings();
         }
 
         private async void ReplayTutorialClicked(object sender, EventArgs e)
         {
-            var popup = new Pages.Popups.TutorialPopup();
+            Tools.HapticClick(hapticFeedbackEnabled);
+
+            var popup = new Popups.TutorialPopup();
 
             await this.ShowPopupAsync(popup, new PopupOptions
             {
@@ -135,40 +146,64 @@ namespace NumberMatch.Pages
             }, CancellationToken.None);
         }
 
-        private void VersionInfoClicked(object sender, EventArgs e)
+        private async void VersionInfoClicked(object sender, EventArgs e)
         {
-            Tools.ShowToast("Clicked");
+            Tools.HapticClick(hapticFeedbackEnabled);
+
+            var popup = new Popups.VersionPopup();
+
+            await this.ShowPopupAsync(popup, new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = dynamicBackgroundColor,
+                    StrokeThickness = 0
+                }
+            }, CancellationToken.None);
         }
 
         private void DeveloperOptionsChanged(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
+
             Preferences.Set("DeveloperOptions", DeveloperOptions.IsToggled);
             page.LoadSettings();
         }
 
         private void developerBtnBackendGridClicked(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
+
             throw new NotImplementedException("Not implemented yet");
         }
 
         private void developerBtnRemoveRowsClicked(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
+
             page.game.RemoveEmptyRows();
         }
 
         private void developerBtnStageCompletionClicked(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
+
             page.game.CheckStageCompletion();
         }
 
         private void developerBtnRefreshGridColorsClicked(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
+
             page.RefreshGridColors();
         }
 
         // Back button handler: navigate back to the MainPage and refresh settings on the main page if available
         private async void BackButtonClicked(object sender, EventArgs e)
         {
+            Tools.HapticClick(hapticFeedbackEnabled);
+
             try
             {
                 // Ensure main page updates (if this SettingsPage was created with a MainPage reference)
@@ -180,6 +215,36 @@ namespace NumberMatch.Pages
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Back navigation failed: {ex.Message}");
+            }
+        }
+
+        // Tapped handler wired from XAML - opens the What's New popup
+        private async void ShowVersionInfoTapped(object sender, EventArgs e)
+        {
+            Tools.HapticClick(hapticFeedbackEnabled);
+
+            try
+            {
+                var version = AppInfo.VersionString;
+                var notes = ReleaseNotesService.GetReleaseNotesForVersion(version);
+
+                var popup = new Popups.WhatsNewPopup(notes, version);
+                await this.ShowPopupAsync(popup, new PopupOptions
+                {
+                    Shape = new RoundRectangle
+                    {
+                        CornerRadius = new CornerRadius(20),
+                        Stroke = dynamicBackgroundColor,
+                        StrokeThickness = 0
+                    }
+                }, CancellationToken.None);
+
+
+            }
+            catch (Exception ex)
+            {
+                // keep UX smooth; show a small fallback alert on failure
+                await DisplayAlert("Error", "Unable to show version info: " + ex.Message, "OK");
             }
         }
     }
