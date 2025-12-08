@@ -2,6 +2,7 @@ using HorusStudio.Maui.MaterialDesignControls;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using MaterialColorUtilities.Maui;
+using NumberMatch.Services;
 
 namespace NumberMatch
 {
@@ -27,6 +28,9 @@ namespace NumberMatch
             // Register pages and MainPage so DI can resolve MainPage when constructing SettingsPage
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<Pages.SettingsPage>();
+
+            // register SettingsService as singleton
+            builder.Services.AddSingleton<SettingsService>();
 
 #if DEBUG
             builder.Logging.AddDebug();

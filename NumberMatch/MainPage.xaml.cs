@@ -49,7 +49,15 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
 #endif
 
             SynchronizeGrid(game.gameData.GameGrid);
+            //LoadSettings();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
             LoadSettings();
+
+            _ = CheckAndShowWhatsNewAsync();
         }
 
         // Load and enable the app settings
@@ -236,9 +244,7 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
         private void HelpButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
-            //this.ShowPopup(new Pages.TutorialPopup());
-            //Tools.ShowToast("Help is not implemented yet");
-
+            
             // Show 1 available match
             Tuple<Tuple<int, int>, Tuple<int, int>> match = game.GetAvailableMove();
             if (match != null)

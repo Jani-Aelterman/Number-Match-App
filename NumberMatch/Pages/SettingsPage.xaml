@@ -106,7 +106,8 @@
                              Text="Oled darkmode"
 			                 FontAttributes="Bold"
                              TextColor="{DynamicResource OnSurface}"
-                             Toggled="OledDarkmodeChanged" />
+                             IsToggled="{Binding SettingsService.OledDarkmode, Mode=TwoWay}" />
+                    <!--Toggled="OledDarkmodeChanged" />-->
                 </material:MaterialCard>
 
                 <material:MaterialCard Style="{StaticResource MaterialCardEnd}">
@@ -114,7 +115,8 @@
                              Text="Enable Haptic Feedback"
 							 FontAttributes="Bold"
                              TextColor="{DynamicResource OnSurface}"
-                             Toggled="VibrationChanged" />
+                             IsToggled="{Binding SettingsService.Vibration, Mode=TwoWay}" />
+                    <!--Toggled="VibrationChanged" />-->
                 </material:MaterialCard>
 
                 <material:MaterialCard Style="{StaticResource MaterialCardStart}">
@@ -186,12 +188,12 @@
                              Text="Developer Options"
 							 FontAttributes="Bold"
                              TextColor="{DynamicResource OnSurface}"
-                             Toggled="DeveloperOptionsChanged" />
+                             IsToggled="{Binding SettingsService.DeveloperOptions, Mode=TwoWay}" />
                 </material:MaterialCard>
 
                 <material:MaterialCard Style="{StaticResource MaterialCardMiddle}">
                     <material:MaterialButton x:Name="btnBackendGrid"
-                             IsVisible="False"
+                             IsVisible="{Binding SettingsService.DeveloperOptions}"
                              Margin="5"
                              Text="Show Backend Grid"
                              Clicked="developerBtnBackendGridClicked"/>
@@ -199,7 +201,7 @@
 
                 <material:MaterialCard Style="{StaticResource MaterialCardMiddle}">
                     <material:MaterialButton x:Name="btnRemoveRows"
-                             IsVisible="False"
+                             IsVisible="{Binding SettingsService.DeveloperOptions}"
                              Margin="5"
                              Text="Remove Empty Rows"
                              Clicked="developerBtnRemoveRowsClicked"/>
@@ -207,7 +209,7 @@
 
                 <material:MaterialCard Style="{StaticResource MaterialCardMiddle}">
                     <material:MaterialButton x:Name="btnStageCompletion"
-                             IsVisible="False"
+                             IsVisible="{Binding SettingsService.DeveloperOptions}"
                              Margin="5"
                              Text="Check For Stage Completion"
                              Clicked="developerBtnStageCompletionClicked"/>
@@ -215,7 +217,7 @@
 
                 <material:MaterialCard Style="{StaticResource MaterialCardEnd}">
                     <material:MaterialButton x:Name="btnRefreshGridColors"
-                             IsVisible="False"
+                             IsVisible="{Binding SettingsService.DeveloperOptions}"
                              Margin="5"
                              Text="RefreshGridColors"
                              Clicked="developerBtnRefreshGridColorsClicked"/>

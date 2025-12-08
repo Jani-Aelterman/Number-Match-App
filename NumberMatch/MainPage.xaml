@@ -30,7 +30,7 @@
                                      HorizontalOptions="Center" />
 
             <material:MaterialCard HorizontalOptions="Center" BackgroundColor="{DynamicResource SecondaryContainer}" Padding="10">
-                    <Label x:Name="LabelAmmountMatchedNumbers"
+                <Label x:Name="LabelAmmountMatchedNumbers"
                            Text="Matched numbers: 0"
                            TextColor="{DynamicResource OnSecondaryContainer}"/>
                 </material:MaterialCard>

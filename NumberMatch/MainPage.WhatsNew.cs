@@ -11,13 +11,6 @@ namespace NumberMatch;
 
 public partial class MainPage
 {
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        // fire-and-forget: checks stored version and shows popup if needed
-        _ = CheckAndShowWhatsNewAsync();
-    }
-
     private async Task CheckAndShowWhatsNewAsync()
     {
         try
