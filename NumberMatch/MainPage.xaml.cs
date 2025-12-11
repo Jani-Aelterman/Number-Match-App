@@ -57,7 +57,40 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             base.OnAppearing();
             LoadSettings();
 
+            // voeg device-specifieke top padding toe op Android zodat header consistent onder statusbar staat
+            //AdjustTopPaddingForStatusBar();
+
             _ = CheckAndShowWhatsNewAsync();
+        }
+
+        private void AdjustTopPaddingForStatusBar()
+        {
+#if ANDROID
+            try
+            {
+                var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
+                if (activity != null)
+                {
+                    var res = activity.Resources;
+                    int resId = res.GetIdentifier("status_bar_height", "dimen", "android");
+                    if (resId > 0)
+                    {
+                        int heightPx = res.GetDimensionPixelSize(resId);
+                        double heightDp = heightPx / res.DisplayMetrics.Density;
+
+                        // voeg alleen de extra inset toe (voorkom meerdere malen optellen)
+                        var p = this.Padding;
+                        // Als we al een extra inset hebben toegevoegd (bijv. > 100) sla dan over
+                        if (p.Top < 100)
+                            this.Padding = new Thickness(p.Left, p.Top + heightDp, p.Right, p.Bottom);
+                    }
+                }
+            }
+            catch
+            {
+                // swallow - niet kritisch
+            }
+#endif
         }
 
         // Load and enable the app settings

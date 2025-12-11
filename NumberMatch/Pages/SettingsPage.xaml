@@ -24,83 +24,6 @@
             VerticalScrollBarVisibility="Never">
             <VerticalStackLayout>
 
-                <!-- Color swatches card (begin) -->
-                <material:MaterialCard Style="{StaticResource MaterialCardStandAlone}">
-                    <VerticalStackLayout Spacing="6">
-                        <material:MaterialLabel Text="Color palette"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Start"
-                                                TextColor="{DynamicResource OnSurface}" />
-
-                        <!-- grid with 6 columns to show all color resources -->
-                        <Grid ColumnSpacing="8" RowSpacing="8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/> <!-- row 0: title (handled above) -->
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- Row 1 -->
-                            <Frame BackgroundColor="{DynamicResource Primary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="0" />
-                            <Frame BackgroundColor="{DynamicResource PrimaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="1" />
-                            <Frame BackgroundColor="{DynamicResource Secondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="2" />
-                            <Frame BackgroundColor="{DynamicResource SecondaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="3" />
-                            <Frame BackgroundColor="{DynamicResource Tertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="4" />
-                            <Frame BackgroundColor="{DynamicResource TertiaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="5" />
-
-                            <!-- Row 2 -->
-                            <Frame BackgroundColor="{DynamicResource Surface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="0" />
-                            <Frame BackgroundColor="{DynamicResource SurfaceVariant}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="1" />
-                            <Frame BackgroundColor="{DynamicResource Background}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="2" />
-                            <Frame BackgroundColor="{DynamicResource Error}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="3" />
-                            <Frame BackgroundColor="{DynamicResource ErrorContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="4" />
-                            <Frame BackgroundColor="{DynamicResource OnPrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="5" />
-
-                            <!-- Row 3 -->
-                            <Frame BackgroundColor="{DynamicResource OnPrimaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="0" />
-                            <Frame BackgroundColor="{DynamicResource OnSecondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="1" />
-                            <Frame BackgroundColor="{DynamicResource OnSecondaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="2" />
-                            <Frame BackgroundColor="{DynamicResource OnTertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="3" />
-                            <Frame BackgroundColor="{DynamicResource OnTertiaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="4" />
-                            <Frame BackgroundColor="{DynamicResource OnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="5" />
-
-                            <!-- Row 4 -->
-                            <Frame BackgroundColor="{DynamicResource OnSurfaceVariant}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="0" />
-                            <Frame BackgroundColor="{DynamicResource OnError}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="1" />
-                            <Frame BackgroundColor="{DynamicResource OnErrorContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="2" />
-                            <Frame BackgroundColor="{DynamicResource OnBackground}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="3" />
-                            <Frame BackgroundColor="{DynamicResource Outline}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="4" />
-                            <Frame BackgroundColor="{DynamicResource Shadow}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="5" />
-
-                            <!-- Row 5 -->
-                            <Frame BackgroundColor="{DynamicResource InverseSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="0" />
-                            <Frame BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="1" />
-                            <Frame BackgroundColor="{DynamicResource InversePrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="2" />
-                            <Frame BackgroundColor="{DynamicResource Surface1}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="3" />
-                            <Frame BackgroundColor="{DynamicResource Surface2}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="4" />
-                            <Frame BackgroundColor="{DynamicResource Surface3}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="5" />
-
-                            <!-- Row 6 -->
-                            <Frame BackgroundColor="{DynamicResource Surface4}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="6" Grid.Column="0" />
-                            <Frame BackgroundColor="{DynamicResource Surface5}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="6" Grid.Column="1" />
-
-                        </Grid>
-                    </VerticalStackLayout>
-                </material:MaterialCard>
-
                 <material:MaterialCard Style="{StaticResource MaterialCardStart}">
                     <material:MaterialSwitch x:Name="OledDarkmode"
                              Text="Oled darkmode"
@@ -183,7 +106,7 @@
 				
 				
 
-                <material:MaterialCard Style="{StaticResource MaterialCardStart}">
+                <!--<material:MaterialCard Style="{StaticResource MaterialCardStart}">
                     <material:MaterialSwitch x:Name="DeveloperOptions"
                              Text="Developer Options"
 							 FontAttributes="Bold"
@@ -221,6 +144,84 @@
                              Margin="5"
                              Text="RefreshGridColors"
                              Clicked="developerBtnRefreshGridColorsClicked"/>
+                </material:MaterialCard>-->
+
+                <!-- Color swatches card (begin) -->
+                <material:MaterialCard Style="{StaticResource MaterialCardStandAlone}">
+                    <VerticalStackLayout Spacing="6">
+                        <material:MaterialLabel Text="Color palette"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Start"
+                                TextColor="{DynamicResource OnSurface}" />
+
+                        <!-- grid with 6 columns to show all color resources -->
+                        <Grid ColumnSpacing="8" RowSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <!-- row 0: title (handled above) -->
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Row 1 -->
+                            <Frame BackgroundColor="{DynamicResource Primary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="0" />
+                            <Frame BackgroundColor="{DynamicResource PrimaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="1" />
+                            <Frame BackgroundColor="{DynamicResource Secondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="2" />
+                            <Frame BackgroundColor="{DynamicResource SecondaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="3" />
+                            <Frame BackgroundColor="{DynamicResource Tertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="4" />
+                            <Frame BackgroundColor="{DynamicResource TertiaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="1" Grid.Column="5" />
+
+                            <!-- Row 2 -->
+                            <Frame BackgroundColor="{DynamicResource Surface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="0" />
+                            <Frame BackgroundColor="{DynamicResource SurfaceVariant}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="1" />
+                            <Frame BackgroundColor="{DynamicResource Background}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="2" />
+                            <Frame BackgroundColor="{DynamicResource Error}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="3" />
+                            <Frame BackgroundColor="{DynamicResource ErrorContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="4" />
+                            <Frame BackgroundColor="{DynamicResource OnPrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="2" Grid.Column="5" />
+
+                            <!-- Row 3 -->
+                            <Frame BackgroundColor="{DynamicResource OnPrimaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="0" />
+                            <Frame BackgroundColor="{DynamicResource OnSecondary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="1" />
+                            <Frame BackgroundColor="{DynamicResource OnSecondaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="2" />
+                            <Frame BackgroundColor="{DynamicResource OnTertiary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="3" />
+                            <Frame BackgroundColor="{DynamicResource OnTertiaryContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="4" />
+                            <Frame BackgroundColor="{DynamicResource OnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="3" Grid.Column="5" />
+
+                            <!-- Row 4 -->
+                            <Frame BackgroundColor="{DynamicResource OnSurfaceVariant}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="0" />
+                            <Frame BackgroundColor="{DynamicResource OnError}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="1" />
+                            <Frame BackgroundColor="{DynamicResource OnErrorContainer}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="2" />
+                            <Frame BackgroundColor="{DynamicResource OnBackground}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="3" />
+                            <Frame BackgroundColor="{DynamicResource Outline}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="4" />
+                            <Frame BackgroundColor="{DynamicResource Shadow}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="4" Grid.Column="5" />
+
+                            <!-- Row 5 -->
+                            <Frame BackgroundColor="{DynamicResource InverseSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="0" />
+                            <Frame BackgroundColor="{DynamicResource InverseOnSurface}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="1" />
+                            <Frame BackgroundColor="{DynamicResource InversePrimary}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="2" />
+                            <Frame BackgroundColor="{DynamicResource Surface1}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="3" />
+                            <Frame BackgroundColor="{DynamicResource Surface2}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="4" />
+                            <Frame BackgroundColor="{DynamicResource Surface3}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="5" Grid.Column="5" />
+
+                            <!-- Row 6 -->
+                            <Frame BackgroundColor="{DynamicResource Surface4}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="6" Grid.Column="0" />
+                            <Frame BackgroundColor="{DynamicResource Surface5}" CornerRadius="4" HeightRequest="40" WidthRequest="40" HasShadow="True" Grid.Row="6" Grid.Column="1" />
+
+                        </Grid>
+                    </VerticalStackLayout>
                 </material:MaterialCard>
 
             </VerticalStackLayout>

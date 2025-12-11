@@ -2,32 +2,24 @@
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
            x:Class="NumberMatch.Pages.Popups.ErrorPopup"
-           CanBeDismissedByTappingOutsideOfPopup="False">
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           Margin="0"
+           Padding="0">
     <Grid>
         <Frame HasShadow="True" BackgroundColor="{DynamicResource Background}" CornerRadius="20" VerticalOptions="Center">
             <VerticalStackLayout VerticalOptions="Center">
-                <Label x:Name="ErrorLabel" VerticalOptions="Center" HorizontalOptions="Center" />
+                <material:MaterialLabel Text="Error" Type="TitleLarge" HorizontalOptions="Center" />
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <!-- <Button
-                    Grid.Column="0"
-                    Text="Cancel"
-                    BackgroundColor="{DynamicResource Primary}"
-                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-                    StyleClass="FilledButton"
-                    x:Name="CancelButton"/> -->
-                    <Button
-                    Grid.Column="1"
+                <Label x:Name="ErrorLabel" VerticalOptions="Center" HorizontalOptions="Center" Margin="10" />
+
+                <material:MaterialButton
+                    HorizontalOptions="End"
+                    Margin="10"
                     Text="OK"
-                    BackgroundColor="{DynamicResource Primary}"
-                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                    TouchAnimationType="Bounce"
                     Clicked="Button_Clicked" />
-                </Grid>
             </VerticalStackLayout>
         </Frame>
     </Grid>

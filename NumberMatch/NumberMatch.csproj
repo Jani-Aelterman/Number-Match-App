@@ -14,10 +14,10 @@
 		<!-- Display name -->
 		<ApplicationTitle>Number Match</ApplicationTitle>
 		<ApplicationId>com.aelterman.numbermatch</ApplicationId>
-		<ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
-		<ApplicationVersion>10200</ApplicationVersion>
+		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
+		<ApplicationVersion>10100</ApplicationVersion>
 		<!-- optional explicit Android versionCode (uses same integer) -->
-		<AndroidVersionCode>10200</AndroidVersionCode>
+		<AndroidVersionCode>10100</AndroidVersionCode>
 
 		<WindowsPackageType>None</WindowsPackageType>
 

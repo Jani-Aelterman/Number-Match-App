@@ -1,17 +1,19 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
 using HorusStudio.Maui.MaterialDesignControls;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Storage;
 using NumberMatch.Helpers;
+using NumberMatch.Services;
 using System;
 using System.Linq;
 using System.Windows.Input;
-using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Storage;
-using NumberMatch.Services;
+//using static Android.InputMethodServices.Keyboard;
+//using static Java.Util.Jar.Attributes;
 
 namespace NumberMatch.Pages
 {
@@ -25,8 +27,7 @@ namespace NumberMatch.Pages
 
         public SettingsService SettingsService { get; }
 
-        // Make the parameter optional so Shell can create the page without throwing
-        public SettingsPage(SettingsService settingsService /*MainPage mainpage = null*/)
+        public SettingsPage(SettingsService settingsService)
         {
             SettingsService = settingsService;
 
@@ -51,8 +52,6 @@ namespace NumberMatch.Pages
             LoadTheme();
 
             SettingsService.PropertyChanged += SettingsService_PropertyChanged;
-
-            //this.LoadSettings();
         }
 
         private void SettingsService_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -69,13 +68,13 @@ namespace NumberMatch.Pages
                 hapticFeedbackEnabled = SettingsService.Vibration;
             }
 
-            if (e.PropertyName == nameof(SettingsService.DeveloperOptions))
+            /*if (e.PropertyName == nameof(SettingsService.DeveloperOptions))
             {
                 btnBackendGrid.IsVisible = SettingsService.DeveloperOptions;
                 btnRemoveRows.IsVisible = SettingsService.DeveloperOptions;
                 btnStageCompletion.IsVisible = SettingsService.DeveloperOptions;
                 btnRefreshGridColors.IsVisible = SettingsService.DeveloperOptions;
-            }
+            }*/
         }
 
         private void LoadTheme()
@@ -175,7 +174,17 @@ namespace NumberMatch.Pages
         {
             Tools.HapticClick(hapticFeedbackEnabled);
 
-            throw new NotImplementedException("Not implemented yet");
+            var popup = new Pages.Popups.ErrorPopup("This option is depreciated.");
+
+            this.ShowPopupAsync(popup, new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = dynamicBackgroundColor,
+                    StrokeThickness = 0
+                }
+            }, CancellationToken.None);
         }
 
         private void developerBtnRemoveRowsClicked(object sender, EventArgs e)
@@ -183,7 +192,17 @@ namespace NumberMatch.Pages
             Tools.HapticClick(hapticFeedbackEnabled);
 
             //page.game.RemoveEmptyRows();
-            throw new NotImplementedException("Not implemented yet");
+            var popup = new Pages.Popups.ErrorPopup("This option is depreciated.");
+
+            this.ShowPopupAsync(popup, new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = dynamicBackgroundColor,
+                    StrokeThickness = 0
+                }
+            }, CancellationToken.None);
         }
 
         private void developerBtnStageCompletionClicked(object sender, EventArgs e)
@@ -191,7 +210,17 @@ namespace NumberMatch.Pages
             Tools.HapticClick(hapticFeedbackEnabled);
 
             //page.game.CheckStageCompletion();
-            throw new NotImplementedException("Not implemented yet");
+            var popup = new Pages.Popups.ErrorPopup("This option is depreciated.");
+
+            this.ShowPopupAsync(popup, new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = dynamicBackgroundColor,
+                    StrokeThickness = 0
+                }
+            }, CancellationToken.None);
         }
 
         private void developerBtnRefreshGridColorsClicked(object sender, EventArgs e)
@@ -199,7 +228,17 @@ namespace NumberMatch.Pages
             Tools.HapticClick(hapticFeedbackEnabled);
 
             //page.RefreshGridColors();
-            throw new NotImplementedException("Not implemented yet");
+            var popup = new Pages.Popups.ErrorPopup("This option is depreciated.");
+
+            this.ShowPopupAsync(popup, new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = dynamicBackgroundColor,
+                    StrokeThickness = 0
+                }
+            }, CancellationToken.None);
         }
 
         // Back button handler: navigate back to the MainPage and refresh settings on the main page if available

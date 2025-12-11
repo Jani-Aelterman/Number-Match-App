@@ -7,7 +7,7 @@ public partial class WhatsNewPopup : Popup
     public WhatsNewPopup(string releaseNotes, string version)
     {
         InitializeComponent();
-        VersionLabel.Text = $"What's new — {version}";
+        VersionLabel.Text = $"What's new — Version {version}";
         NotesLabel.Text = releaseNotes;
     }
 
