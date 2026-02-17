@@ -4,8 +4,9 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="NumberMatch.Pages.SettingsPage"
-             Title="Settings"
-             Padding="{OnPlatform iOS='0,40,0,0', Android='0,45,0,0', WinUI='0,0,0,0'}">
+             Title="Settings">
+    <!--SafeAreaEdges="All"-->
+    <!--Padding="{OnPlatform iOS='0,40,0,0', Android='0,45,0,0', WinUI='0,0,0,0'}"-->
 
     <Grid
         RowDefinitions="Auto,*">
@@ -42,7 +43,7 @@
                     <!--Toggled="VibrationChanged" />-->
                 </material:MaterialCard>
 
-                <material:MaterialCard Style="{StaticResource MaterialCardStart}">
+                <material:MaterialCard Style="{StaticResource MaterialCardStart}" Clicked="ReplayTutorialClicked">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -67,13 +68,13 @@
                                                VerticalTextAlignment="Center"
                                                HorizontalTextAlignment="Start"
                                                Margin="12,0,0,0" />
-                        <material:MaterialCard.GestureRecognizers>
+                        <!--<material:MaterialCard.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ReplayTutorialClicked" NumberOfTapsRequired="1" />
-                        </material:MaterialCard.GestureRecognizers>
+                        </material:MaterialCard.GestureRecognizers>-->
                     </Grid>
                 </material:MaterialCard>
 
-                <material:MaterialCard Style="{StaticResource MaterialCardEnd}">
+                <material:MaterialCard Style="{StaticResource MaterialCardEnd}" Clicked="ShowVersionInfoTapped">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
@@ -98,9 +99,9 @@
                                                VerticalTextAlignment="Center"
                                                HorizontalTextAlignment="Start"
                                                Margin="12,0,0,0" />
-						<material:MaterialCard.GestureRecognizers>
+						<!--<material:MaterialCard.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ShowVersionInfoTapped" NumberOfTapsRequired="1" />
-						</material:MaterialCard.GestureRecognizers>
+						</material:MaterialCard.GestureRecognizers>-->
 					</Grid>
 				</material:MaterialCard>
 				

@@ -18,6 +18,9 @@ namespace NumberMatch
 {
     public partial class MainPage : ContentPage
     {
+        // Add a flag to prevent double-padding when returning from Settings
+        private bool _isPaddingAdjusted = false;
+
         public GameBackend game { private set; get; }
         private const int COLUMNS = 9, ROWS = 13;
         private Tuple<int, int> previousPressedButton = null; //  previous pressed button, row and column
@@ -57,14 +60,17 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             base.OnAppearing();
             LoadSettings();
 
-            // voeg device-specifieke top padding toe op Android zodat header consistent onder statusbar staat
-            //AdjustTopPaddingForStatusBar();
+            // Correctly apply padding ONCE
+            AdjustTopPaddingForStatusBar();
 
             _ = CheckAndShowWhatsNewAsync();
         }
 
         private void AdjustTopPaddingForStatusBar()
         {
+            // If we already added the padding, don't do it again
+            if (_isPaddingAdjusted) return;
+
 #if ANDROID
             try
             {
@@ -78,17 +84,18 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                         int heightPx = res.GetDimensionPixelSize(resId);
                         double heightDp = heightPx / res.DisplayMetrics.Density;
 
-                        // voeg alleen de extra inset toe (voorkom meerdere malen optellen)
                         var p = this.Padding;
-                        // Als we al een extra inset hebben toegevoegd (bijv. > 100) sla dan over
-                        if (p.Top < 100)
-                            this.Padding = new Thickness(p.Left, p.Top + heightDp, p.Right, p.Bottom);
+                        // Add the status bar height to the existing top padding
+                        this.Padding = new Thickness(p.Left, p.Top + heightDp, p.Right, p.Bottom);
+                        
+                        // Mark as done so we don't keep adding it
+                        _isPaddingAdjusted = true;
                     }
                 }
             }
             catch
             {
-                // swallow - niet kritisch
+                // swallow
             }
 #endif
         }

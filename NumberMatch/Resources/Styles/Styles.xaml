@@ -453,6 +453,7 @@
     <Style TargetType="mct:Popup">
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceVariant}" />
     </Style>
 
     <Style TargetType="toolkit:StatusBarBehavior">

@@ -6,6 +6,7 @@
        xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
        xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
        x:TypeArguments="system:Boolean"
+       BackgroundColor="{DynamicResource SurfaceVariant}"
        x:Class="NumberMatch.Pages.Popups.ResetConfirmationPopup">
 
     <material:MaterialCard Padding="12" CornerRadius="12" BackgroundColor="{DynamicResource SurfaceVariant}">
