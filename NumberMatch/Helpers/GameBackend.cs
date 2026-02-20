@@ -21,6 +21,8 @@ namespace NumberMatch.Helpers
         public GameData gameData { get; private set; } = new GameData();
         private Tuple<int, int> gridsize;
         private readonly MainPage page;
+        private const int MAXADD = 3;
+        private const int MAXADDCOUNT = 10;
 
         public GameBackend(int columns, int rows, MainPage mainpage)
         {
@@ -35,6 +37,11 @@ namespace NumberMatch.Helpers
         public List<List<int>> GetGameGrid()
         {
             return gameData.GameGrid;
+        }
+
+        public int GetAddAmmount()
+        {
+            return gameData.addAmmount;
         }
 
         //  initialize the grid with random numbers
@@ -90,6 +97,8 @@ namespace NumberMatch.Helpers
             gameData.NumbersMatched = Preferences.Get("numbersMatched", 0);
             gameData.Stage = Preferences.Get("stage", 1);
             string gameGridJson = Preferences.Get("gameGrid", "");
+            gameData.addAmmount = Preferences.Get("addAmmount", 3);
+            gameData.addCounter = Preferences.Get("addCounter", 0);
 
             if (string.IsNullOrEmpty(gameGridJson))
             {
@@ -131,6 +140,16 @@ namespace NumberMatch.Helpers
                     await RemoveEmptyRows();
                     await CheckStageCompletion();
                     //await CheckIfThereAreNoMovesLeft();
+
+                    gameData.addCounter++;
+                    
+                    if (gameData.addCounter >= MAXADDCOUNT)
+                    {
+                        if (gameData.addAmmount < MAXADD)
+                            gameData.addAmmount++;
+                        
+                        gameData.addCounter = 0;
+                    }
 
                     return true;
                 }

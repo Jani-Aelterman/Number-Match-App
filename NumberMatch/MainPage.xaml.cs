@@ -190,6 +190,19 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             //set numbersmatched and stage
             LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
             LabelStage.Text = "Stage: " + game.gameData.Stage;
+
+            // Check for badge increment to trigger animation
+            if (int.TryParse(HelpBtnBadge.Text, out int oldVal) && game.gameData.addAmmount > oldVal)
+            {
+                // Bounce animation
+                Task.Run(async () =>
+                {
+                    await HelpBtnBadge.ScaleTo(1.5, 150);
+                    await HelpBtnBadge.ScaleTo(1.0, 150);
+                });
+            }
+
+            HelpBtnBadge.Text = game.gameData.addAmmount.ToString();
         }
 
         private async void GridButtonClicked(object sender, EventArgs e)
@@ -232,8 +245,6 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                         if (await game.CheckMatch(previousPressedButton.Item1, previousPressedButton.Item2, row, col))
                         {
                             SynchronizeGrid(game.GetGameGrid());
-
-                            LabelAmmountMatchedNumbers.Text = "Matched numbers: " + game.gameData.NumbersMatched;
 
                             ///////////ShowToast("Matched");
                         }
@@ -281,29 +292,50 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             SynchronizeGrid(game.GetGameGrid());
         }
 
-        private void HelpButtonClicked(object sender, EventArgs e)
+        private async void HelpButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
-            
-            // Show 1 available match
-            Tuple<Tuple<int, int>, Tuple<int, int>> match = game.GetAvailableMove();
-            if (match != null)
+
+            if (game.gameData.addAmmount > 0)
             {
-                // Highlight the buttons
-                var firstButton = GetCellUIElement(match.Item1.Item1, match.Item1.Item2) as Button;
-                var secondButton = GetCellUIElement(match.Item2.Item1, match.Item2.Item2) as Button;
-                if (firstButton != null && secondButton != null)
+                // Show 1 available match
+                Tuple<Tuple<int, int>, Tuple<int, int>> match = game.GetAvailableMove();
+                if (match != null)
                 {
-                    firstButton.BackgroundColor = dynamicInversePrimaryColor;
-                    firstButton.TextColor = dynamicBackgroundColor;
-                    secondButton.BackgroundColor = dynamicInversePrimaryColor;
-                    secondButton.TextColor = dynamicBackgroundColor;
+                    // Decrement available hints
+                    game.gameData.addAmmount--;
+                    HelpBtnBadge.Text = game.gameData.addAmmount.ToString();
+                    
+                    // Highlight the buttons
+                    var firstButton = GetCellUIElement(match.Item1.Item1, match.Item1.Item2) as Button;
+                    var secondButton = GetCellUIElement(match.Item2.Item1, match.Item2.Item2) as Button;
+                    if (firstButton != null && secondButton != null)
+                    {
+                        firstButton.BackgroundColor = dynamicInversePrimaryColor;
+                        firstButton.TextColor = dynamicBackgroundColor;
+                        secondButton.BackgroundColor = dynamicInversePrimaryColor;
+                        secondButton.TextColor = dynamicBackgroundColor;
+                    }
+                }
+                else
+                {
+                    //Tools.ShowToast("No available moves!");
+                    // bounce addbtn
+                    await AddBtn.TranslateTo(0, -10, 50);
+                    await AddBtn.TranslateTo(0, 10, 50);
+                    await AddBtn.TranslateTo(0, 0, 50);
                 }
             }
             else
             {
-                Tools.ShowToast("No available moves!");
+                {
+                    // shake helpbtn
+                    await HelpBtnContainer.TranslateTo(-5, 0, 20);
+                    await HelpBtnContainer.TranslateTo(5, 0, 20);
+                    await HelpBtnContainer.TranslateTo(0, 0, 20);
+                }
             }
+            
         }
 
         private async void ResetButtonClicked(object sender, EventArgs e)

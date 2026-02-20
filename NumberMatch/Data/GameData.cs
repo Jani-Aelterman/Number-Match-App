@@ -20,5 +20,7 @@ namespace NumberMatch.Data
         }*/
 
         public List<List<int>> GameGrid = new List<List<int>>();
+        public int addAmmount { get; set; } = 3;
+        public int addCounter {get; set;} = 0;
     }
 }

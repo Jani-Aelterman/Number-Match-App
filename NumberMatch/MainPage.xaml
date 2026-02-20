@@ -56,21 +56,52 @@
         <!-- Footer: always on bottom -->
         <Grid Grid.Row="2" Padding="10,10,10,40" BackgroundColor="Transparent">
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="15" VerticalOptions="Center">
-                <material:MaterialIconButton x:Name="AddBtn"
-                                             Type="Filled"
-                                             BackgroundColor="{DynamicResource Primary}"
-                                             IconTintColor="{DynamicResource OnPrimary}"
-                                             ImageSource="add.png"
-                                             TouchAnimationType="Bounce"
-                                             Clicked="AddButtonClicked" />
+                <!--<Grid
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">-->
 
-                <material:MaterialIconButton x:Name="HelpBtn"
-                                             ImageSource="lightbulb_2.png"
-                                             Type="Filled"
-                                             BackgroundColor="{DynamicResource Primary}"
-                                             IconTintColor="{DynamicResource OnPrimary}"
-                                             TouchAnimationType="Bounce"
-                                             Clicked="HelpButtonClicked" />
+                    <material:MaterialIconButton x:Name="AddBtn"
+                                                 Type="Filled"
+                                                 BackgroundColor="{DynamicResource Primary}"
+                                                 IconTintColor="{DynamicResource OnPrimary}"
+                                                 ImageSource="add.png"
+                                                 TouchAnimationType="Bounce"
+                                                 Clicked="AddButtonClicked" />
+
+                    <!--<material:MaterialBadge
+                        x:Name="AddBtnBadge"
+                        Type="Large"
+                        Text="3"
+                        BackgroundColor="{DynamicResource Tertiary}"
+                        TextColor="{DynamicResource OnTertiary}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="End"/>
+                </Grid>-->
+                
+                <Grid
+                    x:Name="HelpBtnContainer"
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
+
+                    <material:MaterialIconButton x:Name="HelpBtn"
+                                                 Type="Filled"
+                                                 BackgroundColor="{DynamicResource Primary}"
+                                                 IconTintColor="{DynamicResource OnPrimary}"
+                                                 ImageSource="lightbulb_2.png"
+                                                 TouchAnimationType="Bounce"
+                                                 Clicked="HelpButtonClicked" />
+
+                    <material:MaterialBadge
+                        x:Name="HelpBtnBadge"
+                        Type="Large"
+                        Text="3"
+                        BackgroundColor="{DynamicResource Tertiary}"
+                        TextColor="{DynamicResource OnTertiary}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="End"/>
+                </Grid>
 
                 <material:MaterialIconButton x:Name="ResetBtn"
                                              ImageSource="restart_alt.png"
