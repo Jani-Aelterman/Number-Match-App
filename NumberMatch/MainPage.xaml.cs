@@ -29,6 +29,7 @@ namespace NumberMatch
         private readonly Color dynamicSecondaryColor = (Color)Application.Current.Resources["Secondary"];
         private readonly Color dynamicTertiaryColor = (Color)Application.Current.Resources["Tertiary"];
         private readonly Color dynamicInversePrimaryColor = (Color)Application.Current.Resources["InversePrimary"];
+        //private readonlyColor dynamicGreyColor = (Color)Application.Current.Resources[""]
         private bool hapticFeedbackEnabled = true;
 
         public MainPage()
@@ -197,12 +198,28 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                 // Bounce animation
                 Task.Run(async () =>
                 {
+                    Tools.HapticClick(hapticFeedbackEnabled);
                     await HelpBtnBadge.ScaleTo(1.5, 150);
+                    Tools.HapticClick(hapticFeedbackEnabled);
                     await HelpBtnBadge.ScaleTo(1.0, 150);
                 });
             }
 
             HelpBtnBadge.Text = game.gameData.addAmmount.ToString();
+
+            // Gray out if 0 hints
+            if (game.gameData.addAmmount == 0)
+            {
+                HelpBtn.BackgroundColor = Colors.Gray;
+                HelpBtnBadge.BackgroundColor = Colors.Gray;
+                //HelpBtn.IsEnabled = false;
+            }
+            else
+            {
+                HelpBtn.BackgroundColor = dynamicPrimaryColor;
+                HelpBtnBadge.BackgroundColor = dynamicTertiaryColor;
+                //HelpBtn.IsEnabled = true;
+            }
         }
 
         private async void GridButtonClicked(object sender, EventArgs e)
@@ -311,16 +328,22 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
                     var secondButton = GetCellUIElement(match.Item2.Item1, match.Item2.Item2) as Button;
                     if (firstButton != null && secondButton != null)
                     {
+                        Tools.HapticClick(hapticFeedbackEnabled);
+                        await firstButton.ScaleTo(1.2, 100);
+                        await secondButton.ScaleTo(1.2, 100);
                         firstButton.BackgroundColor = dynamicInversePrimaryColor;
                         firstButton.TextColor = dynamicBackgroundColor;
                         secondButton.BackgroundColor = dynamicInversePrimaryColor;
                         secondButton.TextColor = dynamicBackgroundColor;
+                        await firstButton.ScaleTo(1.0, 100);
+                        await secondButton.ScaleTo(1.0, 100);
                     }
                 }
                 else
                 {
-                    //Tools.ShowToast("No available moves!");
+                    Tools.ShowToast("No available moves!");
                     // bounce addbtn
+                    Tools.ErrorHaptic(hapticFeedbackEnabled);
                     await AddBtn.TranslateTo(0, -10, 50);
                     await AddBtn.TranslateTo(0, 10, 50);
                     await AddBtn.TranslateTo(0, 0, 50);

@@ -6,6 +6,10 @@ public static class ReleaseNotesService
 {
     private static readonly IReadOnlyDictionary<string, string> s_releaseNotes = new Dictionary<string, string>
     {
+        { "1.2", "- Hint reward system: earn hints by matching numbers" +
+                 "\n- Badge on hint button showing available hints" +
+                 "\n- Upgraded to .NET 10" +
+                 "\n- UI improvements and layout refinements"},
         { "1.1", "- Added a 'help' button to show available match" +
                  "\n- Added a tutorial" +
                  "\n- Added a reset confirmation dialog" +

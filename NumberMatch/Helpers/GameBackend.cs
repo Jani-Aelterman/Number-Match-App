@@ -374,64 +374,50 @@ namespace NumberMatch.Helpers
             }
         }
 
-        // needs work
+        // needs work - Fixed: Now copies existing numbers to ensure solvability and parity
         public void AddNumbersToGrid()
         {
-            Random random = new Random();
-            int maxColumns = gridsize.Item1;
-            int maxRows = gridsize.Item2;
-            int rowsToAdd = (maxRows - gameData.GameGrid.Count) / 3;
-
-            for (int i = 0; i < rowsToAdd; i++)
+            try
             {
-                List<int> row = new List<int>();
+                // Get all current non-zero numbers
+                var currentNumbers = gameData.GameGrid
+                    .SelectMany(x => x)
+                    .Where(x => x != 0)
+                    .ToList();
 
-                for (int j = 0; j < maxColumns; j++)
+                if (currentNumbers.Count == 0) return;
+
+                // Use the "Copy Strategy": Append a copy of all current numbers to the END of the grid.
+                Queue<int> numbersToAdd = new Queue<int>(currentNumbers);
+
+                int maxColumns = gridsize.Item1;
+                int maxRows = gridsize.Item2;
+
+                // We will add new rows containing these numbers.
+                // We do NOT fill existing holes (0s) in previous rows to keep classic behavior.
+
+                while (numbersToAdd.Count > 0)
                 {
-                    int number = random.Next(1, 10);
-
-                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                        number = random.Next(1, 10);
-
-                    row.Add(number);
-                }
-
-                // Ensure the row has an even number of elements but does not exceed maxColumns
-                if (row.Count % 2 != 0 && row.Count < maxColumns)
-                {
-                    int number = random.Next(1, 10);
-
-                    while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                        number = random.Next(1, 10);
-
-                    row.Add(number);
-                }
-
-                if (i == rowsToAdd - 1)
-                {
-                    //int number = random.Next(1, 10);
-
-                    //while (!gameData.GameGrid.SelectMany(x => x).Contains(number))
-                    //number = random.Next(1, 10);
-
-                    //row.Add(number);
-
-                    // check if the total amount of numbers in the grid is even and remove a number from the row if it isn't
-                    int amountOfNumbers = gameData.GameGrid.SelectMany(x => x).Count(n => n != 0);
-                    int amountOfRowNumbers = row.Count(n => n != 0);
-
-                    if ((amountOfNumbers % 2 != 0 && amountOfRowNumbers % 2 == 0) || (amountOfNumbers % 2 == 0 && amountOfRowNumbers % 2 != 0))
+                    if (gameData.GameGrid.Count >= maxRows)
                     {
-                        int col = random.Next(0, maxColumns);
-
-                        while (row[col] == 0)
-                            col = random.Next(0, maxColumns);
-
-                        row[col] = 0;
+                        Tools.ShowToast("Grid is full!");
+                        break;
                     }
-                }
 
-                gameData.GameGrid.Add(row);
+                    List<int> newRow = new List<int>();
+                    for (int i = 0; i < maxColumns; i++)
+                    {
+                        if (numbersToAdd.Count > 0)
+                            newRow.Add(numbersToAdd.Dequeue());
+                        else
+                            newRow.Add(0); // Pad with 0
+                    }
+                    gameData.GameGrid.Add(newRow);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"AddNumbersToGrid error: {ex.Message}");
             }
         }
     }

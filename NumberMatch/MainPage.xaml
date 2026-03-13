@@ -17,19 +17,31 @@
 
         <!-- Header: always on top -->
         <VerticalStackLayout Grid.Row="0" Spacing="12" Padding="10,0,10,10" HorizontalOptions="Fill">
-            <material:MaterialButton x:Name="Title"
-                                     Text="Number Match"
-                                     FontSize="32"
-                                     FontAttributes="Bold"
-                                     TextColor="{DynamicResource Primary}"
-                                     BackgroundColor="Transparent"
-                                     BorderColor="{DynamicResource Primary}"
-                                     BorderWidth="1"
-                                     CornerRadius="10"
-                                     Padding="0"
-                                     VerticalOptions="Center"
-                                     Clicked="SettingsButtonClicked"
-                                     HorizontalOptions="Center" />
+            
+            <Grid>
+                <!-- Titel (zonder Clicked event) -->
+                <material:MaterialLabel x:Name="Title"
+                                         Text="Number Match"
+                                         FontSize="32"
+                                         FontAttributes="Bold"
+                                         TextColor="{DynamicResource Primary}"
+                                         BackgroundColor="Transparent"
+                                         Padding="0"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="Center" />
+
+                <!-- Settings knop in de rechter bovenhoek -->
+                <material:MaterialIconButton x:Name="SettingsBtn"
+                                             ImageSource="settings.png"
+                                             Type="Filled"
+                                             BackgroundColor="Transparent"
+                                             IconTintColor="{DynamicResource Primary}"
+                                             TouchAnimationType="Bounce"
+                                             Clicked="SettingsButtonClicked"
+                                             HorizontalOptions="End"
+                                             VerticalOptions="Center"
+                                             Margin="0,0,5,0" />
+            </Grid>
 
             <material:MaterialCard HorizontalOptions="Center" BackgroundColor="{DynamicResource SecondaryContainer}" Padding="10">
                 <Label x:Name="LabelAmmountMatchedNumbers"
