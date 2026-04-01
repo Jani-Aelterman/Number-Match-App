@@ -8,6 +8,19 @@
     <!--SafeAreaEdges="All"-->
     <!--Padding="{OnPlatform iOS='0,40,0,0', Android='0,45,0,0', WinUI='0,0,0,0'}"-->
 
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior
+            ApplyOn="OnPageNavigatedTo"
+            StatusBarColor="{AppThemeBinding Light={DynamicResource Surface1}, Dark={DynamicResource Surface1}}"
+            StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
+    </ContentPage.Behaviors>
+
+    <BoxView x:Name="OnSurfaceColorProxy"
+             IsVisible="False"
+             HeightRequest="0"
+             WidthRequest="0"
+             BackgroundColor="{DynamicResource OnSurface}" />
+
     <Grid
         RowDefinitions="Auto,*">
         <material:MaterialTopAppBar
@@ -57,7 +70,8 @@
                                HorizontalOptions="Start"
                                Grid.Column="0">
 							        <Image.Behaviors>
-								        <toolkit:IconTintColorBehavior TintColor="{DynamicResource OnSurface}" />
+								        <toolkit:IconTintColorBehavior
+                                            TintColor="{Binding Source={x:Reference OnSurfaceColorProxy}, Path=BackgroundColor}" />
 							        </Image.Behaviors>
 						</Image>
 
@@ -88,8 +102,8 @@
                                HorizontalOptions="Start"
                                Grid.Column="0">
 							<Image.Behaviors>
-								<toolkit:IconTintColorBehavior TintColor="{DynamicResource OnSurface}" />
-							</Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="{Binding Source={x:Reference OnSurfaceColorProxy}, Path=BackgroundColor}" />
+                            </Image.Behaviors>
 						</Image>
 
 						<material:MaterialLabel Grid.Column="1"

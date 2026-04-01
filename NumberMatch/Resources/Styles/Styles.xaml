@@ -447,7 +447,7 @@
     
     <!-- Material 3 Expressive with material you colors -->
     <Style TargetType="ContentPage">
-        <Setter Property="BackgroundColor" Value="{DynamicResource Surface1}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource SecondaryContainer}, Dark={DynamicResource Surface1}}" />
     </Style>
 
     <Style TargetType="mct:Popup">
@@ -470,7 +470,7 @@
     <Style TargetType="material:MaterialIconButton">
         <Setter Property="Type" Value="Filled" />
         <Setter Property="IconTintColor" Value="{DynamicResource OnBackground}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource InverseOnSurface}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Background}, Dark={DynamicResource InverseOnSurface}}" />
         <Setter Property="CornerRadius" Value="100" />
     </Style>
 
@@ -510,7 +510,7 @@
     <Style x:Key="MaterialCard" TargetType="material:MaterialCard">
         <!--<Setter Property="Margin" Value="0,2,0,2" />-->
         <Setter Property="Padding" Value="8" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource InverseOnSurface}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Background}, Dark={DynamicResource InverseOnSurface}}" />
     </Style>
 
     <!-- Start card -->
