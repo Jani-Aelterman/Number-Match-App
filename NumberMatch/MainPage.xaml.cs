@@ -302,11 +302,92 @@ MakeNumberMatchGrid(ROWS + 8, COLUMNS + 5);
             }
         }
 
-        private void AddButtonClicked(object sender, EventArgs e)
+        private async void AddButtonClicked(object sender, EventArgs e)
         {
             Tools.HapticClick(hapticFeedbackEnabled);
-            game.AddNumbersToGrid();
+            List<int> addedRows = game.AddNumbersToGrid();
             SynchronizeGrid(game.GetGameGrid());
+
+            await AnimateAddedRowsReveal(addedRows);
+        }
+
+        private async Task AnimateAddedRowsReveal(List<int> addedRows)
+        {
+            if (addedRows == null || addedRows.Count == 0)
+                return;
+
+            var gridData = game.GetGameGrid();
+
+            // Hide newly added numbers first so they appear during the animation.
+            foreach (int rowIndex in addedRows)
+            {
+                if (rowIndex < 0 || rowIndex >= gridData.Count)
+                    continue;
+
+                for (int col = 0; col < COLUMNS && col < gridData[rowIndex].Count; col++)
+                {
+                    var button = GetCellUIElement(rowIndex, col) as Button;
+                    if (button == null)
+                        continue;
+
+                    if (gridData[rowIndex][col] != 0)
+                    {
+                        button.Text = null;
+                        button.Opacity = 0.6;
+                    }
+                }
+            }
+
+            // Reveal row by row with a center-out wave.
+            foreach (int rowIndex in addedRows)
+            {
+                if (rowIndex < 0 || rowIndex >= gridData.Count)
+                    continue;
+
+                int centerCol = COLUMNS / 2;
+
+                for (int distance = 0; distance <= centerCol; distance++)
+                {
+                    List<Task> revealTasks = new List<Task>();
+
+                    int leftCol = centerCol - distance;
+                    int rightCol = centerCol + distance;
+
+                    if (leftCol >= 0)
+                    {
+                        revealTasks.Add(RevealAddedCell(rowIndex, leftCol, gridData));
+                    }
+
+                    if (rightCol < COLUMNS && rightCol != leftCol)
+                    {
+                        revealTasks.Add(RevealAddedCell(rowIndex, rightCol, gridData));
+                    }
+
+                    if (revealTasks.Count > 0)
+                        await Task.WhenAll(revealTasks);
+                }
+            }
+        }
+
+        private async Task RevealAddedCell(int row, int col, List<List<int>> gridData)
+        {
+            if (row < 0 || row >= gridData.Count || col < 0 || col >= gridData[row].Count)
+                return;
+
+            int value = gridData[row][col];
+            if (value == 0)
+                return;
+
+            var button = GetCellUIElement(row, col) as Button;
+            if (button == null)
+                return;
+
+            button.Text = value.ToString();
+            button.Scale = 0.8;
+            await Task.WhenAll(
+                button.FadeTo(1, 4),
+                button.ScaleTo(1.08, 4));
+            await button.ScaleTo(1.0, 4);
         }
 
         private async void HelpButtonClicked(object sender, EventArgs e)

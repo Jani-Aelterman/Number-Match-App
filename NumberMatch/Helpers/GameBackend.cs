@@ -374,9 +374,11 @@ namespace NumberMatch.Helpers
             }
         }
 
-        // needs work - Fixed: Now copies existing numbers to ensure solvability and parity
-        public void AddNumbersToGrid()
+        // Add numbers in a solvable way and return indexes of newly added rows for animation
+        public List<int> AddNumbersToGrid()
         {
+            List<int> addedRowIndexes = new List<int>();
+
             try
             {
                 // Get all current non-zero numbers
@@ -385,7 +387,8 @@ namespace NumberMatch.Helpers
                     .Where(x => x != 0)
                     .ToList();
 
-                if (currentNumbers.Count == 0) return;
+                if (currentNumbers.Count == 0)
+                    return addedRowIndexes;
 
                 // Use the "Copy Strategy": Append a copy of all current numbers to the END of the grid.
                 Queue<int> numbersToAdd = new Queue<int>(currentNumbers);
@@ -412,13 +415,17 @@ namespace NumberMatch.Helpers
                         else
                             newRow.Add(0); // Pad with 0
                     }
+
                     gameData.GameGrid.Add(newRow);
+                    addedRowIndexes.Add(gameData.GameGrid.Count - 1);
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"AddNumbersToGrid error: {ex.Message}");
             }
+
+            return addedRowIndexes;
         }
     }
 }
